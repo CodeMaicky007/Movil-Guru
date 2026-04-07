@@ -1,0 +1,44 @@
+{
+  "app\\page.tsx -> @/components/ui/cinematic-landing-hero": {
+    "id": "app\\page.tsx -> @/components/ui/cinematic-landing-hero",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_ui_cinematic-landing-hero_tsx.js"
+    ]
+  },
+  "app\\page.tsx -> @/components/ui/footer-section": {
+    "id": "app\\page.tsx -> @/components/ui/footer-section",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_ui_footer-section_tsx.js"
+    ]
+  },
+  "app\\page.tsx -> @/components/ui/full-screen-scroll-fx": {
+    "id": "app\\page.tsx -> @/components/ui/full-screen-scroll-fx",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_ui_full-screen-scroll-fx_tsx.js"
+    ]
+  },
+  "app\\page.tsx -> @/components/ui/header-3": {
+    "id": "app\\page.tsx -> @/components/ui/header-3",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_ui_header-3_tsx.js"
+    ]
+  },
+  "app\\page.tsx -> @/components/ui/hero": {
+    "id": "app\\page.tsx -> @/components/ui/hero",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_ui_hero_tsx.js"
+    ]
+  },
+  "app\\page.tsx -> @/components/ui/pricing-section-3": {
+    "id": "app\\page.tsx -> @/components/ui/pricing-section-3",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_ui_pricing-section-3_tsx.js"
+    ]
+  },
+  "app\\page.tsx -> @/components/ui/testimonials-columns-1": {
+    "id": "app\\page.tsx -> @/components/ui/testimonials-columns-1",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_ui_testimonials-columns-1_tsx.js"
+    ]
+  }
+}
