@@ -412,16 +412,17 @@ export function CinematicHero({
   }, [metricValue]);
 
   return (
-    <div
-      ref={containerRef}
-      className={cn(
-        "relative w-screen h-screen overflow-hidden flex items-center justify-center bg-background text-foreground font-sans antialiased",
-        className
-      )}
-      style={{ perspective: "1500px" }}
-      {...props}
-    >
-      <style dangerouslySetInnerHTML={{ __html: INJECTED_STYLES }} />
+    <div className="cinematic-wrapper w-full">
+      <div
+        ref={containerRef}
+        className={cn(
+          "relative w-screen h-screen overflow-hidden flex items-center justify-center bg-background text-foreground font-sans antialiased",
+          className
+        )}
+        style={{ perspective: "1500px" }}
+        {...props}
+      >
+        <style dangerouslySetInnerHTML={{ __html: INJECTED_STYLES }} />
       <div className="film-grain" aria-hidden="true" />
       <div
         className="bg-grid-theme absolute inset-0 z-0 pointer-events-none opacity-50"
@@ -676,6 +677,7 @@ export function CinematicHero({
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }
