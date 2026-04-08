@@ -474,8 +474,6 @@ export const FullScreenScrollFX = forwardRef<HTMLDivElement, FullScreenFXProps>(
       .fx-progress { width: 200px; height: 2px; margin: 1rem auto 0; background: rgba(245,245,245,0.28); position: relative; }
       .fx-progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; background: var(--fx-text); height: 100%; transition: width 0.3s ease; }
       .fx-progress-numbers { position: absolute; inset: auto 0 100% 0; display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--fx-text); }
-      .fx-end { height: 100vh; display: grid; place-items: center; }
-      .fx-fin { transform: rotate(90deg); color: #111; }
       @media (max-width: 900px) {
         .fx-content { grid-template-columns: 1fr; row-gap: 3vh; place-items: center; }
         .fx-left, .fx-right, .fx-center { height: auto; }
@@ -602,9 +600,6 @@ export const FullScreenScrollFX = forwardRef<HTMLDivElement, FullScreenFXProps>(
             </div>
           </div>
 
-          <div className="fx-end">
-            <p className="fx-fin">fin</p>
-          </div>
         </div>
       </div>
     );

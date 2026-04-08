@@ -1,58 +1,44 @@
 {
   "app\\page.tsx -> @/components/ui/cinematic-landing-hero": {
-    "id": 5295,
+    "id": "app\\page.tsx -> @/components/ui/cinematic-landing-hero",
     "files": [
-      "static/chunks/c15bf2b0.7a75e897b50469a8.js",
-      "static/chunks/137.695fdf8effc247ce.js",
-      "static/chunks/956.c7010e356a213311.js",
-      "static/chunks/295.cadd2898323c4c40.js"
+      "static/chunks/_app-pages-browser_src_components_ui_cinematic-landing-hero_tsx.js"
+    ]
+  },
+  "app\\page.tsx -> @/components/ui/feature-carousel": {
+    "id": "app\\page.tsx -> @/components/ui/feature-carousel",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_ui_feature-carousel_tsx.js"
     ]
   },
   "app\\page.tsx -> @/components/ui/footer-section": {
-    "id": 8334,
+    "id": "app\\page.tsx -> @/components/ui/footer-section",
     "files": [
-      "static/chunks/48.182547d5c02cefeb.js",
-      "static/chunks/334.117a238a212c4fa3.js"
-    ]
-  },
-  "app\\page.tsx -> @/components/ui/full-screen-scroll-fx": {
-    "id": 9218,
-    "files": [
-      "static/chunks/c15bf2b0.7a75e897b50469a8.js",
-      "static/chunks/956.c7010e356a213311.js",
-      "static/chunks/218.29ed3dc7867cee39.js"
+      "static/chunks/_app-pages-browser_src_components_ui_footer-section_tsx.js"
     ]
   },
   "app\\page.tsx -> @/components/ui/header-3": {
-    "id": 7734,
+    "id": "app\\page.tsx -> @/components/ui/header-3",
     "files": [
-      "static/chunks/0e5ce63c.7dd18046588feb05.js",
-      "static/chunks/137.695fdf8effc247ce.js",
-      "static/chunks/317.50cb8d4795278afc.js",
-      "static/chunks/734.84bc07322e19118d.js"
+      "static/chunks/_app-pages-browser_src_components_ui_header-3_tsx.js"
     ]
   },
   "app\\page.tsx -> @/components/ui/hero": {
-    "id": 4446,
+    "id": "app\\page.tsx -> @/components/ui/hero",
     "files": [
-      "static/chunks/48.182547d5c02cefeb.js",
-      "static/chunks/446.188aee953cc03796.js"
+      "static/chunks/_app-pages-browser_src_components_ui_hero_tsx.js"
     ]
   },
   "app\\page.tsx -> @/components/ui/pricing-section-3": {
-    "id": 9082,
+    "id": "app\\page.tsx -> @/components/ui/pricing-section-3",
     "files": [
-      "static/chunks/48.182547d5c02cefeb.js",
-      "static/chunks/137.695fdf8effc247ce.js",
-      "static/chunks/257.36812e017cbcd44e.js",
-      "static/chunks/82.82ad695af8e3dbdc.js"
+      "static/chunks/_app-pages-browser_src_components_ui_pricing-section-3_tsx.js"
     ]
   },
   "app\\page.tsx -> @/components/ui/testimonials-columns-1": {
-    "id": 6890,
+    "id": "app\\page.tsx -> @/components/ui/testimonials-columns-1",
     "files": [
-      "static/chunks/48.182547d5c02cefeb.js",
-      "static/chunks/890.26ef11f51155f5a1.js"
+      "static/chunks/_app-pages-browser_src_components_ui_testimonials-columns-1_tsx.js"
     ]
   }
 }

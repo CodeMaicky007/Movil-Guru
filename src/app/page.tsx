@@ -12,37 +12,11 @@ const HeroComponent = dynamic(
   { ssr: false }
 );
 
-const FullScreenScrollFX = dynamic(
-  () => import("@/components/ui/full-screen-scroll-fx").then((m) => m.FullScreenScrollFX),
+const FeatureCarousel = dynamic(
+  () => import("@/components/ui/feature-carousel").then((m) => m.FeatureCarousel),
   { ssr: false }
 );
 
-const scrollSections = [
-  {
-    leftLabel: "Speed",
-    title: "FAST",
-    rightLabel: "Speed",
-    background: "https://images.pexels.com/photos/3568520/pexels-photo-3568520.jpeg",
-  },
-  {
-    leftLabel: "All Devices",
-    title: "EVERY BRAND",
-    rightLabel: "All Devices",
-    background: "https://images.pexels.com/photos/1092644/pexels-photo-1092644.jpeg",
-  },
-  {
-    leftLabel: "Guarantee",
-    title: "LIFETIME",
-    rightLabel: "Guarantee",
-    background: "https://images.pexels.com/photos/6046183/pexels-photo-6046183.jpeg",
-  },
-  {
-    leftLabel: "Privacy",
-    title: "DATA SAFE",
-    rightLabel: "Privacy",
-    background: "https://images.pexels.com/photos/4792733/pexels-photo-4792733.jpeg",
-  },
-];
 
 const CinematicHero = dynamic(
   () => import("@/components/ui/cinematic-landing-hero").then((m) => m.CinematicHero),
@@ -69,18 +43,7 @@ export default function Home() {
     <main className="w-full">
       <Header />
       <HeroComponent />
-      <FullScreenScrollFX
-        sections={scrollSections}
-        header={
-          <>
-            <div>The Movil Guru</div>
-            <div>Difference</div>
-          </>
-        }
-        footer={<div></div>}
-        showProgress
-        durations={{ change: 0.7, snap: 800 }}
-      />
+      <FeatureCarousel />
       <CinematicHero
         brandName="MOVIL GURU"
         tagline1="Every brand."
