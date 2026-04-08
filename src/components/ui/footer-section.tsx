@@ -25,36 +25,36 @@ interface FooterSection {
 
 const footerLinks: FooterSection[] = [
   {
-    label: 'Services',
+    label: 'Servicios',
     links: [
-      { title: 'Screen Repair', href: '#' },
-      { title: 'Battery Replacement', href: '#' },
-      { title: 'Water Damage', href: '#' },
-      { title: 'Foldable Repair', href: '#' },
-      { title: 'Data Recovery', href: '#' },
-      { title: 'Logic Board', href: '#' },
+      { title: 'Reparación de pantalla', href: '#' },
+      { title: 'Cambio de batería', href: '#' },
+      { title: 'Daño por agua', href: '#' },
+      { title: 'Reparación de plegables', href: '#' },
+      { title: 'Recuperación de datos', href: '#' },
+      { title: 'Placa base', href: '#' },
     ],
   },
   {
-    label: 'Company',
+    label: 'Empresa',
     links: [
-      { title: 'About Us', href: '/about' },
-      { title: 'Our Technicians', href: '/team' },
-      { title: 'Warranty Policy', href: '/warranty' },
-      { title: 'B2B / Corporate', href: '/business' },
+      { title: 'Quiénes somos', href: '/about' },
+      { title: 'Nuestros técnicos', href: '/team' },
+      { title: 'Política de garantía', href: '/warranty' },
+      { title: 'B2B / Empresas', href: '/business' },
     ],
   },
   {
-    label: 'Resources',
+    label: 'Recursos',
     links: [
-      { title: 'Track My Repair', href: '/track' },
-      { title: 'Repair Guide', href: '/guide' },
+      { title: 'Rastrear mi reparación', href: '/track' },
+      { title: 'Guía de reparación', href: '/guide' },
       { title: 'Blog', href: '/blog' },
-      { title: 'FAQ', href: '/faq' },
+      { title: 'Preguntas frecuentes', href: '/faq' },
     ],
   },
   {
-    label: 'Follow Us',
+    label: 'Síguenos',
     links: [
       { title: 'Instagram', href: '#', icon: InstagramIcon },
       { title: 'TikTok', href: '#', icon: YoutubeIcon },
@@ -79,10 +79,10 @@ export function Footer() {
             </div>
           </div>
           <p className="text-muted-foreground text-sm mt-3">
-            Every brand. Every break. Fixed today.
+            Cada marca. Cada rotura. Reparado hoy.
           </p>
           <p className="text-muted-foreground text-xs mt-2">
-            © {new Date().getFullYear()} Movil Guru. All rights reserved.
+            © {new Date().getFullYear()} Movil Guru. Todos los derechos reservados.
           </p>
         </AnimatedContainer>
         <div className="mt-10 grid grid-cols-2 gap-8 md:grid-cols-4 xl:col-span-2 xl:mt-0">

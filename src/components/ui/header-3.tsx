@@ -78,7 +78,7 @@ export function Header() {
             <NavigationMenuList>
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="bg-transparent">
-                  Services
+                  Servicios
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-background p-1 pr-1.5">
                   <ul className="bg-popover grid w-[500px] grid-cols-2 gap-2 rounded-md border p-2 shadow">
@@ -90,12 +90,12 @@ export function Header() {
                   </ul>
                   <div className="p-2">
                     <p className="text-muted-foreground text-sm">
-                      Have a broken device?{' '}
+                      ¿Tienes un dispositivo roto?{' '}
                       <a
                         href="#"
                         className="text-foreground font-medium hover:underline"
                       >
-                        Get a free quote
+                        Obtén un presupuesto gratis
                       </a>
                     </p>
                   </div>
@@ -103,7 +103,7 @@ export function Header() {
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="bg-transparent">
-                  About
+                  Nosotros
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-background p-1 pr-1.5 pb-1.5">
                   <div className="grid w-[500px] grid-cols-2 gap-2">
@@ -132,15 +132,15 @@ export function Header() {
               </NavigationMenuItem>
               <NavigationMenuLink className="px-4" asChild>
                 <a href="#pricing" className="hover:bg-accent rounded-md p-2">
-                  Pricing
+                  Precios
                 </a>
               </NavigationMenuLink>
             </NavigationMenuList>
           </NavigationMenu>
         </div>
         <div className="hidden items-center gap-2 md:flex">
-          <Button variant="outline" asChild><a href="/track">Track Repair</a></Button>
-          <Button asChild><a href="#pricing">Book a Repair</a></Button>
+          <Button variant="outline" asChild><a href="/track">Rastrear Reparación</a></Button>
+          <Button asChild><a href="#pricing">Reservar Reparación</a></Button>
         </div>
         <Button
           size="icon"
@@ -160,11 +160,11 @@ export function Header() {
       >
         <NavigationMenu className="max-w-full">
           <div className="flex w-full flex-col gap-y-2">
-            <span className="text-sm">Services</span>
+            <span className="text-sm">Servicios</span>
             {productLinks.map((link) => (
               <ListItem key={link.title} {...link} />
             ))}
-            <span className="text-sm">About</span>
+            <span className="text-sm">Nosotros</span>
             {companyLinks.map((link) => (
               <ListItem key={link.title} {...link} />
             ))}
@@ -175,9 +175,9 @@ export function Header() {
         </NavigationMenu>
         <div className="flex flex-col gap-2">
           <Button variant="outline" className="w-full bg-transparent" asChild>
-            <a href="/track">Track Repair</a>
+            <a href="/track">Rastrear Reparación</a>
           </Button>
-          <Button className="w-full" asChild><a href="#pricing">Book a Repair</a></Button>
+          <Button className="w-full" asChild><a href="#pricing">Reservar Reparación</a></Button>
         </div>
       </MobileMenu>
     </header>
@@ -244,82 +244,82 @@ function ListItem({
 
 const productLinks: LinkItem[] = [
   {
-    title: 'Screen Repair',
+    title: 'Reparación de pantalla',
     href: '#',
-    description: 'Cracked or shattered display? Fixed same day',
+    description: '¿Pantalla rota o resquebrajada? Lo arreglamos hoy',
     icon: Smartphone,
   },
   {
-    title: 'Battery Replacement',
+    title: 'Cambio de batería',
     href: '#',
-    description: 'Restore full-day battery life in 20 minutes',
+    description: 'Recupera la autonomía de todo el día en 20 minutos',
     icon: Battery,
   },
   {
-    title: 'Water Damage',
+    title: 'Daño por agua',
     href: '#',
-    description: 'Board-level cleaning and component recovery',
+    description: 'Limpieza a nivel de placa y recuperación de componentes',
     icon: Droplets,
   },
   {
-    title: 'Camera Repair',
+    title: 'Reparación de cámara',
     href: '#',
-    description: 'Blurry, broken, or misaligned lenses fixed',
+    description: 'Lentes borrosas, rotas o desalineadas, solucionadas',
     icon: Camera,
   },
   {
-    title: 'Foldable Repair',
+    title: 'Reparación de plegables',
     href: '#',
-    description: 'Inner display, hinge, and Z-series specialists',
+    description: 'Especialistas en pantalla interior, bisagra y serie Z',
     icon: LayersIcon,
   },
   {
-    title: 'Data Recovery',
+    title: 'Recuperación de datos',
     href: '#',
-    description: 'Retrieve data from damaged or dead devices',
+    description: 'Recupera datos de dispositivos dañados o muertos',
     icon: Database,
   },
   {
-    title: 'Charging Port',
+    title: 'Puerto de carga',
     href: '#',
-    description: 'USB-C, Lightning, and Micro-USB repairs',
+    description: 'Reparaciones USB-C, Lightning y Micro-USB',
     icon: PlugIcon,
   },
   {
-    title: 'Logic Board',
+    title: 'Placa base',
     href: '#',
-    description: 'Micro-soldering and component-level diagnostics',
+    description: 'Microsoldadura y diagnóstico a nivel de componente',
     icon: Cpu,
   },
 ];
 
 const companyLinks: LinkItem[] = [
   {
-    title: 'About Us',
+    title: 'Quiénes somos',
     href: '/about',
-    description: 'Our story, our technicians, our promise',
+    description: 'Nuestra historia, nuestros técnicos, nuestra promesa',
     icon: Users,
   },
   {
-    title: 'Customer Reviews',
+    title: 'Opiniones de clientes',
     href: '#testimonials',
-    description: 'Real repairs, real results from real customers',
+    description: 'Reparaciones reales, resultados reales de clientes reales',
     icon: Star,
   },
   {
-    title: 'Warranty Policy',
+    title: 'Política de garantía',
     href: '/warranty',
-    description: 'Lifetime warranty on every repair we perform',
+    description: 'Garantía de por vida en cada reparación que realizamos',
     icon: Shield,
   },
 ];
 
 const companyLinks2: LinkItem[] = [
-  { title: 'B2B / Corporate', href: '/business', icon: Briefcase },
-  { title: 'Track My Repair', href: '/track', icon: RotateCcw },
-  { title: 'Repair Guide', href: '/guide', icon: FileText },
+  { title: 'B2B / Empresas', href: '/business', icon: Briefcase },
+  { title: 'Rastrear mi reparación', href: '/track', icon: RotateCcw },
+  { title: 'Guía de reparación', href: '/guide', icon: FileText },
   { title: 'Blog', href: '/blog', icon: Leaf },
-  { title: 'FAQ', href: '/faq', icon: HelpCircle },
+  { title: 'Preguntas frecuentes', href: '/faq', icon: HelpCircle },
 ];
 
 function useScroll(threshold: number) {

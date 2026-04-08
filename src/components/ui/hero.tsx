@@ -68,7 +68,7 @@ const CircularBadge = () => (
         />
         <text className="text-[11px] font-black tracking-[0.18em] uppercase" fill="black">
           <textPath href="#circlePath" startOffset="0%">
-            BOOK REPAIR TODAY • ALL BRANDS •{' '}
+            RESERVA HOY • TODAS LAS MARCAS •{' '}
           </textPath>
         </text>
       </svg>
@@ -112,7 +112,7 @@ export const HeroComponent = () => {
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center space-x-2">
-          {['Services', 'About', 'Pricing', 'Contact'].map((item) => (
+          {['Servicios', 'Nosotros', 'Precios', 'Contacto'].map((item) => (
             <a
               key={item}
               href="#"
@@ -125,7 +125,7 @@ export const HeroComponent = () => {
 
         {/* CTA Button */}
         <button className="px-6 py-2 rounded-full border border-white text-white text-xs md:text-sm font-semibold hover:bg-white hover:text-[#0038FF] transition-colors">
-          Book a Repair
+          Reservar Reparación
         </button>
       </nav>
 
@@ -194,7 +194,7 @@ export const HeroComponent = () => {
                 </div>
                 <div className="text-center mt-2">
                   <p className="font-bold text-sm md:text-lg text-white">iPhone 15 Pro Max</p>
-                  <p className="text-[10px] md:text-xs text-white/80 mt-1">Screen replaced · 47 min</p>
+                  <p className="text-[10px] md:text-xs text-white/80 mt-1">Pantalla reemplazada · 47 min</p>
                 </div>
               </div>
             </motion.div>
@@ -215,7 +215,7 @@ export const HeroComponent = () => {
                 </div>
                 <div className="text-center mt-2">
                   <p className="font-bold text-sm md:text-lg text-white">Galaxy Z Fold 6</p>
-                  <p className="text-[10px] md:text-xs text-white/80 mt-1">Inner display · Same day</p>
+                  <p className="text-[10px] md:text-xs text-white/80 mt-1">Pantalla interior · Mismo día</p>
                 </div>
               </div>
             </motion.div>
@@ -243,10 +243,10 @@ export const HeroComponent = () => {
           {/* Card 1 — Screen Repair */}
           <div className="bg-[#F8F9FA] rounded-[2rem] p-8 flex flex-col items-center text-center relative h-64 border border-gray-100">
             <h3 className="text-xl md:text-2xl uppercase leading-tight mb-2 font-black">
-              SCREENS FROM<br />$89
+              PANTALLAS DESDE<br />$89
             </h3>
             <p className="text-[10px] md:text-xs text-black/60 font-bold mb-auto">
-              Most repairs done in under 90 minutes
+              La mayoría de reparaciones en menos de 90 minutos
             </p>
             <div className="relative w-full flex justify-center mt-6">
               <div className="flex items-center bg-[#0038FF] rounded-2xl p-2 pr-16 text-white shadow-lg relative z-10">
@@ -259,11 +259,11 @@ export const HeroComponent = () => {
                 </div>
                 <div className="text-left">
                   <p className="text-[10px] font-bold leading-none">iPhone 15 Pro Max</p>
-                  <p className="text-[8px] text-white/70 leading-none mt-1">Screen repair</p>
+                  <p className="text-[8px] text-white/70 leading-none mt-1">Reparación de pantalla</p>
                 </div>
               </div>
               <div className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-[#CCFF00] text-black font-black text-[10px] px-3 py-2 rounded-xl z-20 shadow-md">
-                From $89
+                Desde $89
               </div>
             </div>
             <div className="hidden md:block absolute -right-12 bottom-8 w-16 h-16 z-30">
@@ -274,17 +274,17 @@ export const HeroComponent = () => {
           {/* Card 2 — Same-Day Service */}
           <div className="bg-[#F8F9FA] rounded-[2rem] p-8 flex flex-col items-center text-center relative h-64 border border-gray-100">
             <h3 className="text-xl md:text-2xl uppercase leading-tight mb-2 font-black">
-              SAME-DAY<br />SERVICE
+              SERVICIO<br />EN EL DÍA
             </h3>
             <p className="text-[10px] md:text-xs text-black/60 font-bold mb-auto">
-              In-shop parts for 200+ models
+              Piezas en tienda para más de 200 modelos
             </p>
             <div className="relative w-full flex justify-center mt-6">
               <div className="flex items-center bg-[#0038FF] rounded-full p-1.5 text-white shadow-lg">
                 <div className="bg-white/20 text-white font-bold text-sm px-4 py-2 rounded-full mr-2">
                   90 min
                 </div>
-                <div className="font-bold text-xs px-4">avg. repair</div>
+                <div className="font-bold text-xs px-4">rep. promedio</div>
               </div>
               <div className="absolute -bottom-6 right-1/3 bg-[#CCFF00] rounded-full p-2.5 shadow-lg transform rotate-12 z-20">
                 <svg
@@ -307,16 +307,16 @@ export const HeroComponent = () => {
           {/* Card 3 — Lifetime Warranty */}
           <div className="bg-[#F8F9FA] rounded-[2rem] p-8 flex flex-col items-center text-center relative h-64 border border-gray-100">
             <h3 className="text-xl md:text-2xl uppercase leading-tight mb-2 font-black">
-              LIFETIME<br />WARRANTY
+              GARANTÍA<br />DE POR VIDA
             </h3>
             <p className="text-[10px] md:text-xs text-black/60 font-bold mb-auto">
-              On every repair we perform
+              En cada reparación que realizamos
             </p>
             <div className="flex flex-col items-center bg-[#CCFF00] rounded-[2rem] px-6 py-4 text-black shadow-lg mt-6 relative w-full max-w-[200px]">
               <p className="text-[9px] font-bold uppercase tracking-wider mb-1">
-                OUR GUARANTEE
+                NUESTRA GARANTÍA
               </p>
-              <p className="text-xl font-black">∞ Forever</p>
+              <p className="text-xl font-black">∞ Para Siempre</p>
               <div className="absolute -bottom-2 left-8 w-5 h-5 bg-[#CCFF00] transform rotate-45"></div>
             </div>
           </div>

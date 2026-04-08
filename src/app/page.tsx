@@ -46,20 +46,20 @@ export default function Home() {
       <FeatureCarousel />
       <CinematicHero
         brandName="MOVIL GURU"
-        tagline1="Every brand."
-        tagline2="Fixed today."
-        cardHeading="Certified repairs. Lifetime guarantee."
+        tagline1="Cada marca."
+        tagline2="Reparado hoy."
+        cardHeading="Reparaciones certificadas. Garantía de por vida."
         cardDescription={
           <>
-            <span className="text-white font-semibold">Movil Guru</span> repairs
-            iPhones, Samsung Galaxy, Google Pixel, foldables, and more — with
-            OEM-quality parts and a lifetime warranty on every repair we perform.
+            <span className="text-white font-semibold">Movil Guru</span> repara
+            iPhones, Samsung Galaxy, Google Pixel, plegables y más — con
+            piezas de calidad OEM y garantía de por vida en cada reparación.
           </>
         }
         metricValue={47}
-        metricLabel="Min. Avg. Screen Repair"
-        ctaHeading="Fixed today. Backed forever."
-        ctaDescription="Walk in or ship it in. Same certified technicians, same lifetime warranty, same-day results for most repairs."
+        metricLabel="Min. prom. reparación de pantalla"
+        ctaHeading="Reparado hoy. Respaldado para siempre."
+        ctaDescription="Ven a nuestra tienda o envíalo. Mismos técnicos certificados, misma garantía de por vida, resultados en el mismo día para la mayoría de reparaciones."
       />
       <Testimonials />
       <PricingSection />

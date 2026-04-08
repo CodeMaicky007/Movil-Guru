@@ -51,58 +51,58 @@ export const TestimonialsColumn = (props: {
 
 const testimonials = [
   {
-    text: "Cracked my iPhone 15 Pro Max screen on a Monday morning. Movil Guru had it fixed by lunch. The tech showed me the original part before replacing it — that kind of transparency is rare.",
+    text: "Rompí la pantalla de mi iPhone 15 Pro Max un lunes por la mañana. En Movil Guru la tenía arreglada antes del almuerzo. El técnico me mostró la pieza original antes de cambiarla — ese nivel de transparencia es difícil de encontrar.",
     image: "https://randomuser.me/api/portraits/women/1.jpg",
     name: "Sarah M.",
     role: "iPhone 15 Pro Max",
   },
   {
-    text: "Samsung quoted me $340 and a 5-day wait. Movil Guru did it same-day for $235 with a lifetime warranty. Not even close.",
+    text: "Samsung me presupuestó $340 y cinco días de espera. Movil Guru lo hizo el mismo día por $235 con garantía de por vida. Sin comparación.",
     image: "https://randomuser.me/api/portraits/men/2.jpg",
     name: "Marcus T.",
     role: "Samsung Galaxy S24 Ultra",
   },
   {
-    text: "We manage 40 corporate devices. Movil Guru handles everything under an SLA contract — average response under 4 hours. It's changed how we deal with downtime.",
+    text: "Gestionamos 40 dispositivos corporativos. Movil Guru lo maneja todo con un contrato SLA — respuesta media en menos de 4 horas. Ha cambiado por completo cómo gestionamos el tiempo de inactividad.",
     image: "https://randomuser.me/api/portraits/women/3.jpg",
     name: "Priya K.",
-    role: "Operations Manager",
+    role: "Directora de Operaciones",
   },
   {
-    text: "Dropped my Pixel 9 in the sink. They ran a diagnostic in 20 minutes, cleaned the board, and saved everything. Three months later it still works perfectly.",
+    text: "Se me cayó el Pixel 9 al fregadero. Hicieron el diagnóstico en 20 minutos, limpiaron la placa y salvaron todo. Tres meses después sigue funcionando perfectamente.",
     image: "https://randomuser.me/api/portraits/men/4.jpg",
     name: "Jordan L.",
     role: "Google Pixel 9 Pro",
   },
   {
-    text: "The inner display on my Z Fold started separating. No other shop would even look at it. Movil Guru had a foldable specialist who turned it around in 48 hours.",
+    text: "La pantalla interior de mi Z Fold empezó a despegarse. Ninguna otra tienda quiso ni mirarlo. Movil Guru tenía un especialista en plegables y lo resolvió en 48 horas.",
     image: "https://randomuser.me/api/portraits/women/5.jpg",
     name: "Alex W.",
     role: "Samsung Galaxy Z Fold 6",
   },
   {
-    text: "They never once asked for my passcode. There's a data privacy protocol posted right at the counter. That alone made me trust them with my device.",
+    text: "Ni una sola vez me pidieron el código de desbloqueo. Tienen un protocolo de privacidad de datos publicado en el mostrador. Solo eso ya me hizo confiarles mi dispositivo.",
     image: "https://randomuser.me/api/portraits/women/6.jpg",
     name: "Diana R.",
     role: "iPhone 14 Pro",
   },
   {
-    text: "Battery was dying after 18 months. Replaced in 20 minutes, $65 total, lifetime warranty. I thought I needed a new phone. I didn't.",
+    text: "La batería se agotaba a los 18 meses. La cambiaron en 20 minutos, $65 en total, con garantía de por vida. Creía que necesitaba un móvil nuevo. No era así.",
     image: "https://randomuser.me/api/portraits/men/7.jpg",
     name: "Naomi S.",
     role: "Samsung Galaxy A54",
   },
   {
-    text: "The back glass shattered on my 13 Pro. They matched the exact original color — the repair is invisible. Genuinely can't tell it was ever broken.",
+    text: "Se rompió el cristal trasero de mi 13 Pro. Coincidieron exactamente con el color original — la reparación es invisible. De verdad no se nota que estuvo roto.",
     image: "https://randomuser.me/api/portraits/women/8.jpg",
     name: "Thomas B.",
     role: "iPhone 13 Pro",
   },
   {
-    text: "Our IT team switched all device repairs to Movil Guru — iPhones, Androids, even foldables. Clean billing, fast turnarounds, one point of contact.",
+    text: "Nuestro equipo de IT trasladó todas las reparaciones a Movil Guru — iPhones, Androids, hasta plegables. Facturación limpia, entregas rápidas, un solo punto de contacto.",
     image: "https://randomuser.me/api/portraits/men/9.jpg",
     name: "Carlos V.",
-    role: "IT Director",
+    role: "Director de TI",
   },
 ];
 
@@ -123,17 +123,17 @@ export const Testimonials = () => {
         >
           <div className="flex justify-center">
             <div className="bg-[#0038FF]/8 text-[#0038FF] border border-[#0038FF]/20 py-1 px-4 rounded-full text-sm font-semibold tracking-wide">
-              Testimonials
+              Testimonios
             </div>
           </div>
           <h2
             className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tight mt-5 text-center"
             style={{ fontFamily: "var(--font-display, inherit)" }}
           >
-            Trusted by thousands of customers
+            La confianza de miles de clientes
           </h2>
           <p className="text-center mt-4 opacity-60 text-sm md:text-base leading-relaxed">
-            Real repairs. Real results. See what our customers have to say.
+            Reparaciones reales. Resultados reales. Descubre lo que dicen nuestros clientes.
           </p>
         </motion.div>
         <div className="flex justify-center gap-6 mt-10 [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)] max-h-[740px] overflow-hidden">

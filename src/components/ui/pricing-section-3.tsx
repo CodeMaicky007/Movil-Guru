@@ -10,64 +10,64 @@ import { useRef, useState } from "react";
 
 const plans = [
   {
-    name: "Essential",
+    name: "Esencial",
     description:
-      "Common repairs for any device, any brand. In and out the same day.",
+      "Reparaciones comunes para cualquier dispositivo y marca. Listo el mismo día.",
     price: 89,
     yearlyPrice: 109,
-    buttonText: "Book Repair",
+    buttonText: "Reservar",
     buttonVariant: "outline" as const,
     features: [
-      { text: "Screen replacement", icon: <Briefcase size={20} /> },
-      { text: "Battery replacement", icon: <Database size={20} /> },
-      { text: "Charging port repair", icon: <Server size={20} /> },
+      { text: "Cambio de pantalla", icon: <Briefcase size={20} /> },
+      { text: "Cambio de batería", icon: <Database size={20} /> },
+      { text: "Reparación de puerto de carga", icon: <Server size={20} /> },
     ],
     includes: [
-      "What's included:",
-      "OEM-quality parts",
-      "Same-day service",
-      "90-day warranty",
+      "Qué incluye:",
+      "Piezas de calidad OEM",
+      "Servicio en el mismo día",
+      "Garantía 90 días",
     ],
   },
   {
     name: "Plus",
     description:
-      "Advanced repairs and flagship devices with premium part options.",
+      "Reparaciones avanzadas y dispositivos insignia con opciones de piezas premium.",
     price: 159,
     yearlyPrice: 189,
-    buttonText: "Book Repair",
+    buttonText: "Reservar",
     buttonVariant: "outline" as const,
     features: [
-      { text: "Back glass & camera repair", icon: <Briefcase size={20} /> },
-      { text: "Genuine OEM parts available", icon: <Database size={20} /> },
-      { text: "Water damage diagnostic", icon: <Server size={20} /> },
+      { text: "Cristal trasero y cámara", icon: <Briefcase size={20} /> },
+      { text: "Piezas OEM genuinas disponibles", icon: <Database size={20} /> },
+      { text: "Diagnóstico de daño por agua", icon: <Server size={20} /> },
     ],
     includes: [
-      "Everything in Essential, plus:",
-      "Flagship device support",
-      "Water damage recovery",
-      "1-year warranty",
+      "Todo lo de Esencial, más:",
+      "Soporte para gama alta",
+      "Recuperación de daño por agua",
+      "Garantía 1 año",
     ],
   },
   {
     name: "Pro",
     description:
-      "Foldables, logic board, and data recovery by certified specialists.",
+      "Plegables, placa base y recuperación de datos por especialistas certificados.",
     price: 249,
     yearlyPrice: 299,
     popular: true,
-    buttonText: "Book Repair",
+    buttonText: "Reservar",
     buttonVariant: "default" as const,
     features: [
-      { text: "Foldable display & hinge repair", icon: <Briefcase size={20} /> },
-      { text: "Logic board diagnostics", icon: <Database size={20} /> },
-      { text: "Professional data recovery", icon: <Server size={20} /> },
+      { text: "Pantalla plegable y bisagra", icon: <Briefcase size={20} /> },
+      { text: "Diagnóstico de placa base", icon: <Database size={20} /> },
+      { text: "Recuperación profesional de datos", icon: <Server size={20} /> },
     ],
     includes: [
-      "Everything in Plus, plus:",
-      "Foldable specialist repair",
-      "Data recovery",
-      "Lifetime warranty",
+      "Todo lo de Plus, más:",
+      "Reparación especializada en plegables",
+      "Recuperación de datos",
+      "Garantía de por vida",
     ],
   },
 ];
@@ -103,7 +103,7 @@ const PricingSwitch = ({
               transition={{ type: "spring", stiffness: 500, damping: 30 }}
             />
           )}
-          <span className="relative">Walk-in</span>
+          <span className="relative">En tienda</span>
         </button>
         <button
           onClick={() => handleSwitch("1")}
@@ -122,9 +122,9 @@ const PricingSwitch = ({
             />
           )}
           <span className="relative flex items-center gap-2">
-            Mail-in{" "}
+            Envío postal{" "}
             <span className="rounded-full bg-[#CCFF00] px-2 py-0.5 text-xs font-bold text-black">
-              Free shipping
+              Envío gratis
             </span>
           </span>
         </button>
@@ -174,7 +174,7 @@ export default function PricingSection() {
                 delay: 0,
               }}
             >
-              Repair Pricing
+              Precios de Reparación
             </VerticalCutReveal>
           </h2>
           <TimelineContent
@@ -184,7 +184,7 @@ export default function PricingSection() {
             customVariants={revealVariants}
             className="text-gray-600 w-[80%]"
           >
-            Transparent flat-rate pricing. No hidden diagnostics, no surprise fees — just honest repair costs upfront.
+            Precios fijos y transparentes. Sin diagnósticos ocultos, sin sorpresas — solo costes de reparación honestos desde el primer momento.
           </TimelineContent>
         </div>
         <TimelineContent
@@ -223,7 +223,7 @@ export default function PricingSection() {
                   {plan.popular && (
                     <div className="pt-4">
                       <span className="bg-neutral-600 text-white px-3 py-1 rounded-full text-xs font-medium">
-                        Popular
+                        Más popular
                       </span>
                     </div>
                   )}
@@ -243,7 +243,7 @@ export default function PricingSection() {
                           : "text-gray-600 ml-1"
                       }
                     >
-                      {isYearly ? " / mail-in" : " / walk-in"}
+                      {isYearly ? " / envío postal" : " / en tienda"}
                     </span>
                   </div>
                 </div>
