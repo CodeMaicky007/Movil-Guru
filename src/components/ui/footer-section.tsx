@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import { Link } from 'next-view-transitions';
 import type { ComponentProps, ReactNode } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import {
@@ -93,13 +94,13 @@ export function Footer() {
                 <ul className="text-muted-foreground mt-4 space-y-2 text-sm">
                   {section.links.map((link) => (
                     <li key={link.title}>
-                      <a
+                      <Link
                         href={link.href}
                         className="hover:text-foreground inline-flex items-center transition-all duration-300"
                       >
                         {link.icon && <link.icon className="me-1 size-4" />}
                         {link.title}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>

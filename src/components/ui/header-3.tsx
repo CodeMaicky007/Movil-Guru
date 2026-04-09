@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import { Link } from 'next-view-transitions';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
@@ -66,14 +67,14 @@ export function Header() {
     >
       <nav className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between px-4">
         <div className="flex items-center gap-5">
-          <a href="/" className="hover:bg-accent rounded-md px-2 py-1 flex items-center gap-1.5">
+          <Link href="/" className="hover:bg-accent rounded-md px-2 py-1 flex items-center gap-1.5">
             <div className="bg-foreground text-background font-black text-xs px-2.5 py-1 rounded-xl rounded-bl-sm">
               MOVIL
             </div>
             <div className="bg-[#CCFF00] text-black font-black text-xs px-2.5 py-1 rounded-full border border-foreground/10">
               GURU
             </div>
-          </a>
+          </Link>
           <NavigationMenu className="hidden md:flex">
             <NavigationMenuList>
               <NavigationMenuItem>
@@ -91,12 +92,12 @@ export function Header() {
                   <div className="p-2">
                     <p className="text-muted-foreground text-sm">
                       ¿Tienes un dispositivo roto?{' '}
-                      <a
+                      <Link
                         href="#"
                         className="text-foreground font-medium hover:underline"
                       >
                         Obtén un presupuesto gratis
-                      </a>
+                      </Link>
                     </p>
                   </div>
                 </NavigationMenuContent>
@@ -131,16 +132,16 @@ export function Header() {
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuLink className="px-4" asChild>
-                <a href="#pricing" className="hover:bg-accent rounded-md p-2">
+                <Link href="#pricing" className="hover:bg-accent rounded-md p-2">
                   Precios
-                </a>
+                </Link>
               </NavigationMenuLink>
             </NavigationMenuList>
           </NavigationMenu>
         </div>
         <div className="hidden items-center gap-2 md:flex">
-          <Button variant="outline" asChild><a href="/track">Rastrear Reparación</a></Button>
-          <Button asChild><a href="#pricing">Reservar Reparación</a></Button>
+          <Button variant="outline" asChild><Link href="/track">Rastrear Reparación</Link></Button>
+          <Button asChild><Link href="#pricing">Reservar Reparación</Link></Button>
         </div>
         <Button
           size="icon"
@@ -175,9 +176,9 @@ export function Header() {
         </NavigationMenu>
         <div className="flex flex-col gap-2">
           <Button variant="outline" className="w-full bg-transparent" asChild>
-            <a href="/track">Rastrear Reparación</a>
+            <Link href="/track">Rastrear Reparación</Link>
           </Button>
-          <Button className="w-full" asChild><a href="#pricing">Reservar Reparación</a></Button>
+          <Button className="w-full" asChild><Link href="#pricing">Reservar Reparación</Link></Button>
         </div>
       </MobileMenu>
     </header>
@@ -229,7 +230,7 @@ function ListItem({
       {...props}
       asChild
     >
-      <a href={href}>
+      <Link href={href}>
         <div className="bg-background/40 flex aspect-square size-12 items-center justify-center rounded-md border shadow-sm">
           <Icon className="text-foreground size-5" />
         </div>
@@ -237,7 +238,7 @@ function ListItem({
           <span className="font-medium">{title}</span>
           <span className="text-muted-foreground text-xs">{description}</span>
         </div>
-      </a>
+      </Link>
     </NavigationMenuLink>
   );
 }

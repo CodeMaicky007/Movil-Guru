@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Syne } from "next/font/google";
+import { ViewTransitions } from 'next-view-transitions';
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -20,8 +21,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} ${syne.variable}`}>{children}</body>
-    </html>
+    <ViewTransitions>
+      <html lang="en">
+        <body className={`${inter.className} ${syne.variable}`}>{children}</body>
+      </html>
+    </ViewTransitions>
   );
 }

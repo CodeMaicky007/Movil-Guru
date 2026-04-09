@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: var(--font-dm-sans);
+}
+
+:root {
+  --background: #FAFAF8;
+  --foreground: #1A1A18;
+}
+
+.dark {
+  --background: #0D0D0D;
+  --foreground: #ffffff;
+}
+
+* {
+  font-family: var(--font-dm-sans), 'Inter', sans-serif !important;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* Page transitions */
+::view-transition-old(root) {
+  animation: fade-out 0.4s ease-in-out;
+}
+
+::view-transition-new(root) {
+  animation: fade-in 0.4s ease-in-out;
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
