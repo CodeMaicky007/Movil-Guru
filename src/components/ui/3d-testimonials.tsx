@@ -211,12 +211,13 @@ export function Testimonials3D() {
   const col4 = testimonials.filter((_, i) => i % 4 === 3);
 
   return (
-    <div className="relative flex h-[520px] w-full flex-row items-center justify-center overflow-hidden gap-3 [perspective:400px]">
+    <div className="relative flex h-[520px] w-full flex-row items-center justify-center overflow-hidden gap-3 [perspective:400px]" style={{ contain: 'content' }}>
       <div
         className="flex flex-row items-center gap-4"
         style={{
           transform:
             "translateX(-80px) translateY(0px) translateZ(-80px) rotateX(18deg) rotateY(-8deg) rotateZ(18deg)",
+          willChange: 'transform',
         }}
       >
         <Marquee vertical pauseOnHover repeat={3} className="[--duration:38s] h-full">

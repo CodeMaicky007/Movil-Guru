@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
@@ -20,10 +22,7 @@ interface AnimatedTestimonialGridProps {
 }
 
 // --- PRE-DEFINED POSITIONS FOR THE IMAGES ---
-// These positions are carefully chosen to replicate the reference image layout.
-// They are responsive, with some images hidden on smaller screens.
-const imagePositions = [
-  // Desktop and Tablet positions
+const imagePositions: Record<string, any>[] = [
   { top: '5%', left: '15%', className: 'hidden lg:block w-24 h-24' },
   { top: '15%', left: '35%', className: 'hidden md:block w-20 h-20' },
   { top: '5%', left: '55%', className: 'hidden md:block w-16 h-16' },
@@ -35,37 +34,25 @@ const imagePositions = [
   { bottom: '15%', left: '45%', className: 'hidden md:block w-16 h-16' },
   { bottom: '10%', right: '30%', className: 'hidden md:block w-24 h-24' },
   { bottom: '2%', right: '15%', className: 'hidden lg:block w-20 h-20' },
-   // Mobile-specific positions (simpler layout)
   { top: '10%', left: '5%', className: 'block md:hidden w-16 h-16' },
   { top: '5%', right: '10%', className: 'block md:hidden w-20 h-20' },
   { bottom: '5%', left: '10%', className: 'block md:hidden w-20 h-20' },
   { bottom: '10%', right: '5%', className: 'block md:hidden w-16 h-16' },
 ];
 
-// --- ANIMATION LOGIC ---
-const imageVariants: any = {
-  initial: { opacity: 0, scale: 0.5 },
-  animate: { 
-    opacity: 1, 
-    scale: 1, 
-    transition: { 
-      type: 'spring', 
-      stiffness: 260, 
-      damping: 20,
-      delay: Math.random() * 0.5,
-    } 
-  },
-};
-
-const floatingAnimation = (): any => ({
-  y: [0, Math.random() * -15 - 5, 0],
+// --- PRE-COMPUTED FLOATING ANIMATIONS (stable across renders) ---
+const floatingAnimations: any[] = imagePositions.map((_, i) => ({
+  y: [0, -(5 + (i * 3) % 12), 0],
   transition: {
-    duration: Math.random() * 4 + 5,
+    duration: 5 + (i * 1.3) % 4,
     repeat: Infinity,
     repeatType: 'reverse' as const,
     ease: 'easeInOut',
   },
-});
+}));
+
+// --- PRE-COMPUTED ENTRY DELAYS (stable across renders) ---
+const entryDelays: number[] = imagePositions.map((_, i) => i * 0.06);
 
 // --- COMPONENT ---
 export const AnimatedTestimonialGrid = ({
@@ -86,29 +73,37 @@ export const AnimatedTestimonialGrid = ({
       )}
     >
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,56,255,0.08),transparent_60%)] pointer-events-none" />
-      {/* Absolutely Positioned Images */}
+
+      {/* Absolutely Positioned Images — GPU-promoted with will-change */}
       {testimonials.slice(0, imagePositions.length).map((testimonial, index) => (
         <motion.div
           key={index}
           className={cn('absolute rounded-2xl shadow-xl overflow-hidden', imagePositions[index].className)}
-          style={{ 
-            top: imagePositions[index].top, 
+          style={{
+            top: imagePositions[index].top,
             left: imagePositions[index].left,
             right: imagePositions[index].right,
             bottom: imagePositions[index].bottom,
+            willChange: 'transform, opacity',
           }}
-          variants={imageVariants}
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true, margin: "-100px" }}
+          initial={{ opacity: 0, scale: 0.5 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{
+            type: 'spring',
+            stiffness: 260,
+            damping: 20,
+            delay: entryDelays[index],
+          } as any}
           whileHover={{ scale: 1.1, zIndex: 20 }}
-          custom={index}
         >
-           <motion.img
+          <motion.img
             src={testimonial.imgSrc}
             alt={testimonial.alt}
+            loading="lazy"
             className="w-full h-full object-cover rounded-2xl bg-[#0038FF]/20"
-            animate={floatingAnimation()}
+            style={{ willChange: 'transform' }}
+            animate={floatingAnimations[index]}
           />
         </motion.div>
       ))}
