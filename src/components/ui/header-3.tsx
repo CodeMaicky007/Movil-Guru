@@ -245,7 +245,7 @@ function ListItem({
 const productLinks: LinkItem[] = [
   {
     title: 'Reparación de pantalla',
-    href: '#',
+    href: '/reparacion-pantalla',
     description: '¿Pantalla rota o resquebrajada? Lo arreglamos hoy',
     icon: Smartphone,
   },

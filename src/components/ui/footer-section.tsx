@@ -27,7 +27,7 @@ const footerLinks: FooterSection[] = [
   {
     label: 'Servicios',
     links: [
-      { title: 'Reparación de pantalla', href: '#' },
+      { title: 'Reparación de pantalla', href: '/reparacion-pantalla' },
       { title: 'Cambio de batería', href: '#' },
       { title: 'Daño por agua', href: '#' },
       { title: 'Reparación de plegables', href: '#' },

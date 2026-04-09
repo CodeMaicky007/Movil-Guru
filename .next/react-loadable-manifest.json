@@ -1,4 +1,40 @@
 {
+  "app\\about\\page.tsx -> @/components/ui/about-3": {
+    "id": "app\\about\\page.tsx -> @/components/ui/about-3",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_ui_about-3_tsx.js"
+    ]
+  },
+  "app\\about\\page.tsx -> @/components/ui/container-scroll-animation": {
+    "id": "app\\about\\page.tsx -> @/components/ui/container-scroll-animation",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_ui_container-scroll-animation_tsx.js"
+    ]
+  },
+  "app\\about\\page.tsx -> @/components/ui/footer-section": {
+    "id": "app\\about\\page.tsx -> @/components/ui/footer-section",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_ui_footer-section_tsx-_54c71.js"
+    ]
+  },
+  "app\\about\\page.tsx -> @/components/ui/glassmorphism-portfolio-block": {
+    "id": "app\\about\\page.tsx -> @/components/ui/glassmorphism-portfolio-block",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_ui_glassmorphism-portfolio-block_tsx.js"
+    ]
+  },
+  "app\\about\\page.tsx -> @/components/ui/header-3": {
+    "id": "app\\about\\page.tsx -> @/components/ui/header-3",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_ui_header-3_tsx.js"
+    ]
+  },
+  "app\\about\\page.tsx -> @/components/ui/interactive-image-accordion": {
+    "id": "app\\about\\page.tsx -> @/components/ui/interactive-image-accordion",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_ui_interactive-image-accordion_tsx.js"
+    ]
+  },
   "app\\page.tsx -> @/components/ui/cinematic-landing-hero": {
     "id": "app\\page.tsx -> @/components/ui/cinematic-landing-hero",
     "files": [
@@ -14,7 +50,7 @@
   "app\\page.tsx -> @/components/ui/footer-section": {
     "id": "app\\page.tsx -> @/components/ui/footer-section",
     "files": [
-      "static/chunks/_app-pages-browser_src_components_ui_footer-section_tsx.js"
+      "static/chunks/_app-pages-browser_src_components_ui_footer-section_tsx-_54c70.js"
     ]
   },
   "app\\page.tsx -> @/components/ui/header-3": {
@@ -39,6 +75,18 @@
     "id": "app\\page.tsx -> @/components/ui/testimonials-columns-1",
     "files": [
       "static/chunks/_app-pages-browser_src_components_ui_testimonials-columns-1_tsx.js"
+    ]
+  },
+  "app\\reparacion-pantalla\\page.tsx -> @/components/ui/footer-section": {
+    "id": "app\\reparacion-pantalla\\page.tsx -> @/components/ui/footer-section",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_ui_footer-section_tsx-_54c71.js"
+    ]
+  },
+  "app\\reparacion-pantalla\\page.tsx -> @/components/ui/header-3": {
+    "id": "app\\reparacion-pantalla\\page.tsx -> @/components/ui/header-3",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_ui_header-3_tsx.js"
     ]
   }
 }
