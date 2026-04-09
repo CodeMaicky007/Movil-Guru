@@ -35,6 +35,48 @@
       "static/chunks/_app-pages-browser_src_components_ui_interactive-image-accordion_tsx.js"
     ]
   },
+  "app\\opiniones\\page.tsx -> @/components/ui/3d-testimonials": {
+    "id": "app\\opiniones\\page.tsx -> @/components/ui/3d-testimonials",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_ui_3d-testimonials_tsx.js"
+    ]
+  },
+  "app\\opiniones\\page.tsx -> @/components/ui/footer-section": {
+    "id": "app\\opiniones\\page.tsx -> @/components/ui/footer-section",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_ui_footer-section_tsx-_54c71.js"
+    ]
+  },
+  "app\\opiniones\\page.tsx -> @/components/ui/gooey-text-morphing": {
+    "id": "app\\opiniones\\page.tsx -> @/components/ui/gooey-text-morphing",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_ui_gooey-text-morphing_tsx.js"
+    ]
+  },
+  "app\\opiniones\\page.tsx -> @/components/ui/gravity": {
+    "id": "app\\opiniones\\page.tsx -> @/components/ui/gravity",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_ui_gravity_tsx.js"
+    ]
+  },
+  "app\\opiniones\\page.tsx -> @/components/ui/header-3": {
+    "id": "app\\opiniones\\page.tsx -> @/components/ui/header-3",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_ui_header-3_tsx.js"
+    ]
+  },
+  "app\\opiniones\\page.tsx -> @/components/ui/testimonial-2": {
+    "id": "app\\opiniones\\page.tsx -> @/components/ui/testimonial-2",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_ui_testimonial-2_tsx.js"
+    ]
+  },
+  "app\\opiniones\\page.tsx -> @/components/ui/wave-path": {
+    "id": "app\\opiniones\\page.tsx -> @/components/ui/wave-path",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_ui_wave-path_tsx.js"
+    ]
+  },
   "app\\page.tsx -> @/components/ui/cinematic-landing-hero": {
     "id": "app\\page.tsx -> @/components/ui/cinematic-landing-hero",
     "files": [
@@ -87,6 +129,12 @@
     "id": "app\\reparacion-pantalla\\page.tsx -> @/components/ui/header-3",
     "files": [
       "static/chunks/_app-pages-browser_src_components_ui_header-3_tsx.js"
+    ]
+  },
+  "components\\ui\\gravity.tsx -> matter-js": {
+    "id": "components\\ui\\gravity.tsx -> matter-js",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_matter-js_build_matter_js.js"
     ]
   }
 }

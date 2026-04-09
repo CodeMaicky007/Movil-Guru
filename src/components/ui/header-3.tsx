@@ -303,7 +303,7 @@ const companyLinks: LinkItem[] = [
   },
   {
     title: 'Opiniones de clientes',
-    href: '#testimonials',
+    href: '/opiniones',
     description: 'Reparaciones reales, resultados reales de clientes reales',
     icon: Star,
   },
