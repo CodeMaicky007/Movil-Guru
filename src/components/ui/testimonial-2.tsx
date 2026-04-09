@@ -57,7 +57,7 @@ const imageVariants: any = {
   },
 };
 
-const floatingAnimation = () => ({
+const floatingAnimation = (): any => ({
   y: [0, Math.random() * -15 - 5, 0],
   transition: {
     duration: Math.random() * 4 + 5,

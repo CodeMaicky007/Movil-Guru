@@ -1,30 +1,52 @@
 {
   "pages": {
-    "/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/page.js"
+    "/_not-found/page": [
+      "static/chunks/webpack-a5788905d76abff3.js",
+      "static/chunks/fd9d1056-1f3125ef8fbe3de5.js",
+      "static/chunks/117-c7a8f653df1dcc96.js",
+      "static/chunks/main-app-ee9de8e99bf100fe.js",
+      "static/chunks/app/_not-found/page-34368b1caf2d42c0.js"
     ],
     "/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/layout.css",
-      "static/chunks/app/layout.js"
-    ],
-    "/opiniones/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/opiniones/page.js"
-    ],
-    "/reparacion-pantalla/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/reparacion-pantalla/page.js"
+      "static/chunks/webpack-a5788905d76abff3.js",
+      "static/chunks/fd9d1056-1f3125ef8fbe3de5.js",
+      "static/chunks/117-c7a8f653df1dcc96.js",
+      "static/chunks/main-app-ee9de8e99bf100fe.js",
+      "static/css/26445eac715f9d4c.css",
+      "static/chunks/798-30f23a80549b3b5f.js",
+      "static/chunks/app/layout-48531cb8d5f138d9.js"
     ],
     "/about/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/about/page.js"
+      "static/chunks/webpack-a5788905d76abff3.js",
+      "static/chunks/fd9d1056-1f3125ef8fbe3de5.js",
+      "static/chunks/117-c7a8f653df1dcc96.js",
+      "static/chunks/main-app-ee9de8e99bf100fe.js",
+      "static/chunks/49-e936e49ad1124b0e.js",
+      "static/chunks/app/about/page-c8bd3312e16ef709.js"
+    ],
+    "/opiniones/page": [
+      "static/chunks/webpack-a5788905d76abff3.js",
+      "static/chunks/fd9d1056-1f3125ef8fbe3de5.js",
+      "static/chunks/117-c7a8f653df1dcc96.js",
+      "static/chunks/main-app-ee9de8e99bf100fe.js",
+      "static/chunks/49-e936e49ad1124b0e.js",
+      "static/chunks/app/opiniones/page-2bbb9bd9f5ee88f7.js"
+    ],
+    "/reparacion-pantalla/page": [
+      "static/chunks/webpack-a5788905d76abff3.js",
+      "static/chunks/fd9d1056-1f3125ef8fbe3de5.js",
+      "static/chunks/117-c7a8f653df1dcc96.js",
+      "static/chunks/main-app-ee9de8e99bf100fe.js",
+      "static/chunks/49-e936e49ad1124b0e.js",
+      "static/chunks/532-26e9c4f74f4c42da.js",
+      "static/chunks/app/reparacion-pantalla/page-d894e8feb6f15cf8.js"
+    ],
+    "/page": [
+      "static/chunks/webpack-a5788905d76abff3.js",
+      "static/chunks/fd9d1056-1f3125ef8fbe3de5.js",
+      "static/chunks/117-c7a8f653df1dcc96.js",
+      "static/chunks/main-app-ee9de8e99bf100fe.js",
+      "static/chunks/app/page-682c6ba3e65d0627.js"
     ]
   }
 }
