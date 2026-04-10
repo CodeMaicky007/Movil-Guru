@@ -94,40 +94,7 @@ export const HeroComponent = () => {
     <div className="min-h-screen bg-[#0038FF] flex flex-col font-sans selection:bg-[#CCFF00] selection:text-black relative overflow-hidden w-full">
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff15_1px,transparent_1px),linear-gradient(to_bottom,#ffffff15_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none z-0"></div>
 
-      {/* Navbar */}
-      <nav className="relative z-20 flex items-center justify-between px-6 py-6 md:px-10 md:py-8 max-w-[1440px] mx-auto w-full">
-        {/* Logo */}
-        <div className="flex items-center gap-1">
-          <div className="bg-white text-black font-black tracking-tight text-xs md:text-sm px-3 py-1.5 rounded-2xl rounded-bl-sm relative shadow-sm">
-            MOVIL
-            <div
-              className="absolute -bottom-1.5 left-0 w-3 h-3 bg-white"
-              style={{ clipPath: 'polygon(0 0, 100% 0, 0 100%)' }}
-            ></div>
-          </div>
-          <div className="bg-[#CCFF00] text-black font-black text-xs md:text-sm px-3 py-1.5 rounded-full border-[1.5px] border-white shadow-sm">
-            GURU
-          </div>
-        </div>
 
-        {/* Desktop Links */}
-        <div className="hidden md:flex items-center space-x-2">
-          {['Servicios', 'Nosotros', 'Precios', 'Contacto'].map((item) => (
-            <a
-              key={item}
-              href="#"
-              className="px-4 py-1.5 rounded-full border border-white/30 text-white text-xs font-semibold hover:bg-white/10 transition-colors"
-            >
-              {item}
-            </a>
-          ))}
-        </div>
-
-        {/* CTA Button */}
-        <button className="px-6 py-2 rounded-full border border-white text-white text-xs md:text-sm font-semibold hover:bg-white hover:text-[#0038FF] transition-colors">
-          Reservar Reparación
-        </button>
-      </nav>
 
       {/* Hero Section */}
       <main className="flex-1 relative z-10 pt-8 pb-32 md:pt-12 md:pb-48 px-4 flex flex-col items-center justify-center w-full max-w-[1440px] mx-auto">

@@ -13,7 +13,7 @@ const INJECTED_STYLES = `
   .gsap-reveal { visibility: hidden; }
   .film-grain {
       position: absolute; inset: 0; width: 100%; height: 100%;
-      pointer-events: none; z-index: 50; opacity: 0.05; mix-blend-mode: overlay;
+      pointer-events: none; z-index: 50; opacity: 0.03; mix-blend-mode: multiply;
       background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)"/></svg>');
   }
   .bg-grid-theme {
@@ -51,7 +51,7 @@ const INJECTED_STYLES = `
           drop-shadow(0px 4px 8px rgba(0,0,0,0.6));
   }
   .premium-depth-card {
-      background: linear-gradient(145deg, #162C6D 0%, #0A101D 100%);
+      background: linear-gradient(145deg, #0050ff 0%, #0028cc 100%);
       box-shadow:
           0 40px 100px -20px rgba(0, 0, 0, 0.9),
           0 20px 40px -20px rgba(0, 0, 0, 0.8),
@@ -416,7 +416,7 @@ export function CinematicHero({
       <div
         ref={containerRef}
         className={cn(
-          "relative w-screen h-screen overflow-hidden flex items-center justify-center bg-background text-foreground font-sans antialiased",
+          "relative w-screen h-screen overflow-hidden flex items-center justify-center bg-white text-foreground font-sans antialiased",
           className
         )}
         style={{ perspective: "1500px" }}

@@ -140,8 +140,7 @@ export function Header() {
           </NavigationMenu>
         </div>
         <div className="hidden items-center gap-2 md:flex">
-          <Button variant="outline" asChild><Link href="/track">Rastrear Reparación</Link></Button>
-          <Button asChild><Link href="#pricing">Reservar Reparación</Link></Button>
+          <Button asChild className="bg-[#CCFF00] text-black border-[#CCFF00] hover:bg-[#b8e600] hover:text-black font-semibold"><Link href="/track">Rastrear Reparación</Link></Button>
         </div>
         <Button
           size="icon"
@@ -175,10 +174,9 @@ export function Header() {
           </div>
         </NavigationMenu>
         <div className="flex flex-col gap-2">
-          <Button variant="outline" className="w-full bg-transparent" asChild>
+          <Button className="w-full bg-[#CCFF00] text-black border-[#CCFF00] hover:bg-[#b8e600] hover:text-black font-semibold" asChild>
             <Link href="/track">Rastrear Reparación</Link>
           </Button>
-          <Button className="w-full" asChild><Link href="#pricing">Reservar Reparación</Link></Button>
         </div>
       </MobileMenu>
     </header>
@@ -252,43 +250,43 @@ const productLinks: LinkItem[] = [
   },
   {
     title: 'Cambio de batería',
-    href: '#',
+    href: '/reparacion-bateria',
     description: 'Recupera la autonomía de todo el día en 20 minutos',
     icon: Battery,
   },
   {
     title: 'Daño por agua',
-    href: '#',
+    href: '/reparacion-agua',
     description: 'Limpieza a nivel de placa y recuperación de componentes',
     icon: Droplets,
   },
   {
     title: 'Reparación de cámara',
-    href: '#',
+    href: '/reparacion-camara',
     description: 'Lentes borrosas, rotas o desalineadas, solucionadas',
     icon: Camera,
   },
   {
     title: 'Reparación de plegables',
-    href: '#',
+    href: '/reparacion-plegables',
     description: 'Especialistas en pantalla interior, bisagra y serie Z',
     icon: LayersIcon,
   },
   {
     title: 'Recuperación de datos',
-    href: '#',
+    href: '/recuperacion-datos',
     description: 'Recupera datos de dispositivos dañados o muertos',
     icon: Database,
   },
   {
     title: 'Puerto de carga',
-    href: '#',
+    href: '/reparacion-carga',
     description: 'Reparaciones USB-C, Lightning y Micro-USB',
     icon: PlugIcon,
   },
   {
     title: 'Placa base',
-    href: '#',
+    href: '/reparacion-placa',
     description: 'Microsoldadura y diagnóstico a nivel de componente',
     icon: Cpu,
   },
