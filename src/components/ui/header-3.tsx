@@ -132,7 +132,7 @@ export function Header() {
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuLink className="px-4" asChild>
-                <Link href="#pricing" className="hover:bg-accent rounded-md p-2">
+                <Link href="/precios" className="hover:bg-accent rounded-md p-2">
                   Precios
                 </Link>
               </NavigationMenuLink>
@@ -309,16 +309,16 @@ const companyLinks: LinkItem[] = [
   },
   {
     title: 'Política de garantía',
-    href: '/warranty',
+    href: '/garantia',
     description: 'Garantía de por vida en cada reparación que realizamos',
     icon: Shield,
   },
 ];
 
 const companyLinks2: LinkItem[] = [
-  { title: 'B2B / Empresas', href: '/business', icon: Briefcase },
+  { title: 'B2B / Empresas', href: '/empresas', icon: Briefcase },
   { title: 'Rastrear mi reparación', href: '/track', icon: RotateCcw },
-  { title: 'Guía de reparación', href: '/guide', icon: FileText },
+  { title: 'Guía de reparación', href: '/guia', icon: FileText },
   { title: 'Blog', href: '/blog', icon: Leaf },
   { title: 'Preguntas frecuentes', href: '/faq', icon: HelpCircle },
 ];
