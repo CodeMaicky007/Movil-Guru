@@ -40,16 +40,16 @@ export const About3 = ({
   achievements = [],
 }: About3Props = {}) => {
   return (
-    <section className="py-20 md:py-28">
+    <section className="py-20 md:py-28 bg-[#060812] text-white">
       <div className="max-w-6xl mx-auto px-4 md:px-6">
         <div className="mb-14 grid gap-5 text-center md:grid-cols-2 md:text-left">
           <h2
-            className="text-4xl md:text-5xl font-black leading-tight"
+            className="text-4xl md:text-5xl font-black leading-tight text-white"
             style={{ fontFamily: "var(--font-display, inherit)" }}
           >
             {title}
           </h2>
-          <p className="text-muted-foreground text-lg leading-relaxed self-center">{description}</p>
+          <p className="text-white/50 text-lg leading-relaxed self-center">{description}</p>
         </div>
 
         <div className="grid gap-7 lg:grid-cols-3">
@@ -59,9 +59,9 @@ export const About3 = ({
             className="size-full max-h-[620px] rounded-2xl object-cover lg:col-span-2"
           />
           <div className="flex flex-col gap-7 md:flex-row lg:flex-col">
-            <div className="flex flex-col justify-between gap-6 rounded-2xl bg-muted p-7 md:w-1/2 lg:w-auto">
+            <div className="flex flex-col justify-between gap-6 rounded-2xl bg-white/[0.05] border border-white/10 p-7 md:w-1/2 lg:w-auto">
               <div className="flex items-center gap-2">
-                <div className="bg-foreground text-background font-black text-xs px-2.5 py-1 rounded-xl rounded-bl-sm">
+                <div className="bg-white text-black font-black text-xs px-2.5 py-1 rounded-xl rounded-bl-sm">
                   MOVIL
                 </div>
                 <div className="bg-[#CCFF00] text-black font-black text-xs px-2.5 py-1 rounded-full border border-foreground/10">
@@ -69,10 +69,10 @@ export const About3 = ({
                 </div>
               </div>
               <div>
-                <p className="mb-2 text-lg font-black">{breakout.title}</p>
-                <p className="text-muted-foreground text-sm leading-relaxed">{breakout.description}</p>
+                <p className="mb-2 text-lg font-black text-white">{breakout.title}</p>
+                <p className="text-white/50 text-sm leading-relaxed">{breakout.description}</p>
               </div>
-              <Button variant="outline" className="mr-auto" asChild>
+              <Button variant="outline" className="mr-auto border-white/20 text-white hover:bg-white/10 hover:text-white" asChild>
                 <a href={breakout.buttonUrl}>{breakout.buttonText}</a>
               </Button>
             </div>
@@ -87,12 +87,12 @@ export const About3 = ({
         {/* Companies / Brands */}
         {companies.length > 0 && (
           <div className="py-20">
-            <p className="text-center text-sm font-black uppercase tracking-widest text-muted-foreground">
+            <p className="text-center text-sm font-black uppercase tracking-widest text-white/40">
               {companiesTitle}
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-6">
               {companies.map((company, idx) => (
-                <div key={idx} className="flex items-center gap-3 px-5 py-2 rounded-full border border-border">
+                <div key={idx} className="flex items-center gap-3 px-5 py-2 rounded-full border border-white/15 bg-white/[0.03]">
                   <img src={company.src} alt={company.alt} className="h-6 w-auto md:h-7" />
                 </div>
               ))}

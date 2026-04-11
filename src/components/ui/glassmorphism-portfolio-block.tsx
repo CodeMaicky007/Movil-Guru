@@ -2,7 +2,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { motion, type Variants } from "motion/react";
-import type { LucideIcon } from "lucide-react";
 import { ArrowUpRight, Star, MessageCircle } from "lucide-react";
 import { InstagramLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
 
@@ -67,9 +66,7 @@ export function GlassmorphismTeamBlock({
   return (
     <section className="relative overflow-hidden px-4 py-20 md:py-28">
       {/* Background */}
-      <div className="absolute inset-0 bg-[#0038FF]" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)] bg-[size:60px_60px]" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-[radial-gradient(ellipse_at_top,rgba(204,255,0,0.15),transparent_70%)]" />
+      <div className="absolute inset-0 bg-[#060812]" />
 
       <div className="relative z-10 mx-auto max-w-6xl">
         <motion.div

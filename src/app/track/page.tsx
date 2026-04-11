@@ -2,6 +2,7 @@
 import dynamic from "next/dynamic";
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { LampContainer } from "@/components/ui/lamp";
 
 const Header = dynamic(
   () => import("@/components/ui/header-3").then((m) => m.Header),
@@ -36,11 +37,11 @@ const mockResults: Record<string, RepairResult> = {
     tech: "Carlos M.",
     estimatedPickup: "Hoy antes de las 18:00",
     steps: [
-      { key: "recibido", label: "Recibido en taller", time: "08 abr · 10:32", done: true },
-      { key: "diagnostico", label: "Diagnóstico completado", time: "08 abr · 11:15", done: true },
-      { key: "reparando", label: "En reparación", time: "08 abr · 12:00", done: true },
-      { key: "control", label: "Control de calidad", done: false },
-      { key: "listo", label: "Listo para recoger", done: false },
+      { key: "recibido",    label: "Recibido en taller",       time: "08 abr · 10:32", done: true  },
+      { key: "diagnostico", label: "Diagnóstico completado",   time: "08 abr · 11:15", done: true  },
+      { key: "reparando",   label: "En reparación",            time: "08 abr · 12:00", done: true  },
+      { key: "control",     label: "Control de calidad",                                done: false },
+      { key: "listo",       label: "Listo para recoger",                                done: false },
     ],
   },
   "MG-2026-3109": {
@@ -52,23 +53,23 @@ const mockResults: Record<string, RepairResult> = {
     tech: "Laura S.",
     estimatedPickup: "Disponible para recoger",
     steps: [
-      { key: "recibido", label: "Recibido en taller", time: "05 abr · 09:00", done: true },
+      { key: "recibido",    label: "Recibido en taller",     time: "05 abr · 09:00", done: true },
       { key: "diagnostico", label: "Diagnóstico completado", time: "05 abr · 10:45", done: true },
-      { key: "reparando", label: "En reparación", time: "05 abr · 14:30", done: true },
-      { key: "control", label: "Control de calidad", time: "06 abr · 09:00", done: true },
-      { key: "listo", label: "Listo para recoger", time: "06 abr · 10:15", done: true },
+      { key: "reparando",   label: "En reparación",          time: "05 abr · 14:30", done: true },
+      { key: "control",     label: "Control de calidad",     time: "06 abr · 09:00", done: true },
+      { key: "listo",       label: "Listo para recoger",     time: "06 abr · 10:15", done: true },
     ],
   },
 };
 
-// ─── Components ───────────────────────────────────────────────────────────────
+// ─── Sub-components ───────────────────────────────────────────────────────────
 function StatusBadge({ status }: { status: RepairStatus }) {
   const map: Record<RepairStatus, { label: string; bg: string; text: string }> = {
-    recibido: { label: "Recibido", bg: "bg-[#0038FF]/10", text: "text-[#0038FF]" },
-    diagnostico: { label: "En diagnóstico", bg: "bg-amber-100", text: "text-amber-700" },
-    reparando: { label: "En reparación", bg: "bg-[#0038FF]/10", text: "text-[#0038FF]" },
-    control: { label: "Control de calidad", bg: "bg-purple-100", text: "text-purple-700" },
-    listo: { label: "Listo para recoger", bg: "bg-[#CCFF00]/30", text: "text-[#0a0a0a]" },
+    recibido:    { label: "Recibido",            bg: "bg-white/15",      text: "text-white"       },
+    diagnostico: { label: "En diagnóstico",      bg: "bg-amber-100",     text: "text-amber-700"   },
+    reparando:   { label: "En reparación",       bg: "bg-white/15",      text: "text-white"       },
+    control:     { label: "Control de calidad",  bg: "bg-purple-100",    text: "text-purple-700"  },
+    listo:       { label: "Listo para recoger",  bg: "bg-[#CCFF00]/90",  text: "text-black"       },
   };
   const s = map[status];
   return (
@@ -97,16 +98,12 @@ function Timeline({ steps }: { steps: RepairResult["steps"] }) {
             transition={{ duration: 0.35, delay: i * 0.08 }}
             className="relative pb-6 last:pb-0"
           >
-            {/* Vertical line */}
             {!isLast && (
               <div
                 className="absolute left-[-18px] top-[22px] w-0.5 h-[calc(100%-6px)]"
-                style={{
-                  backgroundColor: step.done ? "#0038FF" : "#0a0a0a10",
-                }}
+                style={{ backgroundColor: step.done ? "#0038FF" : "#0a0a0a15" }}
               />
             )}
-            {/* Dot */}
             <div
               className="absolute left-[-22px] top-[6px] w-[9px] h-[9px] rounded-full border-2"
               style={{
@@ -117,9 +114,7 @@ function Timeline({ steps }: { steps: RepairResult["steps"] }) {
             <p className={`text-sm font-semibold leading-tight ${step.done ? "text-[#0a0a0a]" : "text-[#0a0a0a]/35"}`}>
               {step.label}
             </p>
-            {step.time && (
-              <p className="text-xs text-[#0a0a0a]/40 mt-0.5">{step.time}</p>
-            )}
+            {step.time && <p className="text-xs text-[#0a0a0a]/40 mt-0.5">{step.time}</p>}
           </motion.div>
         );
       })}
@@ -129,27 +124,23 @@ function Timeline({ steps }: { steps: RepairResult["steps"] }) {
 
 // ─── Page ──────────────────────────────────────────────────────────────────────
 export default function TrackPage() {
-  const [code, setCode] = useState("");
-  const [result, setResult] = useState<RepairResult | null>(null);
+  const [code, setCode]         = useState("");
+  const [result, setResult]     = useState<RepairResult | null>(null);
   const [notFound, setNotFound] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading]   = useState(false);
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
     const trimmed = code.trim().toUpperCase();
     setResult(null);
     setNotFound(false);
-
     if (!trimmed) return;
-
     setLoading(true);
-    // Simulate API call
     setTimeout(() => {
       if (mockResults[trimmed]) {
         setResult(mockResults[trimmed]);
         setNotFound(false);
       } else {
-        setResult(null);
         setNotFound(true);
       }
       setLoading(false);
@@ -160,91 +151,75 @@ export default function TrackPage() {
     <main className="w-full bg-white">
       <Header />
 
-      {/* ── Hero ── */}
-      <div className="relative bg-[#0038FF] overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff15_1px,transparent_1px),linear-gradient(to_bottom,#ffffff15_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-[radial-gradient(ellipse_at_top,rgba(204,255,0,0.1),transparent_65%)] pointer-events-none" />
+      {/* ── Hero con Lamp ── */}
+      <LampContainer className="min-h-screen">
+        {/* Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mb-6 text-center"
+        >
+          <span className="bg-white/10 border border-white/20 text-white/80 text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-wider">
+            Movil Guru · Seguimiento
+          </span>
+        </motion.div>
 
-        <div className="relative z-10 max-w-6xl mx-auto px-6 pt-20 pb-28 md:pt-28 md:pb-36">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mb-6"
+        {/* Title */}
+        <div className="flex flex-col gap-1 md:gap-2 text-center mb-8">
+          <motion.h1
+            initial={{ opacity: 0.5, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.8, ease: "easeInOut" }}
+            className="text-[clamp(3rem,10vw,120px)] font-black leading-[0.82] tracking-tighter uppercase text-[#CCFF00] m-0"
+            style={{ fontFamily: '"Arial Black", Impact, sans-serif', textShadow: "2px 2px 0 #001A99,4px 4px 0 #001A99,6px 6px 0 #001A99" }}
           >
-            <span className="bg-white/10 border border-white/20 text-white/80 text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-wider">
-              Movil Guru · Seguimiento
-            </span>
-          </motion.div>
-
-          <div className="flex flex-col gap-1 md:gap-2">
-            <motion.h1
-              initial={{ opacity: 0, x: -40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[clamp(3rem,10vw,130px)] font-black leading-[0.82] tracking-tighter uppercase text-[#CCFF00] m-0"
-              style={{
-                fontFamily: '"Arial Black", Impact, sans-serif',
-                textShadow: "2px 2px 0 #001A99,4px 4px 0 #001A99,6px 6px 0 #001A99",
-              }}
-            >
-              RASTREAR
-            </motion.h1>
-            <motion.h1
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[clamp(3rem,10vw,130px)] font-black leading-[0.82] tracking-tighter uppercase text-white m-0 pl-[6%]"
-              style={{
-                fontFamily: '"Arial Black", Impact, sans-serif',
-                textShadow: "2px 2px 0 #001A99,4px 4px 0 #001A99,6px 6px 0 #001A99",
-              }}
-            >
-              REPARACIÓN
-            </motion.h1>
-          </div>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.25 }}
-            className="mt-8 text-white/70 text-base md:text-lg leading-relaxed max-w-lg"
+            RASTREAR
+          </motion.h1>
+          <motion.h1
+            initial={{ opacity: 0.5, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.8, ease: "easeInOut" }}
+            className="text-[clamp(3rem,10vw,120px)] font-black leading-[0.82] tracking-tighter uppercase text-white m-0"
+            style={{ fontFamily: '"Arial Black", Impact, sans-serif', textShadow: "2px 2px 0 #001A99,4px 4px 0 #001A99,6px 6px 0 #001A99" }}
           >
-            Introduce el código de tu reparación para ver el estado en tiempo real. Lo encontrarás en tu comprobante.
-          </motion.p>
+            REPARACIÓN
+          </motion.h1>
         </div>
 
-        <div
-          className="absolute bottom-0 left-0 right-0 h-12 bg-white"
-          style={{ clipPath: "ellipse(60% 100% at 50% 100%)" }}
-        />
-      </div>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="text-white/60 text-sm md:text-base text-center max-w-md mb-10"
+        >
+          Introduce el código de tu reparación para ver el estado en tiempo real.
+        </motion.p>
 
-      {/* ── Search ── */}
-      <section className="max-w-3xl mx-auto px-6 -mt-8 relative z-20">
+        {/* Search form — inside lamp */}
         <motion.form
           onSubmit={handleSearch}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="bg-white rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.08)] border border-[#0a0a0a]/5 p-2 flex items-center gap-2"
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="w-full max-w-xl bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-2 flex items-center gap-2"
         >
           <input
             type="text"
             value={code}
             onChange={(e) => setCode(e.target.value)}
             placeholder="Ej: MG-2026-4821"
-            className="flex-1 px-5 py-4 text-base font-medium text-[#0a0a0a] placeholder:text-[#0a0a0a]/30 bg-transparent focus:outline-none tracking-wide uppercase"
+            className="flex-1 px-5 py-4 text-base font-bold text-white placeholder:text-white/35 bg-transparent focus:outline-none tracking-widest uppercase"
           />
           <button
             type="submit"
             disabled={loading}
-            className="bg-[#0038FF] text-white font-black text-sm px-8 py-4 rounded-xl hover:bg-[#0030e0] transition-colors duration-200 active:scale-95 disabled:opacity-60 shrink-0"
+            className="bg-[#CCFF00] text-black font-black text-sm px-8 py-4 rounded-xl hover:bg-[#d9ff33] transition-colors duration-200 active:scale-95 disabled:opacity-60 shrink-0"
           >
             {loading ? (
               <span className="flex items-center gap-2">
                 <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
-                  <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" strokeLinecap="round" className="opacity-25" />
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" className="opacity-25" />
                   <path d="M4 12a8 8 0 018-8" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
                 </svg>
                 Buscando
@@ -259,15 +234,18 @@ export default function TrackPage() {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-          className="text-center text-xs text-[#0a0a0a]/30 mt-3"
+          transition={{ delay: 0.7 }}
+          className="text-center text-xs text-white/35 mt-3"
         >
-          Demo: prueba con <button type="button" onClick={() => { setCode("MG-2026-4821"); }} className="underline hover:text-[#0038FF] transition-colors">MG-2026-4821</button> o <button type="button" onClick={() => { setCode("MG-2026-3109"); }} className="underline hover:text-[#0038FF] transition-colors">MG-2026-3109</button>
+          Demo:{" "}
+          <button type="button" onClick={() => setCode("MG-2026-4821")} className="underline hover:text-white transition-colors">MG-2026-4821</button>
+          {" "}o{" "}
+          <button type="button" onClick={() => setCode("MG-2026-3109")} className="underline hover:text-white transition-colors">MG-2026-3109</button>
         </motion.p>
-      </section>
+      </LampContainer>
 
       {/* ── Result ── */}
-      <section className="max-w-3xl mx-auto px-6 py-12 min-h-[40vh]">
+      <section className="max-w-3xl mx-auto px-6 relative z-20">
         <AnimatePresence mode="wait">
           {result && (
             <motion.div
@@ -276,36 +254,26 @@ export default function TrackPage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.4 }}
-              className="bg-white rounded-2xl border border-[#0a0a0a]/8 overflow-hidden"
+              className="bg-white rounded-2xl border border-[#0a0a0a]/8 overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.06)]"
             >
-              {/* Header row */}
+              {/* Header */}
               <div className="p-6 md:p-8 border-b border-[#0a0a0a]/5">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
                   <div>
-                    <p className="text-xs font-black uppercase tracking-wider text-[#0a0a0a]/35 mb-0.5">
-                      Código de reparación
-                    </p>
-                    <p
-                      className="text-2xl font-black text-[#0a0a0a] tracking-tight"
-                      style={{ fontFamily: "var(--font-display, inherit)" }}
-                    >
-                      {result.id}
-                    </p>
+                    <p className="text-xs font-black uppercase tracking-wider text-[#0a0a0a]/35 mb-0.5">Código de reparación</p>
+                    <p className="text-2xl font-black text-[#0a0a0a] tracking-tight" style={{ fontFamily: "var(--font-display, inherit)" }}>{result.id}</p>
                   </div>
                   <StatusBadge status={result.status} />
                 </div>
-
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {[
                     { label: "Dispositivo", value: result.device },
-                    { label: "Reparación", value: result.issue },
-                    { label: "Técnico", value: result.tech },
-                    { label: "Recogida", value: result.estimatedPickup },
+                    { label: "Reparación",  value: result.issue },
+                    { label: "Técnico",     value: result.tech },
+                    { label: "Recogida",    value: result.estimatedPickup },
                   ].map((d) => (
                     <div key={d.label}>
-                      <p className="text-[10px] font-bold uppercase tracking-wider text-[#0a0a0a]/30 mb-0.5">
-                        {d.label}
-                      </p>
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-[#0a0a0a]/30 mb-0.5">{d.label}</p>
                       <p className="text-sm font-semibold text-[#0a0a0a]/75">{d.value}</p>
                     </div>
                   ))}
@@ -314,29 +282,19 @@ export default function TrackPage() {
 
               {/* Timeline */}
               <div className="p-6 md:p-8">
-                <p className="text-xs font-black uppercase tracking-wider text-[#0a0a0a]/35 mb-2">
-                  Progreso de la reparación
-                </p>
-                {/* Progress bar */}
+                <p className="text-xs font-black uppercase tracking-wider text-[#0a0a0a]/35 mb-2">Progreso</p>
                 <div className="w-full h-1.5 bg-[#0a0a0a]/5 rounded-full overflow-hidden mb-2">
                   <motion.div
                     initial={{ width: 0 }}
-                    animate={{
-                      width: `${(result.steps.filter((s) => s.done).length / result.steps.length) * 100}%`,
-                    }}
+                    animate={{ width: `${(result.steps.filter((s) => s.done).length / result.steps.length) * 100}%` }}
                     transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
                     className="h-full rounded-full"
-                    style={{
-                      background: result.status === "listo"
-                        ? "linear-gradient(90deg, #0038FF, #CCFF00)"
-                        : "#0038FF",
-                    }}
+                    style={{ background: result.status === "listo" ? "linear-gradient(90deg, #0038FF, #CCFF00)" : "#0038FF" }}
                   />
                 </div>
                 <p className="text-xs text-[#0a0a0a]/40 mb-4">
                   {result.steps.filter((s) => s.done).length} de {result.steps.length} pasos completados
                 </p>
-
                 <Timeline steps={result.steps} />
 
                 {result.status === "listo" && (
@@ -373,9 +331,7 @@ export default function TrackPage() {
             >
               <div className="w-16 h-16 rounded-full bg-[#0a0a0a]/5 flex items-center justify-center mx-auto mb-4">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" strokeOpacity="0.25" strokeWidth="2" strokeLinecap="round">
-                  <circle cx="11" cy="11" r="8" />
-                  <path d="m21 21-4.35-4.35" />
-                  <path d="M8 11h6" />
+                  <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /><path d="M8 11h6" />
                 </svg>
               </div>
               <p className="text-lg font-bold text-[#0a0a0a]">No encontramos esa reparación</p>
@@ -394,54 +350,28 @@ export default function TrackPage() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
             className="mb-14 text-center"
           >
-            <p className="text-xs font-black uppercase tracking-[0.3em] text-[#CCFF00] mb-3">
-              Transparencia total
-            </p>
-            <h2
-              className="text-3xl md:text-4xl font-black text-white leading-tight tracking-tight"
-              style={{ fontFamily: "var(--font-display, inherit)" }}
-            >
+            <p className="text-xs font-black uppercase tracking-[0.3em] text-[#CCFF00] mb-3">Transparencia total</p>
+            <h2 className="text-3xl md:text-4xl font-black text-white leading-tight" style={{ fontFamily: "var(--font-display, inherit)" }}>
               Sabes exactamente dónde está tu móvil
             </h2>
           </motion.div>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              {
-                tag: "01",
-                title: "Seguimiento en tiempo real",
-                desc: "Cada fase de la reparación se actualiza al instante. Sin llamadas, sin esperas por información.",
-              },
-              {
-                tag: "02",
-                title: "Notificación automática",
-                desc: "Recibes un mensaje por WhatsApp o SMS cuando tu dispositivo cambia de estado y cuando está listo.",
-              },
-              {
-                tag: "03",
-                title: "Historial completo",
-                desc: "Fecha y hora de cada paso. Quién realizó la reparación. Qué pieza se instaló. Todo documentado.",
-              },
+              { tag: "01", title: "Seguimiento en tiempo real",   desc: "Cada fase de la reparación se actualiza al instante. Sin llamadas, sin esperas por información." },
+              { tag: "02", title: "Notificación automática",       desc: "Recibes un mensaje por WhatsApp o SMS cuando tu dispositivo cambia de estado y cuando está listo." },
+              { tag: "03", title: "Historial completo",            desc: "Fecha y hora de cada paso. Quién realizó la reparación. Qué pieza se instaló. Todo documentado." },
             ].map((item, i) => (
               <motion.div
                 key={item.tag}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: i * 0.1 }}
+                transition={{ delay: i * 0.1 }}
                 className="border border-white/8 rounded-2xl p-6"
               >
-                <p
-                  className="text-4xl font-black mb-4 leading-none"
-                  style={{
-                    fontFamily: '"Arial Black", Impact, sans-serif',
-                    WebkitTextStroke: "1.5px #CCFF00",
-                    color: "transparent",
-                  }}
-                >
+                <p className="text-4xl font-black mb-4 leading-none" style={{ fontFamily: '"Arial Black", Impact, sans-serif', WebkitTextStroke: "1.5px #CCFF00", color: "transparent" }}>
                   {item.tag}
                 </p>
                 <h3 className="text-white font-bold text-base mb-2">{item.title}</h3>
@@ -458,31 +388,17 @@ export default function TrackPage() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
           className="relative rounded-3xl bg-[#0038FF] overflow-hidden p-10 md:p-16 text-center"
         >
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)] bg-[size:3rem_3rem] pointer-events-none" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(204,255,0,0.08),transparent_70%)] pointer-events-none" />
           <div className="relative z-10">
-            <h2
-              className="text-3xl md:text-4xl font-black text-white leading-tight tracking-tight mb-4"
-              style={{ fontFamily: "var(--font-display, inherit)" }}
-            >
-              ¿Necesitas una reparación?
-              <br />
-              <span className="text-[#CCFF00]">Reserva ahora.</span>
+            <h2 className="text-3xl md:text-5xl font-black text-white leading-tight mb-4" style={{ fontFamily: "var(--font-display, inherit)" }}>
+              ¿Necesitas una reparación?<br /><span className="text-[#CCFF00]">Reserva ahora.</span>
             </h2>
-            <p className="text-white/60 text-base max-w-md mx-auto leading-relaxed mb-8">
-              Diagnóstico gratuito. La mayoría de reparaciones en menos de 1 hora.
-            </p>
-            <a
-              href="/reparacion-pantalla"
-              className="inline-flex items-center gap-2 bg-[#CCFF00] text-black font-black text-base px-8 py-3.5 rounded-full shadow-[0_0_30px_rgba(204,255,0,0.35)] hover:shadow-[0_0_50px_rgba(204,255,0,0.55)] hover:scale-105 transition-transform duration-200 active:scale-95"
-            >
+            <p className="text-white/60 text-base max-w-md mx-auto mb-8">Diagnóstico gratuito. La mayoría de reparaciones en menos de 1 hora.</p>
+            <a href="/reparacion-pantalla" className="inline-flex items-center gap-2 bg-[#CCFF00] text-black font-black text-base px-8 py-3.5 rounded-full hover:scale-105 transition-transform duration-200 active:scale-95">
               Reservar reparación
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </a>
           </div>
         </motion.div>

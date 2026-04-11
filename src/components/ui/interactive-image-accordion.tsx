@@ -109,20 +109,20 @@ export function LandingAccordionItem({
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <section className="py-20 md:py-28 px-4 bg-gray-50">
+    <section className="py-20 md:py-28 px-4 bg-[#060812]">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-12">
           <div>
-            <div className="inline-block bg-[#0038FF]/8 text-[#0038FF] border border-[#0038FF]/20 text-xs font-black px-3 py-1 rounded-full mb-4 uppercase tracking-wider">
+            <div className="inline-block bg-[#CCFF00]/10 text-[#CCFF00] border border-[#CCFF00]/20 text-xs font-black px-3 py-1 rounded-full mb-4 uppercase tracking-wider">
               Nuestros Servicios
             </div>
             <h2
-              className="text-3xl md:text-5xl font-black text-gray-900 leading-tight max-w-lg"
+              className="text-3xl md:text-5xl font-black text-white leading-tight max-w-lg"
               style={{ fontFamily: "var(--font-display, inherit)" }}
             >
               {heading}
             </h2>
-            <p className="text-gray-400 mt-3 text-sm md:text-base font-medium max-w-md">
+            <p className="text-white/45 mt-3 text-sm md:text-base font-medium max-w-md">
               {subheading}
             </p>
           </div>

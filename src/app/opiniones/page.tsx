@@ -73,7 +73,7 @@ export default function OpinionesPage() {
 
   return (
     <main className="w-full bg-[#060812] min-h-screen">
-      <Header />
+      <Header dark />
 
       {/* ── Hero — Gravity ──────────────────────────────────────────────────
            h-[720px] is REQUIRED: Gravity renders as `absolute top-0 left-0 w-full h-full`.

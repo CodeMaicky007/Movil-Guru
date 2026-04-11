@@ -40,7 +40,7 @@ type LinkItem = {
   description?: string;
 };
 
-export function Header() {
+export function Header({ dark = false }: { dark?: boolean }) {
   const [open, setOpen] = React.useState(false);
   const scrolled = useScroll(10);
 
@@ -59,16 +59,20 @@ export function Header() {
     <header
       className={cn(
         'sticky top-0 z-50 w-full border-b border-transparent',
+        dark
+          ? 'bg-[#060812]/90 backdrop-blur-md border-white/[0.06]'
+          : '',
         {
           'bg-background/95 supports-[backdrop-filter]:bg-background/50 border-border backdrop-blur-lg':
-            scrolled,
+            scrolled && !dark,
+          'bg-[#060812]/95 border-white/[0.10]': scrolled && dark,
         }
       )}
     >
-      <nav className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between px-4">
+      <nav className={cn('mx-auto flex h-14 w-full max-w-6xl items-center justify-between px-4', dark && 'text-white')}>
         <div className="flex items-center gap-5">
-          <Link href="/" className="hover:bg-accent rounded-md px-2 py-1 flex items-center gap-1.5">
-            <div className="bg-foreground text-background font-black text-xs px-2.5 py-1 rounded-xl rounded-bl-sm">
+          <Link href="/" className={cn('rounded-md px-2 py-1 flex items-center gap-1.5', dark ? 'hover:bg-white/10' : 'hover:bg-accent')}>
+            <div className={cn('font-black text-xs px-2.5 py-1 rounded-xl rounded-bl-sm', dark ? 'bg-white text-black' : 'bg-foreground text-background')}>
               MOVIL
             </div>
             <div className="bg-[#CCFF00] text-black font-black text-xs px-2.5 py-1 rounded-full border border-foreground/10">
@@ -78,7 +82,7 @@ export function Header() {
           <NavigationMenu className="hidden md:flex">
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent">
+                <NavigationMenuTrigger className={cn('bg-transparent', dark && 'text-white hover:bg-white/10 hover:text-white data-[state=open]:bg-white/10')}>
                   Servicios
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-background p-1 pr-1.5">
@@ -103,7 +107,7 @@ export function Header() {
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent">
+                <NavigationMenuTrigger className={cn('bg-transparent', dark && 'text-white hover:bg-white/10 hover:text-white data-[state=open]:bg-white/10')}>
                   Nosotros
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-background p-1 pr-1.5 pb-1.5">
@@ -132,7 +136,7 @@ export function Header() {
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuLink className="px-4" asChild>
-                <Link href="/precios" className="hover:bg-accent rounded-md p-2">
+                <Link href="/precios" className={cn('rounded-md p-2', dark ? 'text-white hover:bg-white/10' : 'hover:bg-accent')}>
                   Precios
                 </Link>
               </NavigationMenuLink>
@@ -146,7 +150,7 @@ export function Header() {
           size="icon"
           variant="outline"
           onClick={() => setOpen(!open)}
-          className="md:hidden"
+          className={cn('md:hidden', dark && 'border-white/30 text-white hover:bg-white/10 hover:text-white')}
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label="Toggle menu"
