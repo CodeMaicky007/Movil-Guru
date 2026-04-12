@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { Link } from 'next-view-transitions';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -43,6 +44,7 @@ type LinkItem = {
 export function Header({ dark = false }: { dark?: boolean }) {
   const [open, setOpen] = React.useState(false);
   const scrolled = useScroll(10);
+  const router = useRouter();
 
   React.useEffect(() => {
     if (open) {
@@ -58,18 +60,21 @@ export function Header({ dark = false }: { dark?: boolean }) {
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 w-full border-b border-transparent',
+        'sticky top-0 z-50 mx-auto w-full max-w-6xl border-b border-transparent md:rounded-full md:border md:border-transparent md:transition-all md:duration-300 md:ease-out',
         dark
           ? 'bg-[#060812]/90 backdrop-blur-md border-white/[0.06]'
           : '',
         {
-          'bg-background/95 supports-[backdrop-filter]:bg-background/50 border-border backdrop-blur-lg':
-            scrolled && !dark,
-          'bg-[#060812]/95 border-white/[0.10]': scrolled && dark,
+          'bg-background/95 supports-[backdrop-filter]:bg-background/50 border-border backdrop-blur-lg md:top-4 md:max-w-5xl md:shadow md:rounded-full':
+            scrolled && !dark && !open,
+          'bg-[#060812]/95 border-white/[0.10] md:top-4 md:max-w-5xl md:shadow-lg md:border-white/[0.10] md:rounded-full':
+            scrolled && dark && !open,
+          'bg-background/90': open && !dark,
+          'bg-[#060812]/95': open && dark,
         }
       )}
     >
-      <nav className={cn('mx-auto flex h-14 w-full max-w-6xl items-center justify-between px-4', dark && 'text-white')}>
+      <nav className={cn('flex h-14 w-full items-center justify-between px-4 md:transition-all md:duration-300 md:ease-out', scrolled && 'md:px-2', dark && 'text-white')}>
         <div className="flex items-center gap-5">
           <Link href="/" className={cn('rounded-md px-2 py-1 flex items-center gap-1.5', dark ? 'hover:bg-white/10' : 'hover:bg-accent')}>
             <div className={cn('font-black text-xs px-2.5 py-1 rounded-xl rounded-bl-sm', dark ? 'bg-white text-black' : 'bg-foreground text-background')}>
@@ -82,7 +87,10 @@ export function Header({ dark = false }: { dark?: boolean }) {
           <NavigationMenu className="hidden md:flex">
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger className={cn('bg-transparent', dark && 'text-white hover:bg-white/10 hover:text-white data-[state=open]:bg-white/10')}>
+                <NavigationMenuTrigger
+                  className={cn('bg-transparent', dark && 'text-white hover:bg-white/10 hover:text-white data-[state=open]:bg-white/10')}
+                  onClick={() => router.push('/servicios')}
+                >
                   Servicios
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-background p-1 pr-1.5">
@@ -144,7 +152,7 @@ export function Header({ dark = false }: { dark?: boolean }) {
           </NavigationMenu>
         </div>
         <div className="hidden items-center gap-2 md:flex">
-          <Button asChild className="bg-[#CCFF00] text-black border-[#CCFF00] hover:bg-[#b8e600] hover:text-black font-semibold"><Link href="/track">Rastrear Reparación</Link></Button>
+          <Button asChild className="rounded-full bg-[#CCFF00] text-black border-[#CCFF00] hover:bg-[#b8e600] hover:text-black font-semibold"><Link href="/track">Rastrear Reparación</Link></Button>
         </div>
         <Button
           size="icon"
@@ -178,7 +186,7 @@ export function Header({ dark = false }: { dark?: boolean }) {
           </div>
         </NavigationMenu>
         <div className="flex flex-col gap-2">
-          <Button className="w-full bg-[#CCFF00] text-black border-[#CCFF00] hover:bg-[#b8e600] hover:text-black font-semibold" asChild>
+          <Button className="w-full rounded-full bg-[#CCFF00] text-black border-[#CCFF00] hover:bg-[#b8e600] hover:text-black font-semibold" asChild>
             <Link href="/track">Rastrear Reparación</Link>
           </Button>
         </div>
