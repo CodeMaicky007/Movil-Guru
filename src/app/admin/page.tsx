@@ -319,7 +319,7 @@ function ClientesTab({ rows }: { rows: Reservation[] }) {
     cur.total += r.status === 'completada' ? r.price : 0;
     map.set(r.email, cur);
   });
-  const list = [...map.values()].sort((a, b) => b.count - a.count);
+  const list = Array.from(map.values()).sort((a, b) => b.count - a.count);
   return (
     <div className="overflow-hidden rounded-lg border border-white/8 bg-[#111113]">
       <div className="overflow-x-auto">
