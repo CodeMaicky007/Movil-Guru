@@ -15,6 +15,15 @@ const Footer = dynamic(
 // ─── Data ─────────────────────────────────────────────────────────────────────
 const brands = ["Apple", "Samsung", "Xiaomi", "Google", "Huawei", "OnePlus"];
 
+const brandLogos: Record<string, string> = {
+  Apple:   "/images/Apple.png",
+  Samsung: "/images/Samsung.png",
+  Xiaomi:  "/images/Xiaomi.png",
+  Google:  "/images/GooglePixel.png",
+  Huawei:  "/images/huawei.png",
+  OnePlus: "/images/oneplus.png",
+};
+
 type Brand = (typeof brands)[number];
 
 interface RepairPrice {
@@ -192,12 +201,18 @@ export default function PreciosPage() {
             <button
               key={brand}
               onClick={() => setActiveBrand(brand)}
-              className="px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 active:scale-95"
+              className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 active:scale-95"
               style={{
                 backgroundColor: activeBrand === brand ? "#0038FF" : "#0a0a0a08",
                 color: activeBrand === brand ? "#fff" : "#0a0a0a80",
               }}
             >
+              <img
+                src={brandLogos[brand]}
+                alt={brand}
+                className="w-5 h-5 object-contain"
+                style={{ filter: activeBrand === brand ? "brightness(0) invert(1)" : "none" }}
+              />
               {brand}
             </button>
           ))}

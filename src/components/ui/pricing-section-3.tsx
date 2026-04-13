@@ -290,15 +290,16 @@ export default function PricingSection() {
                 </div>
               </CardContent>
               <CardFooter>
-                <button
-                  className={`w-full mb-6 p-4 text-xl rounded-xl ${
+                <a
+                  href="/servicios"
+                  className={`w-full mb-6 p-4 text-xl rounded-xl block text-center ${
                     plan.popular
                       ? "bg-gradient-to-t from-neutral-100 to-neutral-300 font-semibold shadow-lg shadow-neutral-500 border border-neutral-400 text-black"
                       : "bg-gradient-to-t from-neutral-900 to-neutral-600 shadow-lg shadow-neutral-900 border border-neutral-700 text-white"
                   }`}
                 >
                   {plan.buttonText}
-                </button>
+                </a>
               </CardFooter>
             </Card>
           </TimelineContent>

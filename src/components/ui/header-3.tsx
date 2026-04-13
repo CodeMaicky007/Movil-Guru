@@ -32,6 +32,11 @@ import {
   Leaf,
   HelpCircle,
   Briefcase,
+  User as UserIcon,
+  LogIn,
+  UserPlus,
+  Wrench,
+  LogOut,
 } from 'lucide-react';
 
 type LinkItem = {
@@ -152,6 +157,7 @@ export function Header({ dark = false }: { dark?: boolean }) {
           </NavigationMenu>
         </div>
         <div className="hidden items-center gap-2 md:flex">
+          <ProfileMenu dark={dark} />
           <Button asChild className="rounded-full bg-[#CCFF00] text-black border-[#CCFF00] hover:bg-[#b8e600] hover:text-black font-semibold"><Link href="/track">Rastrear Reparación</Link></Button>
         </div>
         <Button
@@ -181,6 +187,10 @@ export function Header({ dark = false }: { dark?: boolean }) {
               <ListItem key={link.title} {...link} />
             ))}
             {companyLinks2.map((link) => (
+              <ListItem key={link.title} {...link} />
+            ))}
+            <span className="text-sm">Cuenta</span>
+            {accountLinks.map((link) => (
               <ListItem key={link.title} {...link} />
             ))}
           </div>
@@ -325,6 +335,12 @@ const companyLinks: LinkItem[] = [
   },
 ];
 
+const accountLinks: LinkItem[] = [
+  { title: 'Iniciar sesión', href: '/login', description: 'Accede a tu cuenta', icon: LogIn },
+  { title: 'Crear cuenta', href: '/registro', description: 'Regístrate en 60 segundos', icon: UserPlus },
+  { title: 'Mi perfil', href: '/perfil', description: 'Reparaciones y facturas', icon: UserIcon },
+];
+
 const companyLinks2: LinkItem[] = [
   { title: 'B2B / Empresas', href: '/empresas', icon: Briefcase },
   { title: 'Rastrear mi reparación', href: '/track', icon: RotateCcw },
@@ -332,6 +348,165 @@ const companyLinks2: LinkItem[] = [
   { title: 'Blog', href: '/blog', icon: Leaf },
   { title: 'Preguntas frecuentes', href: '/faq', icon: HelpCircle },
 ];
+
+function ProfileMenu({ dark }: { dark?: boolean }) {
+  const [open, setOpen] = React.useState(false);
+  const [loggedIn] = React.useState(false); // swap with real auth state later
+  const ref = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    function onDocClick(e: MouseEvent) {
+      if (!ref.current?.contains(e.target as Node)) setOpen(false);
+    }
+    function onEsc(e: KeyboardEvent) {
+      if (e.key === 'Escape') setOpen(false);
+    }
+    document.addEventListener('mousedown', onDocClick);
+    document.addEventListener('keydown', onEsc);
+    return () => {
+      document.removeEventListener('mousedown', onDocClick);
+      document.removeEventListener('keydown', onEsc);
+    };
+  }, []);
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        onClick={() => setOpen((v) => !v)}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-label="Menú de perfil"
+        className={cn(
+          'group relative flex h-9 w-9 items-center justify-center rounded-full border transition-all duration-300',
+          dark
+            ? 'border-white/15 bg-white/5 text-white hover:border-[#CCFF00]/60 hover:bg-[#CCFF00]/10'
+            : 'border-foreground/10 bg-background/40 text-foreground hover:border-[#CCFF00] hover:bg-[#CCFF00]/15',
+          open && 'border-[#CCFF00]/70 bg-[#CCFF00]/10'
+        )}
+      >
+        <UserIcon className="size-4 transition-transform duration-300 group-hover:scale-110" />
+        {loggedIn && (
+          <span className="absolute -top-0.5 -right-0.5 size-2.5 rounded-full bg-[#CCFF00] ring-2 ring-[#060812]" />
+        )}
+      </button>
+
+      <div
+        role="menu"
+        aria-hidden={!open}
+        className={cn(
+          'absolute right-0 top-[calc(100%+10px)] w-72 origin-top-right rounded-2xl border p-2 shadow-2xl backdrop-blur-xl transition-all duration-200',
+          dark
+            ? 'border-white/10 bg-[#0a0d1a]/95'
+            : 'border-foreground/10 bg-background/95',
+          open
+            ? 'pointer-events-auto translate-y-0 scale-100 opacity-100'
+            : 'pointer-events-none -translate-y-1 scale-95 opacity-0'
+        )}
+        style={{
+          boxShadow: dark
+            ? '0 20px 60px -10px rgba(0,0,0,0.8), 0 0 0 1px rgba(204,255,0,0.05)'
+            : undefined,
+        }}
+      >
+        {/* Header */}
+        <div
+          className={cn(
+            'relative overflow-hidden rounded-xl px-4 py-3.5 mb-1',
+            dark ? 'bg-white/[0.04]' : 'bg-accent/50'
+          )}
+        >
+          <div
+            aria-hidden
+            className="absolute -top-10 -right-10 size-24 rounded-full opacity-30"
+            style={{
+              background:
+                'radial-gradient(closest-side, rgba(204,255,0,0.5), transparent)',
+            }}
+          />
+          <div className="relative flex items-center gap-3">
+            <div className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#CCFF00] to-[#84cc16] text-black font-black">
+              {loggedIn ? 'CM' : <UserIcon className="size-4" />}
+            </div>
+            <div className="min-w-0">
+              <div className={cn('text-sm font-bold truncate', dark ? 'text-white' : '')}>
+                {loggedIn ? 'Carlos Mendoza' : 'Invitado'}
+              </div>
+              <div
+                className={cn(
+                  'text-xs truncate',
+                  dark ? 'text-white/50' : 'text-muted-foreground'
+                )}
+              >
+                {loggedIn ? 'carlos@correo.com' : 'Accede para ver tus reparaciones'}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Items */}
+        <div className="flex flex-col gap-0.5">
+          {(loggedIn
+            ? [
+                { title: 'Mi perfil', icon: UserIcon, href: '/perfil' },
+                { title: 'Mis reparaciones', icon: Wrench, href: '/perfil' },
+              ]
+            : [
+                { title: 'Iniciar sesión', icon: LogIn, href: '/login' },
+                { title: 'Crear cuenta', icon: UserPlus, href: '/registro' },
+              ]
+          ).map((item) => (
+            <Link
+              key={item.title}
+              href={item.href}
+              onClick={() => setOpen(false)}
+              className={cn(
+                'group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors',
+                dark
+                  ? 'text-white/80 hover:bg-[#CCFF00]/10 hover:text-white'
+                  : 'text-foreground/80 hover:bg-accent hover:text-foreground'
+              )}
+            >
+              <item.icon
+                className={cn(
+                  'size-4 transition-colors',
+                  dark
+                    ? 'text-white/50 group-hover:text-[#CCFF00]'
+                    : 'text-foreground/50 group-hover:text-foreground'
+                )}
+              />
+              <span className="font-medium">{item.title}</span>
+              <span
+                className={cn(
+                  'ml-auto text-[10px] font-black uppercase tracking-widest opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0',
+                  dark ? 'text-[#CCFF00]' : 'text-foreground/60'
+                )}
+              >
+                →
+              </span>
+            </Link>
+          ))}
+        </div>
+
+        {loggedIn && (
+          <>
+            <div className={cn('mx-2 my-1.5 h-px', dark ? 'bg-white/10' : 'bg-border')} />
+            <button
+              className={cn(
+                'flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors',
+                dark
+                  ? 'text-white/60 hover:bg-red-500/10 hover:text-red-300'
+                  : 'text-foreground/70 hover:bg-red-500/10 hover:text-red-600'
+              )}
+            >
+              <LogOut className="size-4" />
+              <span className="font-medium">Cerrar sesión</span>
+            </button>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
 
 function useScroll(threshold: number) {
   const [scrolled, setScrolled] = React.useState(false);

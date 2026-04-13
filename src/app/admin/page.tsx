@@ -15,6 +15,17 @@ import {
 } from 'lucide-react';
 import { reservations, type Reservation, type ReservationStatus } from './_data/mock';
 
+const brandLogo = (device: string) => {
+  if (/iphone/i.test(device))  return '/images/Apple.png';
+  if (/samsung|galaxy/i.test(device)) return '/images/Samsung.png';
+  if (/xiaomi|redmi|poco/i.test(device)) return '/images/Xiaomi.png';
+  if (/pixel/i.test(device))   return '/images/GooglePixel.png';
+  if (/huawei/i.test(device))  return '/images/huawei.png';
+  if (/oneplus/i.test(device)) return '/images/oneplus.png';
+  if (/motorola|moto/i.test(device)) return '/images/motorola.png';
+  return null;
+};
+
 const statusMeta: Record<ReservationStatus, { label: string; dot: string }> = {
   pendiente:  { label: 'Pendiente',  dot: '#D4A84B' },
   en_curso:   { label: 'En curso',   dot: '#4B7BD4' },
@@ -253,7 +264,14 @@ function ReservationsTable({ rows, onStatus }: { rows: Reservation[]; onStatus: 
                   <div className="font-medium text-neutral-100">{r.customer}</div>
                   <div className="text-xs text-neutral-500">{r.phone}</div>
                 </td>
-                <td className="px-5 py-3.5 text-neutral-300">{r.device}</td>
+                <td className="px-5 py-3.5">
+                  <div className="flex items-center gap-2">
+                    {brandLogo(r.device) && (
+                      <img src={brandLogo(r.device)!} alt="" className="h-4 w-4 object-contain opacity-70" />
+                    )}
+                    <span className="text-neutral-300">{r.device}</span>
+                  </div>
+                </td>
                 <td className="px-5 py-3.5 text-neutral-300">{r.service}</td>
                 <td className="px-5 py-3.5 text-neutral-500">{r.date}</td>
                 <td className="px-5 py-3.5 text-right font-medium text-neutral-100">{r.price} €</td>

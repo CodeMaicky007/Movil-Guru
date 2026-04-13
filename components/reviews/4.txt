@@ -1,0 +1,12 @@
+https://prod.spline.design/Ph3tJkSmI8nRutql/scene.splinecode
+import Spline from '@splinetool/react-spline/next';
+
+export default function Home() {
+  return (
+    <main>
+      <Spline
+        scene="https://prod.spline.design/Ph3tJkSmI8nRutql/scene.splinecode" 
+      />
+    </main>
+  );
+}

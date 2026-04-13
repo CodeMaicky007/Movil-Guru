@@ -23,10 +23,10 @@ interface About3Props {
 export const About3 = ({
   title = "Quiénes Somos",
   description = "Somos un equipo apasionado de técnicos especializados en reparación de dispositivos móviles.",
-  mainImage = { src: "https://placehold.co/800x620", alt: "Taller" },
-  secondaryImage = { src: "https://placehold.co/400x300", alt: "Reparación" },
+  mainImage = { src: "https://images.pexels.com/photos/3568520/pexels-photo-3568520.jpeg?auto=compress&w=800", alt: "Taller" },
+  secondaryImage = { src: "https://images.pexels.com/photos/6046183/pexels-photo-6046183.jpeg?auto=compress&w=400", alt: "Reparación" },
   breakout = {
-    src: "https://placehold.co/80x40",
+    src: "",
     alt: "logo",
     title: "Tu móvil, nuestra responsabilidad",
     description: "Trabajamos con piezas de calidad OEM y técnicos certificados.",
@@ -92,8 +92,14 @@ export const About3 = ({
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-6">
               {companies.map((company, idx) => (
-                <div key={idx} className="flex items-center gap-3 px-5 py-2 rounded-full border border-white/15 bg-white/[0.03]">
-                  <img src={company.src} alt={company.alt} className="h-6 w-auto md:h-7" />
+                <div key={idx} className="flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04]">
+                  <img
+                    src={company.src}
+                    alt={company.alt}
+                    className="h-5 w-auto md:h-6 object-contain"
+                    style={{ filter: 'none' }}
+                  />
+                  <span className="text-xs font-semibold text-white/70">{company.alt}</span>
                 </div>
               ))}
             </div>

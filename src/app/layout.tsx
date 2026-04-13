@@ -22,7 +22,7 @@ export default function RootLayout({
 }) {
   return (
     <ViewTransitions>
-      <html lang="en">
+      <html lang="es">
         <body className={`${inter.className} ${syne.variable}`}>{children}</body>
       </html>
     </ViewTransitions>

@@ -35,7 +35,7 @@ const posts: Post[] = [
     category: "Consejos",
     date: "8 abril 2026",
     readTime: "5 min",
-    image: "https://images.pexels.com/photos/699122/pexels-photo-699122.jpeg?auto=compress&w=800",
+    image: "https://images.pexels.com/photos/4195342/pexels-photo-4195342.jpeg?auto=compress&w=800",
     featured: true,
   },
   {
@@ -57,7 +57,7 @@ const posts: Post[] = [
     category: "Tecnología",
     date: "28 marzo 2026",
     readTime: "8 min",
-    image: "https://images.pexels.com/photos/788946/pexels-photo-788946.jpeg?auto=compress&w=800",
+    image: "https://images.pexels.com/photos/3568520/pexels-photo-3568520.jpeg?auto=compress&w=800",
   },
   {
     slug: "copia-seguridad-antes-reparar",
@@ -67,7 +67,7 @@ const posts: Post[] = [
     category: "Guías",
     date: "22 marzo 2026",
     readTime: "6 min",
-    image: "https://images.pexels.com/photos/1092644/pexels-photo-1092644.jpeg?auto=compress&w=800",
+    image: "https://images.pexels.com/photos/4792733/pexels-photo-4792733.jpeg?auto=compress&w=800",
   },
   {
     slug: "moviles-plegables-merecen-pena",
@@ -77,7 +77,7 @@ const posts: Post[] = [
     category: "Tecnología",
     date: "15 marzo 2026",
     readTime: "9 min",
-    image: "https://images.pexels.com/photos/13568327/pexels-photo-13568327.jpeg?auto=compress&w=800",
+    image: "https://images.pexels.com/photos/6046183/pexels-photo-6046183.jpeg?auto=compress&w=800",
   },
   {
     slug: "agua-movil-que-hacer",
@@ -87,7 +87,7 @@ const posts: Post[] = [
     category: "Consejos",
     date: "8 marzo 2026",
     readTime: "4 min",
-    image: "https://images.pexels.com/photos/1084510/pexels-photo-1084510.jpeg?auto=compress&w=800",
+    image: "https://images.pexels.com/photos/4195342/pexels-photo-4195342.jpeg?auto=compress&w=800",
   },
   {
     slug: "derecho-reparar-europa",
@@ -97,7 +97,7 @@ const posts: Post[] = [
     category: "Noticias",
     date: "1 marzo 2026",
     readTime: "6 min",
-    image: "https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&w=800",
+    image: "https://images.pexels.com/photos/3568520/pexels-photo-3568520.jpeg?auto=compress&w=800",
   },
   {
     slug: "elegir-cristal-templado",
@@ -107,7 +107,7 @@ const posts: Post[] = [
     category: "Guías",
     date: "22 febrero 2026",
     readTime: "5 min",
-    image: "https://images.pexels.com/photos/607812/pexels-photo-607812.jpeg?auto=compress&w=800",
+    image: "https://images.pexels.com/photos/4195325/pexels-photo-4195325.jpeg?auto=compress&w=800",
   },
   {
     slug: "señales-cambiar-bateria",

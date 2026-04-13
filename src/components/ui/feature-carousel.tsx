@@ -21,7 +21,7 @@ const FEATURES = [
     id: "screen",
     label: "Pantallas",
     icon: Smartphone,
-    image: "https://images.pexels.com/photos/1092644/pexels-photo-1092644.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    image: "https://images.pexels.com/photos/4195342/pexels-photo-4195342.jpeg?auto=compress&cs=tinysrgb&w=1200",
     description: "Reemplazo de pantallas OLED y LCD con partes de calidad OEM.",
   },
   {
@@ -49,7 +49,7 @@ const FEATURES = [
     id: "speaker",
     label: "Altavoz y Micro",
     icon: Volume2,
-    image: "https://images.pexels.com/photos/3587478/pexels-photo-3587478.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    image: "https://images.pexels.com/photos/4195325/pexels-photo-4195325.jpeg?auto=compress&cs=tinysrgb&w=1200",
     description: "Recupera el sonido claro en llamadas y multimedia.",
   },
   {
@@ -63,21 +63,21 @@ const FEATURES = [
     id: "glass",
     label: "Tapa Trasera",
     icon: Layers,
-    image: "https://images.pexels.com/photos/1092671/pexels-photo-1092671.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    image: "https://images.pexels.com/photos/4195504/pexels-photo-4195504.jpeg?auto=compress&cs=tinysrgb&w=1200",
     description: "Cambio de cristal trasero dejando tu móvil como nuevo.",
   },
   {
     id: "board",
     label: "Placa Base",
     icon: Cpu,
-    image: "https://images.pexels.com/photos/2588757/pexels-photo-2588757.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    image: "https://images.pexels.com/photos/4792733/pexels-photo-4792733.jpeg?auto=compress&cs=tinysrgb&w=1200",
     description: "Microsoldadura y reparación a nivel de componente.",
   },
   {
     id: "sameday",
     label: "Servicio Express",
     icon: Clock,
-    image: "https://images.pexels.com/photos/5077049/pexels-photo-5077049.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    image: "https://images.pexels.com/photos/3568520/pexels-photo-3568520.jpeg?auto=compress&cs=tinysrgb&w=1200",
     description: "La mayoría de reparaciones listas en menos de 60 minutos.",
   },
   {

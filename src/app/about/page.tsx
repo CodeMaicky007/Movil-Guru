@@ -44,12 +44,12 @@ const achievements = [
 ];
 
 const companies = [
-  { src: "https://placehold.co/90x32/000000/FFFFFF?text=Apple&font=montserrat", alt: "Apple" },
-  { src: "https://placehold.co/120x32/1428A0/FFFFFF?text=Samsung&font=montserrat", alt: "Samsung" },
-  { src: "https://placehold.co/100x32/FF6900/FFFFFF?text=Xiaomi&font=montserrat", alt: "Xiaomi" },
-  { src: "https://placehold.co/110x32/CF0A2C/FFFFFF?text=Huawei&font=montserrat", alt: "Huawei" },
-  { src: "https://placehold.co/110x32/F5010C/FFFFFF?text=OnePlus&font=montserrat", alt: "OnePlus" },
-  { src: "https://placehold.co/110x32/4285F4/FFFFFF?text=Pixel&font=montserrat", alt: "Google Pixel" },
+  { src: "/images/Apple.png",       alt: "Apple"       },
+  { src: "/images/Samsung.png",     alt: "Samsung"     },
+  { src: "/images/Xiaomi.png",      alt: "Xiaomi"      },
+  { src: "/images/huawei.png",      alt: "Huawei"      },
+  { src: "/images/oneplus.png",     alt: "OnePlus"     },
+  { src: "/images/GooglePixel.png", alt: "Google Pixel"},
 ];
 
 export default function AboutPage() {
@@ -65,7 +65,7 @@ export default function AboutPage() {
         title="Somos Movil Guru"
         description="Un taller especializado fundado en 2019 con una misión clara: reparar cualquier móvil de cualquier marca con piezas de calidad, técnicos certificados y una garantía que realmente cumplimos."
         mainImage={{
-          src: "https://images.pexels.com/photos/3768914/pexels-photo-3768914.jpeg?auto=compress&w=1200",
+          src: "https://images.pexels.com/photos/4792733/pexels-photo-4792733.jpeg?auto=compress&w=1200",
           alt: "Taller Movil Guru",
         }}
         secondaryImage={{

@@ -46,6 +46,7 @@ interface Brand {
   name: string;
   shortName: string;
   accentColor: string;
+  logo: string;
   models: PhoneModel[];
 }
 
@@ -152,7 +153,7 @@ function makeRepairs(
 // ─── Brands & models ────────────────────────────────────────────────────────────
 const brands: Brand[] = [
   {
-    id: "iphone", name: "Apple iPhone", shortName: "iPhone", accentColor: "#1d1d1f",
+    id: "iphone", name: "Apple iPhone", shortName: "iPhone", accentColor: "#1d1d1f", logo: "/images/Apple.png",
     models: [
       { name: "iPhone 16 Pro Max",  repairs: makeRepairs([349,229,159], 79, 89, 149, 89, 199, 59, 49) },
       { name: "iPhone 16 Pro",      repairs: makeRepairs([319,209,149], 79, 89, 139, 89, 189, 55, 45) },
@@ -170,7 +171,7 @@ const brands: Brand[] = [
     ],
   },
   {
-    id: "samsung", name: "Samsung Galaxy", shortName: "Samsung", accentColor: "#1428A0",
+    id: "samsung", name: "Samsung Galaxy", shortName: "Samsung", accentColor: "#1428A0", logo: "/images/Samsung.png",
     models: [
       { name: "Galaxy S24 Ultra",  repairs: makeRepairs([329,219,149], 79, 79, 149,  99, 219, 59, 49) },
       { name: "Galaxy S24+",       repairs: makeRepairs([279,179,129], 69, 69, 129,  89, 199, 49, 39) },
@@ -186,7 +187,7 @@ const brands: Brand[] = [
     ],
   },
   {
-    id: "xiaomi", name: "Xiaomi", shortName: "Xiaomi", accentColor: "#FF6900",
+    id: "xiaomi", name: "Xiaomi", shortName: "Xiaomi", accentColor: "#FF6900", logo: "/images/Xiaomi.png",
     models: [
       { name: "14 Ultra",          repairs: makeRepairs([249,169,119], 59, 49, 119, 79, 179, 45, 35) },
       { name: "14 Pro",            repairs: makeRepairs([219,149, 99], 55, 45,  99, 69, 169, 39, 29) },
@@ -199,7 +200,7 @@ const brands: Brand[] = [
     ],
   },
   {
-    id: "pixel", name: "Google Pixel", shortName: "Pixel", accentColor: "#4285F4",
+    id: "pixel", name: "Google Pixel", shortName: "Pixel", accentColor: "#4285F4", logo: "/images/GooglePixel.png",
     models: [
       { name: "Pixel 9 Pro Fold",  repairs: makeRepairs([  0,  0,  0], 69, 69, 129,  89, 189, 45, 35, 679, 259, 199) },
       { name: "Pixel 9 Pro XL",    repairs: makeRepairs([269,179,129], 69, 69, 129,  89, 189, 45, 35) },
@@ -211,7 +212,7 @@ const brands: Brand[] = [
     ],
   },
   {
-    id: "oneplus", name: "OnePlus", shortName: "OnePlus", accentColor: "#F5010C",
+    id: "oneplus", name: "OnePlus", shortName: "OnePlus", accentColor: "#F5010C", logo: "/images/oneplus.png",
     models: [
       { name: "OnePlus Open",        repairs: makeRepairs([  0,  0,  0], 65, 55, 119, 75, 179, 39, 29, 549, 199, 189) },
       { name: "OnePlus 12",          repairs: makeRepairs([229,149, 99], 65, 55, 119, 75, 179, 39, 29) },
@@ -221,7 +222,7 @@ const brands: Brand[] = [
     ],
   },
   {
-    id: "huawei", name: "Huawei", shortName: "Huawei", accentColor: "#CF0A2C",
+    id: "huawei", name: "Huawei", shortName: "Huawei", accentColor: "#CF0A2C", logo: "/images/huawei.png",
     models: [
       { name: "Mate X5 (plegable)",  repairs: makeRepairs([  0,  0,  0], 69, 69, 139, 89, 199, 49, 39, 599,   0, 199) },
       { name: "P60 Pro",             repairs: makeRepairs([269,179,129], 69, 59, 129, 85, 189, 45, 35) },
@@ -231,7 +232,7 @@ const brands: Brand[] = [
     ],
   },
   {
-    id: "motorola", name: "Motorola Razr", shortName: "Motorola", accentColor: "#e2001a",
+    id: "motorola", name: "Motorola Razr", shortName: "Motorola", accentColor: "#e2001a", logo: "/images/motorola.png",
     models: [
       { name: "Razr 50 Ultra",  repairs: makeRepairs([0,0,0], 65, 55, 119, 75, 179, 39, 29, 479, 169, 179) },
       { name: "Razr 50",        repairs: makeRepairs([0,0,0], 59, 49,  99, 69, 159, 35, 25, 399, 149, 169) },
@@ -407,7 +408,7 @@ export function BookingWizard({
                     <motion.button key={brand.id} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05, duration: 0.35 }} onClick={() => { setSelectedBrand(brand); scrollUp(); }} className="group relative bg-white rounded-2xl p-6 border border-[#0a0a0a]/5 hover:border-[#0038FF]/30 hover:shadow-[0_8px_32px_rgba(0,56,255,0.1)] transition-all duration-200 text-left">
                       <div className="absolute bottom-0 left-0 right-0 h-[3px] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-b-2xl" style={{ backgroundColor: brand.accentColor }} />
                       <div className="w-10 h-10 rounded-xl border border-[#0a0a0a]/5 flex items-center justify-center mb-4" style={{ backgroundColor: `${brand.accentColor}12` }}>
-                        <span className="text-base font-black" style={{ color: brand.accentColor }}>{brand.shortName[0]}</span>
+                        <img src={brand.logo} alt={brand.shortName} className="w-6 h-6 object-contain" />
                       </div>
                       <p className="text-2xl font-black text-[#0a0a0a] group-hover:text-[#0038FF] transition-colors duration-200" style={{ fontFamily: "var(--font-display, inherit)" }}>{brand.shortName}</p>
                       <p className="text-xs text-[#0a0a0a]/35 mt-1 font-medium">{brand.models.filter((m) => (m.repairs[categoryId] ?? []).some((r) => r.price > 0)).length} modelos</p>

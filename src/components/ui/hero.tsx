@@ -160,7 +160,10 @@ export const HeroComponent = () => {
                   />
                 </div>
                 <div className="text-center mt-2">
-                  <p className="font-bold text-sm md:text-lg text-white">iPhone 15 Pro Max</p>
+                  <div className="flex items-center gap-1.5 justify-center">
+                    <img src="/images/Apple.png" alt="Apple" className="w-4 h-4 object-contain brightness-0 invert" />
+                    <p className="font-bold text-sm md:text-lg text-white">iPhone 15 Pro Max</p>
+                  </div>
                   <p className="text-[10px] md:text-xs text-white/80 mt-1">Pantalla reemplazada · 47 min</p>
                 </div>
               </div>
@@ -181,7 +184,10 @@ export const HeroComponent = () => {
                   />
                 </div>
                 <div className="text-center mt-2">
-                  <p className="font-bold text-sm md:text-lg text-white">Galaxy Z Fold 6</p>
+                  <div className="flex items-center gap-1.5 justify-center">
+                    <img src="/images/Samsung.png" alt="Samsung" className="w-4 h-4 object-contain brightness-0 invert" />
+                    <p className="font-bold text-sm md:text-lg text-white">Galaxy Z Fold 6</p>
+                  </div>
                   <p className="text-[10px] md:text-xs text-white/80 mt-1">Pantalla interior · Mismo día</p>
                 </div>
               </div>
@@ -225,7 +231,10 @@ export const HeroComponent = () => {
                   />
                 </div>
                 <div className="text-left">
-                  <p className="text-[10px] font-bold leading-none">iPhone 15 Pro Max</p>
+                  <div className="flex items-center gap-1">
+                    <img src="/images/Apple.png" alt="Apple" className="w-3 h-3 object-contain brightness-0 invert" />
+                    <p className="text-[10px] font-bold leading-none">iPhone 15 Pro Max</p>
+                  </div>
                   <p className="text-[8px] text-white/70 leading-none mt-1">Reparación de pantalla</p>
                 </div>
               </div>

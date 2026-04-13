@@ -350,7 +350,7 @@ export default function FaqPage() {
                 Escríbenos por WhatsApp y te respondemos en minutos.
               </p>
               <a
-                href="/reparacion-pantalla"
+                href="/servicios"
                 className="inline-flex items-center gap-1.5 bg-[#0038FF] text-white text-xs font-black px-4 py-2 rounded-lg hover:bg-[#0030e0] transition-colors duration-200"
               >
                 Contactar
@@ -480,7 +480,7 @@ export default function FaqPage() {
               Sin cita previa obligatoria. Diagnóstico gratuito. Garantía incluida desde el primer día.
             </p>
             <a
-              href="/reparacion-pantalla"
+              href="/servicios"
               className="inline-flex items-center gap-2 bg-[#CCFF00] text-black font-black text-base px-8 py-3.5 rounded-full shadow-[0_0_30px_rgba(204,255,0,0.35)] hover:shadow-[0_0_50px_rgba(204,255,0,0.55)] hover:scale-105 transition-transform transition-shadow duration-200 active:scale-95"
             >
               Reservar reparación

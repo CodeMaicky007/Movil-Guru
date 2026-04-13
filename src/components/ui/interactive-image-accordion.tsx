@@ -77,7 +77,7 @@ const defaultItems: AccordionItemData[] = [
     id: 2,
     title: "Baterías",
     subtitle: "Restaura la autonomía en 20 min",
-    imageUrl: "https://images.pexels.com/photos/1092644/pexels-photo-1092644.jpeg?auto=compress&w=800",
+    imageUrl: "https://images.pexels.com/photos/4195325/pexels-photo-4195325.jpeg?auto=compress&w=800",
   },
   {
     id: 3,
@@ -95,7 +95,7 @@ const defaultItems: AccordionItemData[] = [
     id: 5,
     title: "Recuperación de Datos",
     subtitle: "Rescatamos lo que otros no pueden",
-    imageUrl: "https://images.pexels.com/photos/117729/pexels-photo-117729.jpeg?auto=compress&w=800",
+    imageUrl: "https://images.pexels.com/photos/4195504/pexels-photo-4195504.jpeg?auto=compress&w=800",
   },
 ];
 

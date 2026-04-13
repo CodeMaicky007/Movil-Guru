@@ -39,47 +39,13 @@ const MARQUEE_STYLES = `
 `;
 
 // ─── Brand SVG icons (inline, no deps) ───────────────────────────────────────
-const AppleIcon = () => (
-  <svg viewBox="0 0 24 24" className="h-8 w-8" fill="currentColor">
-    <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.04 2.26-.79 3.59-.76 1.56.04 2.87.67 3.55 1.76-3.13 1.77-2.62 5.92.35 7.14-.65 1.58-1.57 3.1-2.57 4.03zm-3.21-14.7c-.55 1.4-1.89 2.37-3.25 2.28.09-1.5 1.05-2.82 2.38-3.4 1.25-.57 2.66-.41 3.25.04-.15.35-.26.72-.38 1.08z"/>
-  </svg>
-);
-const SamsungIcon = () => (
-  <svg viewBox="0 0 24 24" className="h-8 w-8" fill="currentColor">
-    <path d="M19.15 10.84a3.4 3.4 0 00-2.4-1.01H7.25a3.4 3.4 0 00-3.4 3.4v1.54a3.4 3.4 0 003.4 3.4h9.5a3.4 3.4 0 003.4-3.4v-1.54a3.4 3.4 0 00-1-.99zm-9.4 3.43H8.6v-2.54h.56c.3 0 .45.14.45.43v1.68c0 .29-.15.43-.46.43zm2.4 0h-1.02v-2.54h1.02v2.54zm2.9 0h-.94l-.63-1.5v1.5h-.93v-2.54h.93l.64 1.49v-1.49h.93v2.54zm2.5-.85c0 .52-.3.85-.86.85h-1.4v-2.54h1.4c.56 0 .86.33.86.85v.84zm-.86-.42c0-.14-.06-.2-.2-.2h-.27v1.24h.27c.14 0 .2-.06.2-.2v-.84z"/>
-  </svg>
-);
-const XiaomiIcon = () => (
-  <svg viewBox="0 0 24 24" className="h-7 w-7" fill="currentColor">
-    <path d="M6.5 4A2.5 2.5 0 004 6.5v11A2.5 2.5 0 006.5 20h11a2.5 2.5 0 002.5-2.5v-11A2.5 2.5 0 0017.5 4h-11zm1 5h2v6h-2V9zm3.5 0h2c1.1 0 2 .9 2 2v4h-2v-4h-2v4h-2v-4c0-1.1.9-2 2-2z"/>
-  </svg>
-);
-const GoogleIcon = () => (
-  <svg viewBox="0 0 24 24" className="h-7 w-7" fill="currentColor">
-    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-  </svg>
-);
-const HuaweiIcon = () => (
-  <svg viewBox="0 0 24 24" className="h-7 w-7 text-[#CF0A2C]" fill="currentColor">
-    <path d="M12 2C9.8 4.2 8 7.9 8 10c0 2.2 1.8 4 4 4s4-1.8 4-4c0-2.1-1.8-5.8-4-8zM4.9 7C3 9.5 2 12.1 2 14c0 3.3 2 5.7 4.5 6.8L8 14.7C6.6 13.6 6 12 6 10c0-1.1.3-2.1.9-3zM19.1 7c.6.9.9 1.9.9 3 0 2-.6 3.6-2 4.7l1.5 6.1C22 19.7 22 17.3 22 14c0-2.1-1-4.5-2.9-7zM12 16c-1.4 0-2.7-.3-3.8-.9l-1.5 6C8.3 21.7 10.1 22 12 22s3.7-.3 5.3-.9l-1.5-6c-1.1.6-2.4.9-3.8.9z"/>
-  </svg>
-);
-const OnePlusIcon = () => (
-  <svg viewBox="0 0 24 24" className="h-7 w-7" fill="currentColor">
-    <path d="M17 2H7a5 5 0 00-5 5v10a5 5 0 005 5h10a5 5 0 005-5V7a5 5 0 00-5-5zm-4.5 14.5v-4H10v-2h2.5V8h2v2.5H17v2h-2.5v4h-2z"/>
-  </svg>
-);
-
 const brandIcons = [
-  { Icon: AppleIcon,   bg: "#1d1d1f", color: "#ffffff", label: "Apple"   },
-  { Icon: SamsungIcon, bg: "#1428A0", color: "#ffffff", label: "Samsung" },
-  { Icon: XiaomiIcon,  bg: "#FF6900", color: "#ffffff", label: "Xiaomi"  },
-  { Icon: GoogleIcon,  bg: "#ffffff", color: "#000000", label: "Pixel"   },
-  { Icon: HuaweiIcon,  bg: "#0d0d0d", color: "#CF0A2C", label: "Huawei"  },
-  { Icon: OnePlusIcon, bg: "#F5010C", color: "#ffffff", label: "OnePlus" },
+  { logo: "/images/Apple.png",      bg: "#1d1d1f", invert: true,  label: "Apple"   },
+  { logo: "/images/Samsung.png",    bg: "#1428A0", invert: true,  label: "Samsung" },
+  { logo: "/images/Xiaomi.png",     bg: "#FF6900", invert: true,  label: "Xiaomi"  },
+  { logo: "/images/GooglePixel.png",bg: "#ffffff", invert: false, label: "Pixel"   },
+  { logo: "/images/huawei.png",     bg: "#0d0d0d", invert: false, label: "Huawei"  },
+  { logo: "/images/oneplus.png",    bg: "#F5010C", invert: true,  label: "OnePlus" },
 ];
 
 // ─── Repair service cards for marquee ────────────────────────────────────────
@@ -87,7 +53,7 @@ const services = [
   {
     title: "Pantalla rota",
     sub: "Reparación en 47 min",
-    img: "https://images.pexels.com/photos/1440727/pexels-photo-1440727.jpeg?auto=compress&w=400",
+    img: "https://images.pexels.com/photos/4195342/pexels-photo-4195342.jpeg?auto=compress&w=400",
     tag: "Más frecuente",
     tagColor: "#CCFF00",
   },
@@ -101,7 +67,7 @@ const services = [
   {
     title: "Cámara",
     sub: "Diagnóstico gratis",
-    img: "https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg?auto=compress&w=400",
+    img: "https://images.pexels.com/photos/4195504/pexels-photo-4195504.jpeg?auto=compress&w=400",
     tag: "Pieza original",
     tagColor: "#CCFF00",
   },
@@ -122,7 +88,7 @@ const services = [
   {
     title: "Altavoz",
     sub: "Todas las marcas",
-    img: "https://images.pexels.com/photos/3768914/pexels-photo-3768914.jpeg?auto=compress&w=400",
+    img: "https://images.pexels.com/photos/4195325/pexels-photo-4195325.jpeg?auto=compress&w=400",
     tag: "Certificado",
     tagColor: "#0038FF",
   },
@@ -210,17 +176,22 @@ export function AboutHero() {
             >
               {/* Overlapping brand circles */}
               <div className="flex -space-x-4">
-                {brandIcons.map(({ Icon, bg, color, label }, i) => (
+                {brandIcons.map(({ logo, bg, invert, label }, i) => (
                   <motion.div
                     key={label}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.35 + i * 0.06, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                     title={label}
-                    className="relative flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-[#060812] shadow-xl shrink-0 cursor-default"
-                    style={{ background: bg, color, zIndex: brandIcons.length - i }}
+                    className="relative flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-[#060812] shadow-xl shrink-0 cursor-default overflow-hidden"
+                    style={{ background: bg, zIndex: brandIcons.length - i }}
                   >
-                    <Icon />
+                    <img
+                      src={logo}
+                      alt={label}
+                      className="w-9 h-9 object-contain"
+                      style={{ filter: invert ? 'brightness(0) invert(1)' : 'none' }}
+                    />
                   </motion.div>
                 ))}
               </div>
@@ -270,7 +241,7 @@ export function AboutHero() {
               </div>
 
               <a
-                href="/reparacion-pantalla"
+                href="/servicios"
                 className="shrink-0 inline-flex items-center gap-3 bg-[#CCFF00] text-black font-black text-sm md:text-base px-10 py-5 rounded-full hover:scale-105 active:scale-95 transition-transform duration-200 shadow-[0_0_32px_rgba(204,255,0,0.45)] mb-2"
               >
                 Reservar reparación

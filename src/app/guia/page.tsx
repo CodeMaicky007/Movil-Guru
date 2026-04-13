@@ -485,7 +485,7 @@ export default function GuiaPage() {
                         ¿Necesitas ayuda profesional? Diagnóstico gratuito.
                       </p>
                       <a
-                        href="/reparacion-pantalla"
+                        href="/servicios"
                         className="inline-flex items-center gap-2 bg-[#CCFF00] text-black font-black text-sm px-6 py-2.5 rounded-full hover:shadow-[0_0_24px_rgba(204,255,0,0.3)] hover:scale-105 transition-all duration-200 active:scale-95"
                       >
                         Reservar reparación
@@ -526,7 +526,7 @@ export default function GuiaPage() {
               Trae tu dispositivo sin cita previa. Diagnóstico gratuito y presupuesto al momento. Solo reparamos si tú decides.
             </p>
             <a
-              href="/reparacion-pantalla"
+              href="/servicios"
               className="inline-flex items-center gap-2 bg-[#CCFF00] text-black font-black text-base px-8 py-3.5 rounded-full shadow-[0_0_30px_rgba(204,255,0,0.35)] hover:shadow-[0_0_50px_rgba(204,255,0,0.55)] hover:scale-105 transition-transform duration-200 active:scale-95"
             >
               Solicitar reparación
