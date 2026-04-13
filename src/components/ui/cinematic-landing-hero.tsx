@@ -263,8 +263,10 @@ export function CinematicHero({
           start: "top top",
           end: "+=7000",
           pin: true,
+          pinSpacing: true,
           scrub: 1,
           anticipatePin: 1,
+          invalidateOnRefresh: true,
         },
       });
 
@@ -412,11 +414,11 @@ export function CinematicHero({
   }, [metricValue]);
 
   return (
-    <div className="cinematic-wrapper w-full">
+    <div className="cinematic-wrapper relative w-full">
       <div
         ref={containerRef}
         className={cn(
-          "relative w-screen h-screen overflow-hidden flex items-center justify-center bg-white text-foreground font-sans antialiased",
+          "relative w-full h-screen overflow-hidden flex items-center justify-center bg-white text-foreground font-sans antialiased z-[30]",
           className
         )}
         style={{ perspective: "1500px" }}
@@ -428,7 +430,7 @@ export function CinematicHero({
         className="bg-grid-theme absolute inset-0 z-0 pointer-events-none opacity-50"
         aria-hidden="true"
       />
-      <div className="hero-text-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-screen px-4 will-change-transform">
+      <div className="hero-text-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-full px-4 will-change-transform">
         <h1 className="text-track gsap-reveal text-3d-matte text-5xl md:text-7xl lg:text-[6rem] font-bold tracking-tight mb-2">
           {tagline1}
         </h1>
@@ -436,7 +438,7 @@ export function CinematicHero({
           {tagline2}
         </h1>
       </div>
-      <div className="cta-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-screen px-4 gsap-reveal pointer-events-auto will-change-transform">
+      <div className="cta-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-full px-4 gsap-reveal pointer-events-auto will-change-transform">
         <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight text-silver-matte">
           {ctaHeading}
         </h2>
@@ -500,8 +502,8 @@ export function CinematicHero({
         >
           <div className="card-sheen" aria-hidden="true" />
           <div className="relative w-full h-full max-w-7xl mx-auto px-4 lg:px-12 flex flex-col justify-evenly lg:grid lg:grid-cols-3 items-center lg:gap-8 z-10 py-6 lg:py-0">
-            <div className="card-right-text gsap-reveal order-1 lg:order-3 flex justify-center lg:justify-end z-20 w-full">
-              <h2 className="text-6xl md:text-[6rem] lg:text-[8rem] font-black uppercase tracking-tighter text-card-silver-matte lg:mt-0">
+            <div className="card-right-text gsap-reveal order-1 lg:order-3 flex justify-center lg:justify-end lg:items-center z-20 w-full">
+              <h2 className="text-6xl md:text-[6rem] lg:text-[4.5rem] xl:text-[5.5rem] font-black uppercase tracking-tighter text-card-silver-matte lg:mt-0 text-center lg:text-right">
                 {brandName}
               </h2>
             </div>

@@ -372,7 +372,7 @@ export default function GarantiaPage() {
             </p>
             <h2
               className="text-3xl md:text-5xl font-black text-white leading-tight tracking-tight"
-              style={{ fontFamily: "var(--font-display, inherit)" }}
+              style={{}}
             >
               Reclamar la garantía
               <br />
@@ -442,7 +442,7 @@ export default function GarantiaPage() {
             </p>
             <h2
               className="text-3xl md:text-4xl font-black text-[#0a0a0a] leading-tight tracking-tight mb-5"
-              style={{ fontFamily: "var(--font-display, inherit)" }}
+              style={{}}
             >
               Qué no cubre
               <br />
@@ -509,7 +509,7 @@ export default function GarantiaPage() {
             </p>
             <h2
               className="text-3xl md:text-4xl font-black text-white leading-tight tracking-tight"
-              style={{ fontFamily: "var(--font-display, inherit)" }}
+              style={{}}
             >
               Todo lo que necesitas saber
             </h2>
@@ -543,7 +543,7 @@ export default function GarantiaPage() {
             </span>
             <h2
               className="text-3xl md:text-5xl font-black text-white leading-tight tracking-tight mb-4"
-              style={{ fontFamily: "var(--font-display, inherit)" }}
+              style={{}}
             >
               Tu reparación viene
               <br />

@@ -68,7 +68,7 @@ const CircularBadge = () => (
         />
         <text className="text-[11px] font-black tracking-[0.18em] uppercase" fill="black">
           <textPath href="#circlePath" startOffset="0%">
-            RESERVA HOY • TODAS LAS MARCAS •{' '}
+            DISPONIBLES • RESERVA HOY •{' '}
           </textPath>
         </text>
       </svg>
@@ -111,7 +111,7 @@ export const HeroComponent = () => {
                     '1px 1px 0 #001A99, 2px 2px 0 #001A99, 3px 3px 0 #001A99, 4px 4px 0 #001A99, 5px 5px 0 #001A99, 6px 6px 0 #001A99, 7px 7px 0 #001A99, 8px 8px 0 #001A99, 9px 9px 0 #001A99, 10px 10px 0 #001A99, 11px 11px 0 #001A99, 12px 12px 0 #001A99, 13px 13px 0 #001A99, 14px 14px 0 #001A99',
                 }}
               >
-                MOVIL
+                EXPERTOS
               </h1>
             </div>
 
@@ -124,7 +124,7 @@ export const HeroComponent = () => {
                     '1px 1px 0 #001A99, 2px 2px 0 #001A99, 3px 3px 0 #001A99, 4px 4px 0 #001A99, 5px 5px 0 #001A99, 6px 6px 0 #001A99, 7px 7px 0 #001A99, 8px 8px 0 #001A99, 9px 9px 0 #001A99, 10px 10px 0 #001A99, 11px 11px 0 #001A99, 12px 12px 0 #001A99, 13px 13px 0 #001A99, 14px 14px 0 #001A99',
                 }}
               >
-                REPAIR
+                REPARA
               </h1>
             </div>
 
@@ -137,7 +137,7 @@ export const HeroComponent = () => {
                     '1px 1px 0 #001A99, 2px 2px 0 #001A99, 3px 3px 0 #001A99, 4px 4px 0 #001A99, 5px 5px 0 #001A99, 6px 6px 0 #001A99, 7px 7px 0 #001A99, 8px 8px 0 #001A99, 9px 9px 0 #001A99, 10px 10px 0 #001A99, 11px 11px 0 #001A99, 12px 12px 0 #001A99, 13px 13px 0 #001A99, 14px 14px 0 #001A99',
                 }}
               >
-                EXPERTS
+                MOVILES
               </h1>
             </div>
           </div>

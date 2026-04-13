@@ -79,7 +79,7 @@ export function Header({ dark = false }: { dark?: boolean }) {
         }
       )}
     >
-      <nav className={cn('flex h-14 w-full items-center justify-between px-4 md:transition-all md:duration-300 md:ease-out', scrolled && 'md:px-2', dark && 'text-white')}>
+      <nav className={cn('flex h-14 w-full items-center justify-between px-4 md:transition-all md:duration-300 md:ease-out', scrolled && 'md:px-2', dark && 'text-white')} style={{ fontFamily: "var(--font-display), sans-serif" }}>
         <div className="flex items-center gap-5">
           <Link href="/" className={cn('rounded-md px-2 py-1 flex items-center gap-1.5', dark ? 'hover:bg-white/10' : 'hover:bg-accent')}>
             <div className={cn('font-black text-xs px-2.5 py-1 rounded-xl rounded-bl-sm', dark ? 'bg-white text-black' : 'bg-foreground text-background')}>
@@ -153,11 +153,20 @@ export function Header({ dark = false }: { dark?: boolean }) {
                   Precios
                 </Link>
               </NavigationMenuLink>
+              <NavigationMenuLink className="px-4" asChild>
+                <Link href="/tienda" className={cn('rounded-md p-2 font-semibold flex items-center gap-1.5', dark ? 'text-[#CCFF00] hover:bg-white/10' : 'text-[#0038FF] hover:bg-accent')}>
+                  <span className="size-1.5 rounded-full bg-[#CCFF00] shadow-[0_0_6px_#CCFF00]" />
+                  Tienda
+                </Link>
+              </NavigationMenuLink>
             </NavigationMenuList>
           </NavigationMenu>
         </div>
         <div className="hidden items-center gap-2 md:flex">
           <ProfileMenu dark={dark} />
+          <Link href="/tienda/carrito" className={cn('relative flex items-center justify-center size-9 rounded-full border transition-all', dark ? 'border-white/15 text-white hover:border-[#CCFF00]/60 hover:bg-[#CCFF00]/10' : 'border-foreground/10 hover:border-foreground/30')} aria-label="Carrito">
+            <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
+          </Link>
           <Button asChild className="rounded-full bg-[#CCFF00] text-black border-[#CCFF00] hover:bg-[#b8e600] hover:text-black font-semibold"><Link href="/track">Rastrear Reparación</Link></Button>
         </div>
         <Button
@@ -178,6 +187,10 @@ export function Header({ dark = false }: { dark?: boolean }) {
       >
         <NavigationMenu className="max-w-full">
           <div className="flex w-full flex-col gap-y-2">
+            <Link href="/tienda" className="flex items-center gap-2 font-black text-sm text-[#0038FF] uppercase tracking-wide px-2 py-2 rounded-lg bg-[#CCFF00]/10 hover:bg-[#CCFF00]/20 transition-colors">
+              <span className="size-1.5 rounded-full bg-[#CCFF00] shadow-[0_0_6px_#CCFF00]" />
+              Tienda
+            </Link>
             <span className="text-sm">Servicios</span>
             {productLinks.map((link) => (
               <ListItem key={link.title} {...link} />
@@ -224,6 +237,7 @@ function MobileMenu({ open, children, className, ...props }: MobileMenuProps) {
           'size-full p-4',
           className
         )}
+        style={{ fontFamily: "var(--font-display), sans-serif" }}
         {...props}
       >
         {children}

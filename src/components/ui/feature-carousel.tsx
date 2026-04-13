@@ -145,7 +145,7 @@ export function FeatureCarousel() {
         </p>
         <h2
           className="font-black text-4xl md:text-5xl lg:text-6xl uppercase leading-none tracking-tight text-black"
-          style={{ fontFamily: "Syne, sans-serif" }}
+          style={{ fontFamily: "var(--font-display), sans-serif" }}
         >
           Todo tipo de
           <br />
@@ -233,7 +233,7 @@ export function FeatureCarousel() {
                       </div>
                       <span
                         className="font-semibold text-sm md:text-[15px] tracking-tight whitespace-nowrap uppercase"
-                        style={{ fontFamily: "Syne, sans-serif" }}
+                        style={{ fontFamily: "var(--font-display), sans-serif" }}
                       >
                         {feature.label}
                       </span>
@@ -303,7 +303,7 @@ export function FeatureCarousel() {
                             style={{
                               backgroundColor: "#CCFF00",
                               color: "#0038FF",
-                              fontFamily: "Syne, sans-serif",
+                              fontFamily: "var(--font-display), sans-serif",
                             }}
                           >
                             {index + 1} · {feature.label}
