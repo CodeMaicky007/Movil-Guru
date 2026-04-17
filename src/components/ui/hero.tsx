@@ -97,16 +97,16 @@ export const HeroComponent = () => {
 
 
       {/* Hero Section */}
-      <main className="flex-1 relative z-10 pt-8 pb-32 md:pt-12 md:pb-48 px-4 flex flex-col items-center justify-center w-full max-w-[1440px] mx-auto">
+      <main className="flex-1 relative z-10 pt-16 pb-32 md:pt-20 md:pb-48 px-4 flex flex-col items-center justify-center w-full max-w-[1440px] mx-auto">
         <div className="relative w-full max-w-5xl mx-auto flex flex-col items-center justify-center text-center z-10 mt-4 mb-16">
 
           {/* Headline Stack */}
           <div className="w-full flex flex-col items-center relative z-10 space-y-2 md:space-y-4">
-            <div className="w-full flex justify-start pl-[10%] md:pl-[25%] relative z-30">
+            <div className="w-full flex justify-center relative z-30">
               <h1
                 className="text-[clamp(4.5rem,12vw,160px)] font-black leading-[0.85] tracking-tighter text-[#CCFF00] m-0 p-0 uppercase"
                 style={{
-                  fontFamily: '"Arial Black", Impact, sans-serif',
+                  fontFamily: 'var(--font-display), sans-serif',
                   textShadow:
                     '1px 1px 0 #001A99, 2px 2px 0 #001A99, 3px 3px 0 #001A99, 4px 4px 0 #001A99, 5px 5px 0 #001A99, 6px 6px 0 #001A99, 7px 7px 0 #001A99, 8px 8px 0 #001A99, 9px 9px 0 #001A99, 10px 10px 0 #001A99, 11px 11px 0 #001A99, 12px 12px 0 #001A99, 13px 13px 0 #001A99, 14px 14px 0 #001A99',
                 }}
@@ -119,7 +119,7 @@ export const HeroComponent = () => {
               <h1
                 className="text-[clamp(5rem,15vw,220px)] font-black leading-[0.85] tracking-tighter text-white m-0 p-0 uppercase"
                 style={{
-                  fontFamily: '"Arial Black", Impact, sans-serif',
+                  fontFamily: 'var(--font-display), sans-serif',
                   textShadow:
                     '1px 1px 0 #001A99, 2px 2px 0 #001A99, 3px 3px 0 #001A99, 4px 4px 0 #001A99, 5px 5px 0 #001A99, 6px 6px 0 #001A99, 7px 7px 0 #001A99, 8px 8px 0 #001A99, 9px 9px 0 #001A99, 10px 10px 0 #001A99, 11px 11px 0 #001A99, 12px 12px 0 #001A99, 13px 13px 0 #001A99, 14px 14px 0 #001A99',
                 }}
@@ -128,16 +128,16 @@ export const HeroComponent = () => {
               </h1>
             </div>
 
-            <div className="w-full flex justify-start pl-[15%] md:pl-[30%] relative z-10">
+            <div className="w-full flex justify-center relative z-10">
               <h1
-                className="text-[clamp(4.5rem,12vw,160px)] font-black leading-[0.85] tracking-tighter text-white m-0 p-0 uppercase"
+                className="text-[clamp(4.5rem,12vw,160px)] font-black leading-[0.85] tracking-tighter m-0 p-0 uppercase"
                 style={{
-                  fontFamily: '"Arial Black", Impact, sans-serif',
+                  fontFamily: 'var(--font-display), sans-serif',
                   textShadow:
                     '1px 1px 0 #001A99, 2px 2px 0 #001A99, 3px 3px 0 #001A99, 4px 4px 0 #001A99, 5px 5px 0 #001A99, 6px 6px 0 #001A99, 7px 7px 0 #001A99, 8px 8px 0 #001A99, 9px 9px 0 #001A99, 10px 10px 0 #001A99, 11px 11px 0 #001A99, 12px 12px 0 #001A99, 13px 13px 0 #001A99, 14px 14px 0 #001A99',
                 }}
               >
-                MOVILES
+                <span className="text-white">MOV</span><span className="text-[#CCFF00]">ILE</span><span className="text-white">S</span>
               </h1>
             </div>
           </div>
@@ -194,10 +194,10 @@ export const HeroComponent = () => {
             </motion.div>
 
             {/* Decorative Arrows */}
-            <div className="absolute bottom-[0%] left-[0%] md:left-[10%] w-24 h-24 md:w-32 md:h-32 z-20">
+            <div className="absolute bottom-[8%] -left-40 md:-left-56 w-24 h-24 md:w-32 md:h-32 z-20">
               <ArrowGreenLeft />
             </div>
-            <div className="absolute top-[5%] right-[0%] md:right-[10%] w-24 h-24 md:w-32 md:h-32 z-20">
+            <div className="absolute top-[3%] -right-60 md:-right-80 w-24 h-24 md:w-32 md:h-32 z-20">
               <ArrowGreenRight />
             </div>
 
@@ -216,7 +216,7 @@ export const HeroComponent = () => {
           {/* Card 1 — Screen Repair */}
           <div className="bg-[#F8F9FA] rounded-[2rem] p-8 flex flex-col items-center text-center relative h-64 border border-gray-100">
             <h3 className="text-xl md:text-2xl uppercase leading-tight mb-2 font-black">
-              PANTALLAS DESDE<br />$89
+              <span className="text-[#0038FF]">PANTALLAS</span> DESDE<br /><span className="text-[#0038FF]">39€</span>
             </h3>
             <p className="text-[10px] md:text-xs text-black/60 font-bold mb-auto">
               La mayoría de reparaciones en menos de 90 minutos
@@ -239,7 +239,7 @@ export const HeroComponent = () => {
                 </div>
               </div>
               <div className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-[#CCFF00] text-black font-black text-[10px] px-3 py-2 rounded-xl z-20 shadow-md">
-                Desde $89
+                Desde 39€
               </div>
             </div>
             <div className="hidden md:block absolute -right-12 bottom-8 w-16 h-16 z-30">
@@ -250,7 +250,7 @@ export const HeroComponent = () => {
           {/* Card 2 — Same-Day Service */}
           <div className="bg-[#F8F9FA] rounded-[2rem] p-8 flex flex-col items-center text-center relative h-64 border border-gray-100">
             <h3 className="text-xl md:text-2xl uppercase leading-tight mb-2 font-black">
-              SERVICIO<br />EN EL DÍA
+              <span className="text-[#0038FF]">SERVICIO</span><br />EN EL <span className="text-[#0038FF]">DÍA</span>
             </h3>
             <p className="text-[10px] md:text-xs text-black/60 font-bold mb-auto">
               Piezas en tienda para más de 200 modelos
@@ -283,7 +283,7 @@ export const HeroComponent = () => {
           {/* Card 3 — Lifetime Warranty */}
           <div className="bg-[#F8F9FA] rounded-[2rem] p-8 flex flex-col items-center text-center relative h-64 border border-gray-100">
             <h3 className="text-xl md:text-2xl uppercase leading-tight mb-2 font-black">
-              GARANTÍA<br />DE POR VIDA
+              <span className="text-[#0038FF]">GARANTÍA</span><br />DE POR <span className="text-[#0038FF]">VIDA</span>
             </h3>
             <p className="text-[10px] md:text-xs text-black/60 font-bold mb-auto">
               En cada reparación que realizamos

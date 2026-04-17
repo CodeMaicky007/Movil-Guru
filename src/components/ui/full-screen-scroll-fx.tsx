@@ -79,7 +79,7 @@ export const FullScreenScrollFX = forwardRef<HTMLDivElement, FullScreenFXProps>(
       sections,
       className,
       style,
-      fontFamily = '"Arial Black", Impact, sans-serif',
+      fontFamily = 'var(--font-display), sans-serif',
       header,
       footer,
       gap = 1,

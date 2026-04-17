@@ -221,9 +221,8 @@ function ProductCard({
       className="group relative flex flex-col"
     >
       <div
-        className={`relative aspect-[4/5] overflow-hidden rounded-2xl ${
-          dark ? "bg-white/[0.04]" : "bg-neutral-100"
-        }`}
+        className={`relative aspect-[4/5] overflow-hidden rounded-2xl ${dark ? "bg-white/[0.04]" : "bg-neutral-100"
+          }`}
       >
         {/* Badge */}
         {product.badge && (
@@ -238,17 +237,15 @@ function ProductCard({
         {/* Like */}
         <button
           onClick={() => setLiked((v) => !v)}
-          className={`absolute top-4 right-4 z-10 size-9 rounded-full flex items-center justify-center transition-all ${
-            dark
-              ? "bg-white/10 hover:bg-white/20 border border-white/10"
-              : "bg-white/90 hover:bg-white shadow-sm"
-          }`}
+          className={`absolute top-4 right-4 z-10 size-9 rounded-full flex items-center justify-center transition-all ${dark
+            ? "bg-white/10 hover:bg-white/20 border border-white/10"
+            : "bg-white/90 hover:bg-white shadow-sm"
+            }`}
           aria-label="Favorito"
         >
           <Heart
-            className={`size-4 transition-colors ${
-              liked ? "fill-[#CCFF00] text-[#CCFF00]" : dark ? "text-white" : "text-black"
-            }`}
+            className={`size-4 transition-colors ${liked ? "fill-[#CCFF00] text-[#CCFF00]" : dark ? "text-white" : "text-black"
+              }`}
             strokeWidth={2}
           />
         </button>
@@ -271,9 +268,8 @@ function ProductCard({
       <div className="pt-4 flex flex-col gap-1">
         {product.tag && (
           <span
-            className={`text-[10px] font-black uppercase tracking-[0.25em] ${
-              dark ? "text-[#CCFF00]" : "text-[#0038FF]"
-            }`}
+            className={`text-[10px] font-black uppercase tracking-[0.25em] ${dark ? "text-[#CCFF00]" : "text-[#0038FF]"
+              }`}
           >
             {product.tag}
           </span>
@@ -311,7 +307,7 @@ export default function TiendaPage() {
       <Header />
 
       {/* ═══ HERO ═══ */}
-      <section className="relative w-full bg-[#060812] overflow-hidden">
+      <section className="relative w-full bg-[#060d12] overflow-hidden">
         {/* Ambient blobs */}
         <div className="absolute inset-0 pointer-events-none">
           <div
@@ -353,7 +349,7 @@ export default function TiendaPage() {
               >
                 Protege
                 <br />
-                con{" "}
+                <span className="text-[#0038FF]">con</span>{" "}
                 <span
                   className="text-[#CCFF00] italic"
                   style={{ textShadow: "0 0 60px rgba(204,255,0,0.4)" }}
@@ -424,7 +420,7 @@ export default function TiendaPage() {
                   alt="Funda destacada"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#060812] via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#060d12] via-transparent to-transparent" />
 
                 {/* Floating price tag */}
                 <div className="absolute top-6 right-6 bg-[#CCFF00] text-black rounded-2xl px-4 py-3 rotate-3 shadow-[0_10px_40px_rgba(204,255,0,0.4)]">
@@ -469,9 +465,9 @@ export default function TiendaPage() {
                 Categorías
               </p>
               <h2 className="font-black text-5xl md:text-7xl uppercase leading-[0.9] tracking-tight text-black">
-                Compra por
+                <span className="text-[#0038FF]">Compra</span> por
                 <br />
-                <span className="text-[#0038FF]">lo que necesitas</span>
+                <span className="text-[#CCFF00]">lo que </span><span className="text-black">necesitas</span>
               </h2>
             </div>
             <Link
@@ -513,7 +509,8 @@ export default function TiendaPage() {
 
                   <div className="absolute inset-x-0 bottom-0 p-4">
                     <h3
-                      className="font-black text-white text-xl md:text-2xl uppercase tracking-tight leading-none"
+                      className="font-black text-xl md:text-2xl uppercase tracking-tight leading-none"
+                      style={{ color: cat.accent }}
                     >
                       {cat.name}
                     </h3>
@@ -530,7 +527,7 @@ export default function TiendaPage() {
       </section>
 
       {/* ═══ FEATURED DROPS ═══ */}
-      <section id="drops" className="w-full bg-[#060812] py-20 md:py-28 relative overflow-hidden">
+      <section id="drops" className="w-full bg-[#060d12] py-20 md:py-28 relative overflow-hidden">
         <div
           className="absolute -top-20 left-1/3 w-[500px] h-[500px] rounded-full opacity-20 pointer-events-none"
           style={{
@@ -557,11 +554,10 @@ export default function TiendaPage() {
               {["Todo", "Nuevo", "Ofertas", "Premium"].map((f, i) => (
                 <button
                   key={f}
-                  className={`text-[11px] font-black uppercase tracking-[0.2em] px-4 py-2.5 rounded-full border transition-colors ${
-                    i === 0
-                      ? "bg-[#CCFF00] text-black border-[#CCFF00]"
-                      : "bg-transparent text-white/70 border-white/15 hover:border-white/40"
-                  }`}
+                  className={`text-[11px] font-black uppercase tracking-[0.2em] px-4 py-2.5 rounded-full border transition-colors ${i === 0
+                    ? "bg-[#CCFF00] text-black border-[#CCFF00]"
+                    : "bg-transparent text-white/70 border-white/15 hover:border-white/40"
+                    }`}
                 >
                   {f}
                 </button>
@@ -585,34 +581,67 @@ export default function TiendaPage() {
         </div>
       </section>
 
-      {/* ═══ LAYERED TEXT EDITORIAL ═══ */}
-      <section className="w-full min-h-screen bg-[#CCFF00] relative overflow-hidden flex flex-col items-center justify-center">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+      {/* ═══ LAYERED TEXT + NEWSLETTER ═══ */}
+      <section className="w-full min-h-[76vh] bg-[#CCFF00] overflow-hidden">
+        <div className="max-w-7xl mx-auto h-full min-h-[76vh] grid lg:grid-cols-2 gap-0 items-center">
 
-        <div className="relative w-full flex flex-col items-center justify-center flex-1 px-6 py-10">
-          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-black/60 mb-4">
-            Movil Guru · Manifest
-          </p>
-          <LayeredText
-            lines={[
-              { top: "\u00A0", bottom: "PROTEGE" },
-              { top: "PROTEGE", bottom: "ESTILO" },
-              { top: "ESTILO", bottom: "POTENCIA" },
-              { top: "POTENCIA", bottom: "MOVIL" },
-              { top: "MOVIL", bottom: "GURU" },
-              { top: "GURU", bottom: "FOREVER" },
-              { top: "FOREVER", bottom: "\u00A0" },
-            ]}
-            className="!py-0 !text-black w-full"
-            fontSize="clamp(3rem, 10vw, 120px)"
-            fontSizeMd="clamp(2rem, 6vw, 60px)"
-            lineHeight={100}
-            lineHeightMd={55}
-          />
-          <p className="text-black/70 text-center max-w-xl text-sm md:text-base font-medium mt-8">
-            Pasa el cursor. Cada accesorio lleva la misma filosofía: reparación honesta,
-            producto honesto, precio honesto.
-          </p>
+          {/* Left — LayeredText */}
+          <div className="flex items-center justify-start -ml-64 py-12 lg:py-0">
+            <LayeredText
+              lines={[
+                { top: "\u00A0", bottom: "PROTEGE" },
+                { top: "PROTEGE", bottom: "ESTILO" },
+                { top: "ESTILO", bottom: "POTENCIA" },
+                { top: "POTENCIA", bottom: "MOVIL" },
+                { top: "MOVIL", bottom: "GURU" },
+                { top: "GURU", bottom: "FOREVER" },
+                { top: "FOREVER", bottom: "\u00A0" },
+              ]}
+              className="!py-0 !text-black"
+              fontSize="clamp(1.6rem, 5.2vw, 72px)"
+              fontSizeMd="clamp(1.2rem, 4vw, 52px)"
+              lineHeight={86}
+              lineHeightMd={62}
+            />
+          </div>
+
+          {/* Divider */}
+          <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-black/10" />
+
+          {/* Right — Newsletter */}
+          <div className="flex flex-col items-start justify-center py-12 lg:py-0 lg:pl-48 pr-6 md:pr-64 border-t lg:border-t-0 border-black/10">
+            <p className="text-xs font-black uppercase tracking-[0.4em] text-black/50 mb-5">
+              Ofertas exclusivas
+            </p>
+            <h2 className="font-black text-5xl md:text-6xl lg:text-7xl uppercase leading-[0.88] tracking-tight text-black mb-6">
+              Sé el <span className="text-[#0038FF]">primero</span>
+              <br />
+              en <span className="text-black">saberlo.</span>
+            </h2>
+            <p className="text-black/60 text-base md:text-lg leading-relaxed mb-10 max-w-sm">
+              Drops, descuentos y accesorios nuevos — directo a tu email antes que nadie. Sin spam.
+            </p>
+            <form
+              onSubmit={(e) => e.preventDefault()}
+              className="w-full flex flex-col gap-4 max-w-sm"
+            >
+              <input
+                type="email"
+                required
+                placeholder="tu@email.com"
+                className="w-full bg-black/10 border border-black/15 rounded-full px-6 py-4 text-black placeholder:text-black/40 text-base focus:outline-none focus:border-black/40 transition-colors"
+              />
+              <button
+                type="submit"
+                className="w-full bg-black text-[#CCFF00] font-black text-sm uppercase tracking-[0.25em] px-8 py-4 rounded-full hover:bg-black/80 active:scale-[0.98] transition-all"
+              >
+                Suscribirme gratis
+              </button>
+            </form>
+            <p className="text-black/40 text-xs font-semibold mt-5">
+              Sin spam · Cancela cuando quieras
+            </p>
+          </div>
         </div>
       </section>
 
@@ -625,9 +654,9 @@ export default function TiendaPage() {
                 Más vendidos
               </p>
               <h2 className="font-black text-5xl md:text-7xl uppercase leading-[0.9] tracking-tight text-black">
-                Probados por
+                <span className="text-[#0038FF]">Probados</span> por
                 <br />
-                <span className="text-black/20">miles.</span>
+                <span className="text-[#CCFF00]" style={{WebkitTextStroke:"1px #b8e600"}}>miles.</span>
               </h2>
             </div>
             <p className="text-neutral-500 max-w-xs text-sm leading-relaxed">
@@ -688,7 +717,7 @@ export default function TiendaPage() {
                 <div className="absolute -top-20 -right-20 size-48 rounded-full bg-[#CCFF00]/0 group-hover:bg-[#CCFF00]/30 blur-2xl transition-colors duration-500" />
                 <v.icon className="size-8 text-[#0038FF] mb-4 relative z-10" strokeWidth={2} />
                 <h3 className="font-black text-xl text-black uppercase tracking-tight mb-2 relative z-10">
-                  {v.title}
+                  <span className="text-[#0038FF]">{v.title}</span>
                 </h3>
                 <p className="text-sm text-neutral-600 leading-relaxed relative z-10">
                   {v.desc}
@@ -700,7 +729,7 @@ export default function TiendaPage() {
       </section>
 
       {/* ═══ NEWSLETTER CTA ═══ */}
-      <section className="w-full bg-[#060812] relative overflow-hidden py-20 md:py-28">
+      <section className="w-full bg-[#060d12] relative overflow-hidden py-20 md:py-28">
         <div
           className="absolute inset-0 opacity-30 pointer-events-none"
           style={{

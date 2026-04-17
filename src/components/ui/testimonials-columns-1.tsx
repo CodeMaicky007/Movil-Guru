@@ -130,7 +130,7 @@ export const Testimonials = () => {
             className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tight mt-5 text-center"
             style={{ fontFamily: "var(--font-display, inherit)" }}
           >
-            La confianza de miles de clientes
+            La confianza de <span style={{ color: "#0038FF" }}>miles</span> de <span style={{ color: "#0038FF" }}>clientes</span>
           </h2>
           <p className="text-center mt-4 opacity-60 text-sm md:text-base leading-relaxed">
             Reparaciones reales. Resultados reales. Descubre lo que dicen nuestros clientes.

@@ -46,23 +46,27 @@ export function LayeredText({
     if (!containerRef.current) return
 
     const container = containerRef.current
-    const paragraphs = container.querySelectorAll("p")
-
-    timelineRef.current = gsap.timeline({ paused: true })
-
-    timelineRef.current.to(paragraphs, {
-      y: window.innerWidth >= 768 ? -60 : -35,
-      duration: 0.8,
-      ease: "power2.out",
-      stagger: 0.08,
-    })
+    const paragraphs = Array.from(container.querySelectorAll("p"))
+    const yOffset = window.innerWidth >= 768 ? -lineHeight : -lineHeightMd
 
     const handleMouseEnter = () => {
-      timelineRef.current?.play()
+      gsap.to(paragraphs, {
+        y: yOffset,
+        duration: 0.7,
+        ease: "power2.out",
+        stagger: 0.06,
+        overwrite: "auto",
+      })
     }
 
     const handleMouseLeave = () => {
-      timelineRef.current?.reverse()
+      gsap.to(paragraphs, {
+        y: 0,
+        duration: 0.6,
+        ease: "power2.inOut",
+        stagger: 0.04,
+        overwrite: "auto",
+      })
     }
 
     container.addEventListener("mouseenter", handleMouseEnter)
@@ -71,9 +75,9 @@ export function LayeredText({
     return () => {
       container.removeEventListener("mouseenter", handleMouseEnter)
       container.removeEventListener("mouseleave", handleMouseLeave)
-      timelineRef.current?.kill()
+      gsap.killTweensOf(paragraphs)
     }
-  }, [lines])
+  }, [lines, lineHeight, lineHeightMd])
 
   return (
     <div
@@ -98,22 +102,22 @@ export function LayeredText({
               }
             >
               <p
-                className="leading-[55px] md:leading-[30px] px-[15px] align-top whitespace-nowrap m-0"
+                className="px-[15px] align-top whitespace-nowrap m-0"
                 style={
                   {
                     height: `${lineHeight}px`,
-                    lineHeight: `${lineHeight - 5}px`,
+                    lineHeight: `${lineHeight}px`,
                   } as React.CSSProperties
                 }
               >
                 {line.top}
               </p>
               <p
-                className="leading-[55px] md:leading-[30px] px-[15px] align-top whitespace-nowrap m-0"
+                className="px-[15px] align-top whitespace-nowrap m-0"
                 style={
                   {
                     height: `${lineHeight}px`,
-                    lineHeight: `${lineHeight - 5}px`,
+                    lineHeight: `${lineHeight}px`,
                   } as React.CSSProperties
                 }
               >

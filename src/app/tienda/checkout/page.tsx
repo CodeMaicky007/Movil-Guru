@@ -39,7 +39,7 @@ function CreditCardVisual({ number, holder, expiry, flipped }: {
           style={{
             backfaceVisibility: "hidden",
             WebkitBackfaceVisibility: "hidden",
-            background: "linear-gradient(135deg, #0038FF 0%, #001ea8 55%, #060812 100%)",
+            background: "linear-gradient(135deg, #0038FF 0%, #001ea8 55%, #060d12 100%)",
             boxShadow: "0 20px 60px rgba(0,56,255,0.45), 0 0 0 1px rgba(255,255,255,0.07)",
           }}
         >
@@ -81,7 +81,7 @@ function CreditCardVisual({ number, holder, expiry, flipped }: {
             backfaceVisibility: "hidden",
             WebkitBackfaceVisibility: "hidden",
             transform: "rotateY(180deg)",
-            background: "linear-gradient(135deg, #111827 0%, #060812 100%)",
+            background: "linear-gradient(135deg, #111827 0%, #060d12 100%)",
             boxShadow: "0 20px 60px rgba(0,0,0,0.6)",
           }}
         >
@@ -235,7 +235,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <main className="w-full bg-[#060812] min-h-screen">
+    <main className="w-full bg-[#060d12] min-h-screen">
       <Header dark />
 
       {/* ── Top bar ── */}

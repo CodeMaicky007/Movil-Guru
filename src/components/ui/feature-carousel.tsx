@@ -147,9 +147,9 @@ export function FeatureCarousel() {
           className="font-black text-4xl md:text-5xl lg:text-6xl uppercase leading-none tracking-tight text-black"
           style={{ fontFamily: "var(--font-display), sans-serif" }}
         >
-          Todo tipo de
+          <span style={{ color: "#0038FF" }}>Todo</span> tipo de
           <br />
-          <span style={{ color: "#0038FF" }}>reparación</span>
+          <span style={{ color: "#0038FF" }}>repar</span><span style={{ color: "#CCFF00", WebkitTextStroke: "1px #b8e600" }}>ación</span>
         </h2>
       </div>
 

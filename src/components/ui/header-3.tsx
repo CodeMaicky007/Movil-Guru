@@ -37,6 +37,7 @@ import {
   UserPlus,
   Wrench,
   LogOut,
+  Store,
 } from 'lucide-react';
 
 type LinkItem = {
@@ -67,15 +68,15 @@ export function Header({ dark = false }: { dark?: boolean }) {
       className={cn(
         'sticky top-0 z-50 mx-auto w-full max-w-6xl border-b border-transparent md:rounded-full md:border md:border-transparent md:transition-all md:duration-300 md:ease-out',
         dark
-          ? 'bg-[#060812]/90 backdrop-blur-md border-white/[0.06]'
+          ? 'bg-[#060d12]/90 backdrop-blur-md border-white/[0.06]'
           : '',
         {
           'bg-background/95 supports-[backdrop-filter]:bg-background/50 border-border backdrop-blur-lg md:top-4 md:max-w-5xl md:shadow md:rounded-full':
             scrolled && !dark && !open,
-          'bg-[#060812]/95 border-white/[0.10] md:top-4 md:max-w-5xl md:shadow-lg md:border-white/[0.10] md:rounded-full':
+          'bg-[#060d12]/95 border-white/[0.10] md:top-4 md:max-w-5xl md:shadow-lg md:border-white/[0.10] md:rounded-full':
             scrolled && dark && !open,
           'bg-background/90': open && !dark,
-          'bg-[#060812]/95': open && dark,
+          'bg-[#060d12]/95': open && dark,
         }
       )}
     >
@@ -154,6 +155,12 @@ export function Header({ dark = false }: { dark?: boolean }) {
                 </Link>
               </NavigationMenuLink>
               <NavigationMenuLink className="px-4" asChild>
+                <Link href="/tiendas" className={cn('rounded-md p-2 flex items-center gap-1.5', dark ? 'text-white hover:bg-white/10' : 'hover:bg-accent')}>
+                  <Store className="size-3.5" />
+                  Tiendas
+                </Link>
+              </NavigationMenuLink>
+              <NavigationMenuLink className="px-4" asChild>
                 <Link href="/tienda" className={cn('rounded-md p-2 font-semibold flex items-center gap-1.5', dark ? 'text-[#CCFF00] hover:bg-white/10' : 'text-[#0038FF] hover:bg-accent')}>
                   <span className="size-1.5 rounded-full bg-[#CCFF00] shadow-[0_0_6px_#CCFF00]" />
                   Tienda
@@ -190,6 +197,10 @@ export function Header({ dark = false }: { dark?: boolean }) {
             <Link href="/tienda" className="flex items-center gap-2 font-black text-sm text-[#0038FF] uppercase tracking-wide px-2 py-2 rounded-lg bg-[#CCFF00]/10 hover:bg-[#CCFF00]/20 transition-colors">
               <span className="size-1.5 rounded-full bg-[#CCFF00] shadow-[0_0_6px_#CCFF00]" />
               Tienda
+            </Link>
+            <Link href="/tiendas" className="flex items-center gap-2 text-sm px-2 py-2 rounded-lg hover:bg-accent transition-colors">
+              <Store className="size-4" />
+              Tiendas
             </Link>
             <span className="text-sm">Servicios</span>
             {productLinks.map((link) => (
@@ -400,7 +411,7 @@ function ProfileMenu({ dark }: { dark?: boolean }) {
       >
         <UserIcon className="size-4 transition-transform duration-300 group-hover:scale-110" />
         {loggedIn && (
-          <span className="absolute -top-0.5 -right-0.5 size-2.5 rounded-full bg-[#CCFF00] ring-2 ring-[#060812]" />
+          <span className="absolute -top-0.5 -right-0.5 size-2.5 rounded-full bg-[#CCFF00] ring-2 ring-[#060d12]" />
         )}
       </button>
 
@@ -410,7 +421,7 @@ function ProfileMenu({ dark }: { dark?: boolean }) {
         className={cn(
           'absolute right-0 top-[calc(100%+10px)] w-72 origin-top-right rounded-2xl border p-2 shadow-2xl backdrop-blur-xl transition-all duration-200',
           dark
-            ? 'border-white/10 bg-[#0a0d1a]/95'
+            ? 'border-white/10 bg-[#070c10]/95'
             : 'border-foreground/10 bg-background/95',
           open
             ? 'pointer-events-auto translate-y-0 scale-100 opacity-100'

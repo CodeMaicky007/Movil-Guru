@@ -58,8 +58,6 @@ export default function Home() {
         }
         metricValue={47}
         metricLabel="Min. prom. reparación de pantalla"
-        ctaHeading="Reparado hoy. Respaldado para siempre."
-        ctaDescription="Ven a nuestra tienda o envíalo. Mismos técnicos certificados, misma garantía de por vida, resultados en el mismo día para la mayoría de reparaciones."
       />
       <Testimonials />
       <PricingSection />

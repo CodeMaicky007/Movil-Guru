@@ -63,7 +63,7 @@ export default function PerfilPage() {
   const [tab, setTab] = React.useState("reparaciones");
 
   return (
-    <main className="w-full bg-[#060812] min-h-screen relative overflow-hidden">
+    <main className="w-full bg-[#060d12] min-h-screen relative overflow-hidden">
       <Header dark />
 
       <div
@@ -81,7 +81,7 @@ export default function PerfilPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="relative overflow-hidden rounded-[28px] border border-white/[0.08] bg-gradient-to-br from-[#0a0d1a] via-[#0a0d1a] to-[#0f1428] p-8 md:p-10 mb-8"
+          className="relative overflow-hidden rounded-[28px] border border-white/[0.08] bg-gradient-to-br from-[#070c10] via-[#070c10] to-[#0f1428] p-8 md:p-10 mb-8"
         >
           <div
             aria-hidden
@@ -99,14 +99,14 @@ export default function PerfilPage() {
               className="relative"
             >
               <div className="size-24 rounded-2xl bg-gradient-to-br from-[#CCFF00] to-[#84cc16] p-[2px]">
-                <div className="w-full h-full rounded-2xl bg-[#060812] flex items-center justify-center text-3xl font-black text-[#CCFF00]">
+                <div className="w-full h-full rounded-2xl bg-[#060d12] flex items-center justify-center text-3xl font-black text-[#CCFF00]">
                   CM
                 </div>
               </div>
               <motion.div
                 animate={{ scale: [1, 1.2, 1] }}
                 transition={{ repeat: Infinity, duration: 2 }}
-                className="absolute -bottom-1 -right-1 size-5 rounded-full bg-[#CCFF00] ring-4 ring-[#060812]"
+                className="absolute -bottom-1 -right-1 size-5 rounded-full bg-[#CCFF00] ring-4 ring-[#060d12]"
               />
             </motion.div>
 
@@ -222,7 +222,7 @@ export default function PerfilPage() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: i * 0.08, duration: 0.5 }}
-                      className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0a0d1a]/70 p-5 backdrop-blur-sm hover:border-[#CCFF00]/30 transition-colors"
+                      className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[#070c10]/70 p-5 backdrop-blur-sm hover:border-[#CCFF00]/30 transition-colors"
                     >
                       <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
                         <div className="flex gap-4 min-w-0">
@@ -303,7 +303,7 @@ export default function PerfilPage() {
                 key={tab}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="rounded-2xl border border-white/[0.08] bg-[#0a0d1a]/70 p-10 text-center backdrop-blur-sm"
+                className="rounded-2xl border border-white/[0.08] bg-[#070c10]/70 p-10 text-center backdrop-blur-sm"
               >
                 <TrendingUp className="mx-auto size-10 text-[#CCFF00] mb-4" />
                 <h3

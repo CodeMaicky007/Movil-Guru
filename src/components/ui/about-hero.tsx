@@ -100,13 +100,13 @@ export function AboutHero() {
     <>
       <style dangerouslySetInnerHTML={{ __html: MARQUEE_STYLES }} />
 
-      <div className="relative w-full bg-[#060812] overflow-hidden">
+      <div className="relative w-full bg-[#0038FF] overflow-hidden">
 
         {/* ── Ambient blobs ── */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div
             className="blob-1 absolute -top-32 -left-32 w-[600px] h-[600px] rounded-full opacity-20"
-            style={{ background: "radial-gradient(circle, #0038FF 0%, transparent 70%)", filter: "blur(60px)" }}
+            style={{ background: "radial-gradient(circle, #001A99 0%, transparent 70%)", filter: "blur(60px)" }}
           />
           <div
             className="blob-2 absolute -top-20 right-0 w-[500px] h-[500px] rounded-full opacity-15"
@@ -114,31 +114,31 @@ export function AboutHero() {
           />
           <div
             className="blob-3 absolute bottom-0 left-1/3 w-[400px] h-[400px] rounded-full opacity-10"
-            style={{ background: "radial-gradient(circle, #0038FF 0%, transparent 70%)", filter: "blur(70px)" }}
+            style={{ background: "radial-gradient(circle, #001A99 0%, transparent 70%)", filter: "blur(70px)" }}
           />
           {/* Grid */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff07_1px,transparent_1px),linear-gradient(to_bottom,#ffffff07_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff15_1px,transparent_1px),linear-gradient(to_bottom,#ffffff15_1px,transparent_1px)] bg-[size:4rem_4rem]" />
         </div>
 
         {/* ── Main glass card ── */}
-        <div className="relative z-10 px-4 pt-10 pb-0 md:px-8">
+        <div className="relative z-10 px-4 pt-12 pb-0 md:px-8 md:pt-16">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="mx-auto max-w-7xl rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-sm shadow-[0_0_80px_rgba(0,56,255,0.08)] p-8 md:p-14 lg:p-20 flex flex-col gap-10 md:gap-14"
+            className="mx-auto max-w-6xl rounded-2xl border-2 border-[#CCFF00] bg-white/[0.02] backdrop-blur-sm shadow-[0_0_60px_rgba(204,255,0,0.2)] p-6 md:p-10 flex flex-col gap-3 md:gap-4 overflow-hidden"
           >
 
             {/* ── Row 1: "QUIÉNES" + description ── */}
-            <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-14">
+            <div className="flex flex-row items-center gap-4 md:gap-6">
               <motion.h1
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="text-[clamp(4rem,13vw,140px)] font-black leading-[0.82] tracking-tighter uppercase text-[#CCFF00] shrink-0 mix-blend-plus-lighter"
+                className="text-[clamp(2.5rem,8vw,92px)] font-black leading-[0.85] tracking-tighter uppercase text-[#CCFF00] shrink-0"
                 style={{
-                  fontFamily: '"Arial Black", Impact, sans-serif',
-                  textShadow: "0 0 60px rgba(204,255,0,0.3)",
+                  fontFamily: 'var(--font-display), sans-serif',
+                  textShadow: "0 0 40px rgba(204,255,0,0.3)",
                 }}
               >
                 QUIÉNES
@@ -148,19 +148,19 @@ export function AboutHero() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.25 }}
-                className="flex flex-col gap-4 max-w-sm"
+                className="flex flex-col gap-1.5 ml-auto"
               >
-                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#CCFF00]/70">
+                <span className="text-[9px] font-black uppercase tracking-[0.25em] text-[#CCFF00]/70">
                   Movil Guru · Desde 2019
                 </span>
-                <p className="text-white/60 text-base md:text-lg leading-relaxed font-medium">
-                  Un taller de confianza con más de 5 años reparando móviles de todas las marcas — con honestidad, transparencia y garantía real.
+                <p className="text-white/70 text-[10px] leading-snug font-medium max-w-[200px]">
+                  5 años, todas las marcas. Honestidad y garantía real.
                 </p>
-                <div className="flex gap-2 flex-wrap">
-                  <span className="bg-[#CCFF00] text-black font-black text-xs px-4 py-1.5 rounded-full shadow-[0_0_16px_rgba(204,255,0,0.4)]">
+                <div className="flex gap-1.5 flex-wrap">
+                  <span className="bg-[#CCFF00] text-black font-black text-[9px] px-2.5 py-1 rounded-full">
                     10k+ reparaciones
                   </span>
-                  <span className="border border-white/20 text-white/70 text-xs px-4 py-1.5 rounded-full font-semibold">
+                  <span className="border border-white/20 text-white/70 text-[9px] px-2.5 py-1 rounded-full font-semibold">
                     99% satisfacción
                   </span>
                 </div>
@@ -172,10 +172,10 @@ export function AboutHero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16"
+              className="flex flex-row items-center gap-4 md:gap-6"
             >
               {/* Overlapping brand circles */}
-              <div className="flex -space-x-4">
+              <div className="flex -space-x-3">
                 {brandIcons.map(({ logo, bg, invert, label }, i) => (
                   <motion.div
                     key={label}
@@ -183,13 +183,13 @@ export function AboutHero() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.35 + i * 0.06, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                     title={label}
-                    className="relative flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-[#060812] shadow-xl shrink-0 cursor-default overflow-hidden"
+                    className="relative flex items-center justify-center w-9 h-9 md:w-12 md:h-12 rounded-full border-2 border-[#0038FF] shadow-xl shrink-0 cursor-default overflow-hidden"
                     style={{ background: bg, zIndex: brandIcons.length - i }}
                   >
                     <img
                       src={logo}
                       alt={label}
-                      className="w-9 h-9 object-contain"
+                      className="w-4 h-4 md:w-6 md:h-6 object-contain"
                       style={{ filter: invert ? 'brightness(0) invert(1)' : 'none' }}
                     />
                   </motion.div>
@@ -200,49 +200,53 @@ export function AboutHero() {
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                className="text-[clamp(4rem,13vw,140px)] font-black leading-[0.82] tracking-tighter uppercase text-white mix-blend-plus-lighter"
+                className="text-[clamp(2.5rem,8vw,92px)] font-black leading-[0.85] tracking-tighter uppercase text-white"
                 style={{
-                  fontFamily: '"Arial Black", Impact, sans-serif',
-                  textShadow: "0 0 60px rgba(255,255,255,0.12)",
+                  fontFamily: 'var(--font-display), sans-serif',
+                  textShadow: "0 0 40px rgba(255,255,255,0.12)",
                 }}
               >
                 SOMOS
               </motion.h1>
             </motion.div>
 
-            {/* ── Row 3: "MOVIL GURU" + CTA ── */}
+            {/* ── Row 3: "MOVIL GURU" ── */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col lg:flex-row lg:items-end gap-8"
+              className="flex flex-row items-center gap-2 md:gap-3 w-full"
             >
-              {/* Logo: MOVIL + GURU pill */}
-              <div
-                className="flex items-center gap-4 md:gap-6"
-                style={{ filter: "drop-shadow(0 0 40px rgba(204,255,0,0.2))" }}
+              <span
+                className="text-[clamp(2.5rem,8vw,92px)] font-black leading-none tracking-tighter uppercase text-black px-3 md:px-4 rounded-[0.3em] shrink-0"
+                style={{
+                  fontFamily: 'var(--font-display), sans-serif',
+                  background: "#ffffff",
+                }}
               >
-                <span
-                  className="text-[clamp(3.5rem,10vw,120px)] font-black leading-none tracking-tighter uppercase text-white"
-                  style={{ fontFamily: '"Arial Black", Impact, sans-serif' }}
-                >
-                  MOVIL
-                </span>
-                <span
-                  className="text-[clamp(3.5rem,10vw,120px)] font-black leading-none tracking-tighter uppercase text-black px-6 md:px-8 rounded-[0.35em]"
-                  style={{
-                    fontFamily: '"Arial Black", Impact, sans-serif',
-                    background: "#CCFF00",
-                    boxShadow: "0 0 48px rgba(204,255,0,0.5)",
-                  }}
-                >
-                  GURU
-                </span>
-              </div>
+                MOVIL
+              </span>
+              <span
+                className="text-[clamp(2.5rem,8vw,92px)] font-black leading-none tracking-tighter uppercase text-black px-3 md:px-4 rounded-[0.3em] shrink-0"
+                style={{
+                  fontFamily: 'var(--font-display), sans-serif',
+                  background: "#CCFF00",
+                  boxShadow: "0 0 40px rgba(204,255,0,0.5)",
+                }}
+              >
+                GURU
+              </span>
+            </motion.div>
 
+            {/* ── Row 4: CTA button ── */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            >
               <a
                 href="/servicios"
-                className="shrink-0 inline-flex items-center gap-3 bg-[#CCFF00] text-black font-black text-sm md:text-base px-10 py-5 rounded-full hover:scale-105 active:scale-95 transition-transform duration-200 shadow-[0_0_32px_rgba(204,255,0,0.45)] mb-2"
+                className="inline-flex items-center gap-2 bg-[#CCFF00] text-black font-black text-sm px-7 py-3.5 rounded-full hover:scale-105 active:scale-95 transition-transform duration-200 shadow-[0_0_24px_rgba(204,255,0,0.45)]"
               >
                 Reservar reparación
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -260,7 +264,7 @@ export function AboutHero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.55, duration: 0.5 }}
-            className="text-center text-white/35 text-xs font-black uppercase tracking-[0.3em] mb-7"
+            className="text-center text-white/40 text-xs font-black uppercase tracking-[0.3em] mb-7"
           >
             Nuestros servicios más solicitados
           </motion.p>
@@ -270,15 +274,15 @@ export function AboutHero() {
               {[...services, ...services].map((s, i) => (
                 <div
                   key={i}
-                  className="relative flex items-center gap-0 overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm min-w-[240px] group hover:border-white/20 transition-colors duration-300"
+                  className="relative flex items-center gap-0 overflow-hidden rounded-2xl border border-white/[0.12] bg-white/[0.08] min-w-[240px] group hover:border-white/25 transition-colors duration-300"
                 >
                   {/* Tag */}
                   <div
                     className="absolute top-3 left-3 z-10 text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full"
                     style={{
-                      background: s.tagColor === "#CCFF00" ? "rgba(204,255,0,0.15)" : "rgba(0,56,255,0.2)",
-                      color: s.tagColor,
-                      border: `1px solid ${s.tagColor}30`,
+                      background: s.tagColor === "#CCFF00" ? "rgba(204,255,0,0.2)" : "rgba(255,255,255,0.15)",
+                      color: s.tagColor === "#CCFF00" ? "#CCFF00" : "#ffffff",
+                      border: `1px solid ${s.tagColor === "#CCFF00" ? "rgba(204,255,0,0.4)" : "rgba(255,255,255,0.25)"}`,
                     }}
                   >
                     {s.tag}
@@ -287,7 +291,7 @@ export function AboutHero() {
                   {/* Text */}
                   <div className="flex flex-col px-5 py-5 pt-10 flex-1 min-w-[130px]">
                     <h3 className="font-black text-white text-base leading-tight">{s.title}</h3>
-                    <p className="text-white/45 text-xs mt-1 font-medium">{s.sub}</p>
+                    <p className="text-white/55 text-xs mt-1 font-medium">{s.sub}</p>
                   </div>
 
                   {/* Photo */}
@@ -297,7 +301,7 @@ export function AboutHero() {
                       alt={s.title}
                       className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#060812]/60 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#0038FF]/70 to-transparent" />
                   </div>
                 </div>
               ))}
@@ -305,8 +309,8 @@ export function AboutHero() {
           </div>
         </div>
 
-        {/* Bottom fade into page */}
-        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#060812] to-transparent pointer-events-none z-20" />
+        {/* Bottom fade into white */}
+        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white to-transparent pointer-events-none z-20" />
       </div>
     </>
   );

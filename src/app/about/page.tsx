@@ -54,16 +54,16 @@ const companies = [
 
 export default function AboutPage() {
   return (
-    <main className="w-full bg-[#060812]">
-      <Header dark />
+    <main className="w-full bg-white">
+      <Header />
 
       {/* ── Hero ── */}
       <AboutHero />
 
       {/* ── About3 — Company overview ── */}
       <About3
-        title="Somos Movil Guru"
-        description="Un taller especializado fundado en 2019 con una misión clara: reparar cualquier móvil de cualquier marca con piezas de calidad, técnicos certificados y una garantía que realmente cumplimos."
+        title={<>MOVIL <span className="text-[#0038FF]">GURU.</span> <span className="text-[#CCFF00] [text-shadow:0_2px_12px_rgba(204,255,0,0.25)]">PUNTO.</span></>}
+        description="Cinco años. Más de 10.000 móviles reparados. Una sola regla: si no lo arreglamos, no cobras. Así de simple."
         mainImage={{
           src: "https://images.pexels.com/photos/4792733/pexels-photo-4792733.jpeg?auto=compress&w=1200",
           alt: "Taller Movil Guru",
@@ -75,42 +75,38 @@ export default function AboutPage() {
         breakout={{
           src: "",
           alt: "Movil Guru",
-          title: "Tu móvil, nuestra responsabilidad",
-          description: "Nunca usamos piezas de baja calidad. Cada reparación lleva garantía mínima de 90 días — de por vida en piezas originales.",
-          buttonText: "Ver política de garantía",
-          buttonUrl: "/warranty",
+          title: "Sin letra pequeña. Sin sorpresas.",
+          description: "Piezas originales o de calidad OEM. Garantía de por vida. Te mostramos la pieza antes de cambiarla. No cobramos si no reparamos.",
+          buttonText: "Ver garantía",
+          buttonUrl: "/garantia",
         }}
-        companiesTitle="Reparamos todas las marcas principales"
+        companiesTitle="Todas las marcas. Sin excepción."
         companies={companies}
-        achievementsTitle="Números que lo dicen todo"
-        achievementsDescription="Cada cifra representa un cliente que confió en nosotros y no se arrepintió."
+        achievementsTitle={<>LOS <span className="text-[#CCFF00]">NÚMEROS</span> NO <span className="text-[#CCFF00] [text-shadow:0_0_20px_rgba(204,255,0,0.4)]">MIENTEN</span></>}
+        achievementsDescription="Cada cifra es un móvil reparado, un cliente que volvió, una garantía que cumplimos."
         achievements={achievements}
       />
 
       {/* ── ContainerScroll — Cinematic workshop shot ── */}
-      <div className="bg-[#060812]">
+      <div className="bg-white">
         <ContainerScroll
           titleComponent={
             <div className="mb-8">
-              <p className="text-xs font-black uppercase tracking-[0.3em] text-[#CCFF00] mb-4">
-                Nuestro Taller
+              <p className="text-xs font-black uppercase tracking-[0.3em] text-[#0038FF] mb-4">
+                Nuestro Taller · Desde 2019
               </p>
               <h2
-                className="text-4xl md:text-6xl font-black text-white leading-tight"
+                className="text-4xl md:text-6xl font-black text-black leading-tight"
                 style={{ fontFamily: "var(--font-display, inherit)" }}
               >
-                Tu móvil en manos
+                Tu móvil{" "}
+                <span className="text-[#0038FF]">en manos</span>
                 <br />
-                <span
-                  className="text-[#CCFF00]"
-                  style={{
-                    textShadow: "0 0 40px rgba(204,255,0,0.4)",
-                  }}
-                >
+                <span className="text-[#CCFF00] [text-shadow:0_2px_12px_rgba(204,255,0,0.25)]">
                   de expertos
                 </span>
               </h2>
-              <p className="text-white/50 mt-4 text-base max-w-md mx-auto">
+              <p className="text-black/50 mt-4 text-base max-w-md mx-auto">
                 Equipamiento profesional, técnicos certificados y protocolos de privacidad estrictos en cada reparación.
               </p>
             </div>
@@ -146,35 +142,35 @@ export default function AboutPage() {
 
       {/* ── LandingAccordionItem — Services ── */}
       <LandingAccordionItem
-        heading="Cada reparación es nuestra especialidad"
-        subheading="Cinco años perfeccionando cada tipo de reparación. Sin excepciones, sin sorpresas."
-        ctaText="Ver precios"
-        ctaHref="/reparacion-pantalla"
+        heading={<>Lo que otros <span className="text-[#0038FF]">rechazan,</span> nosotros <span className="text-[#CCFF00] [text-shadow:0_2px_16px_rgba(204,255,0,0.3)]">lo reparamos.</span></>}
+        subheading="Pantallas OLED, plegables, daño por agua, microsoldadura — sin excepciones, entregado hoy."
+        ctaText="Ver todos los servicios"
+        ctaHref="/servicios"
       />
 
       {/* ── GlassmorphismTeamBlock — Team profile ── */}
       <GlassmorphismTeamBlock
-        badgeLabel="Nuestro Equipo Técnico"
+        badgeLabel="Quién hay detrás"
         name="Carlos Mendoza"
-        role="Técnico Principal · Fundador"
-        bio="Más de 8 años reparando dispositivos móviles de todas las marcas. Fundé Movil Guru con una idea simple: reparaciones honestas, transparentes y con una garantía que realmente se cumple."
+        role="Fundador · Técnico Principal"
+        bio="8 años reparando lo que otros no pueden. Fundé Movil Guru con una regla: si no lo arreglamos, no cobras. Nada de excusas, nada de letra pequeña."
         avatarSrc="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&w=400"
         highlights={[
           {
-            title: "Especialidad principal",
-            description: "Microsoldadura y diagnóstico a nivel de componente. Reparaciones que otros talleres rechazan — pantallas plegables, logic boards y recuperación de datos.",
+            title: "Lo que nadie más toca",
+            description: "Microsoldadura a nivel de componente, logic boards, pantallas plegables y recuperación de datos. Reparaciones que el resto rechaza.",
           },
           {
-            title: "Certificaciones",
-            description: "Certificado por Apple (AASP), Samsung Premium Service Partner y formación especializada en reparación de dispositivos plegables.",
+            title: "Certificaciones reales",
+            description: "Apple AASP, Samsung Premium Service Partner. No son títulos en la pared — son las mismas certificaciones que exige Apple a sus propios técnicos.",
           },
           {
-            title: "Compromiso",
-            description: "Mostramos la pieza original antes de cambiarla. No cobramos si no podemos reparar. Garantía de por vida en piezas originales.",
+            title: "Nuestra promesa",
+            description: "Te mostramos la pieza antes de cambiarla. No cobramos si no podemos reparar. Garantía de por vida en piezas originales. Sin negociación.",
           },
         ]}
-        ctaText="Reservar reparación"
-        ctaHref="/reparacion-pantalla"
+        ctaText="Reservar ahora"
+        ctaHref="/servicios"
       />
 
       <CinematicFooter />

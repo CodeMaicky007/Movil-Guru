@@ -44,7 +44,7 @@ export default function RegistroPage() {
   const prev = () => setStep((s) => Math.max(0, s - 1));
 
   return (
-    <main className="w-full bg-[#060812] min-h-screen relative overflow-hidden">
+    <main className="w-full bg-[#060d12] min-h-screen relative overflow-hidden">
       <Header dark />
 
       <div
@@ -133,7 +133,7 @@ export default function RegistroPage() {
                 "linear-gradient(140deg, rgba(204,255,0,0.3), rgba(255,255,255,0.04) 40%, rgba(120,80,255,0.2))",
             }}
           />
-          <div className="relative rounded-[28px] border border-white/[0.08] bg-[#0a0d1a]/85 p-8 md:p-12 backdrop-blur-xl overflow-hidden">
+          <div className="relative rounded-[28px] border border-white/[0.08] bg-[#070c10]/85 p-8 md:p-12 backdrop-blur-xl overflow-hidden">
             <AnimatePresence mode="wait">
               {step === 0 && (
                 <motion.div

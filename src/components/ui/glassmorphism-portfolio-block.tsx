@@ -66,7 +66,7 @@ export function GlassmorphismTeamBlock({
   return (
     <section className="relative overflow-hidden px-4 py-20 md:py-28">
       {/* Background */}
-      <div className="absolute inset-0 bg-[#060812]" />
+      <div className="absolute inset-0 bg-[#F8F9FA]" />
 
       <div className="relative z-10 mx-auto max-w-6xl">
         <motion.div
@@ -74,17 +74,17 @@ export function GlassmorphismTeamBlock({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="relative overflow-hidden rounded-3xl border border-white/15 bg-white/10 p-8 backdrop-blur-2xl md:p-12"
+          className="relative overflow-hidden rounded-3xl border border-black/10 bg-white p-8 shadow-[0_8px_48px_rgba(0,0,0,0.08)] md:p-12"
         >
-          {/* Glass gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-transparent pointer-events-none" />
+          {/* Subtle gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#0038FF]/[0.03] via-transparent to-transparent pointer-events-none" />
 
           <div className="relative grid gap-12 lg:grid-cols-2">
             {/* Left — main content */}
             <div className="space-y-8">
               <Badge
                 variant="outline"
-                className="inline-flex items-center gap-2 rounded-full border-white/20 bg-white/10 px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-white/80 backdrop-blur"
+                className="inline-flex items-center gap-2 rounded-full border-black/15 bg-black/5 px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-black/70"
               >
                 {badgeLabel}
               </Badge>
@@ -95,17 +95,17 @@ export function GlassmorphismTeamBlock({
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.1 }}
-                  className="text-2xl font-black tracking-tight text-white md:text-3xl"
+                  className="text-2xl font-black tracking-tight text-black md:text-3xl"
                   style={{ fontFamily: "var(--font-display, inherit)" }}
                 >
-                  {name}, {role}
+                  <span className="text-[#0038FF]">{name}</span>, {role}
                 </motion.h2>
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.2 }}
-                  className="max-w-xl text-base leading-relaxed text-white/70"
+                  className="max-w-xl text-base leading-relaxed text-black/70"
                 >
                   {bio}
                 </motion.p>
@@ -121,12 +121,12 @@ export function GlassmorphismTeamBlock({
                     viewport={{ once: true }}
                     transition={{ duration: 0.4, delay: 0.1 * index }}
                     whileHover={{ y: -3 }}
-                    className="group relative overflow-hidden rounded-2xl border border-white/15 bg-white/8 p-5 backdrop-blur transition-all hover:border-white/25 hover:bg-white/12"
+                    className="group relative overflow-hidden rounded-2xl border border-black/10 bg-black/[0.03] p-5 transition-all hover:border-black/20 hover:bg-black/[0.05]"
                   >
-                    <p className="text-xs font-black uppercase tracking-[0.25em] text-[#CCFF00]/80 mb-2">
+                    <p className="text-xs font-black uppercase tracking-[0.25em] text-[#0038FF] mb-2">
                       {item.title}
                     </p>
-                    <p className="text-sm leading-relaxed text-white/70">{item.description}</p>
+                    <p className="text-sm leading-relaxed text-black/70">{item.description}</p>
                   </motion.div>
                 ))}
               </div>
@@ -140,7 +140,7 @@ export function GlassmorphismTeamBlock({
               >
                 <Button
                   size="lg"
-                  className="h-12 gap-2 rounded-full px-8 text-sm font-black uppercase tracking-[0.15em] bg-[#CCFF00] text-black hover:bg-[#BBEE00] hover:shadow-lg transition-all"
+                  className="h-12 gap-2 rounded-full px-8 text-sm font-black uppercase tracking-[0.15em] bg-[#0038FF] text-white hover:bg-[#0028CC] hover:shadow-lg transition-all"
                   asChild
                 >
                   <a href={ctaHref}>
@@ -153,8 +153,8 @@ export function GlassmorphismTeamBlock({
 
             {/* Right — profile card */}
             <div className="relative">
-              <div className="absolute inset-0 rounded-[32px] bg-[#CCFF00]/10 blur-3xl" />
-              <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-[28px] border border-white/15 bg-white/10 p-8 backdrop-blur-xl">
+              <div className="absolute inset-0 rounded-[32px] bg-[#0038FF]/8 blur-3xl" />
+              <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-[28px] border border-black/10 bg-[#F8F9FA] p-8">
                 <div className="flex flex-col items-center text-center">
                   {/* Avatar */}
                   <motion.div
@@ -164,11 +164,11 @@ export function GlassmorphismTeamBlock({
                     transition={{ duration: 0.5 }}
                     className="relative mb-6"
                   >
-                    <div className="absolute left-1/2 top-1/2 h-32 w-32 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#CCFF00]/20 blur-2xl" />
+                    <div className="absolute left-1/2 top-1/2 h-32 w-32 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#0038FF]/10 blur-2xl" />
                     <img
                       src={avatarSrc}
                       alt={name}
-                      className="relative h-28 w-28 rounded-full border-2 border-white/20 object-cover shadow-[0_25px_60px_rgba(0,0,0,0.5)]"
+                      className="relative h-28 w-28 rounded-full border-2 border-black/10 object-cover shadow-[0_8px_32px_rgba(0,0,0,0.15)]"
                     />
                     {/* Online badge */}
                     <div className="absolute bottom-1 right-1 w-4 h-4 bg-[#CCFF00] rounded-full border-2 border-white shadow-sm" />
@@ -181,10 +181,11 @@ export function GlassmorphismTeamBlock({
                     transition={{ duration: 0.5, delay: 0.2 }}
                     className="space-y-1"
                   >
-                    <h3 className="text-xl font-black tracking-tight text-white">
-                      {name}
+                    <h3 className="text-xl font-black tracking-tight text-black">
+                      <span className="text-[#0038FF]">{name?.split(" ")[0]}</span>{" "}
+                      {name?.split(" ").slice(1).join(" ")}
                     </h3>
-                    <p className="text-xs font-black uppercase tracking-[0.3em] text-[#CCFF00]/80">
+                    <p className="text-xs font-black uppercase tracking-[0.3em] text-[#0038FF]">
                       {role}
                     </p>
                   </motion.div>
@@ -194,7 +195,7 @@ export function GlassmorphismTeamBlock({
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: 0.3 }}
-                    className="mt-4 max-w-xs text-sm leading-relaxed text-white/60"
+                    className="mt-4 max-w-xs text-sm leading-relaxed text-black/60"
                   >
                     Disponible hoy para tu reparación.
                   </motion.p>
@@ -217,20 +218,20 @@ export function GlassmorphismTeamBlock({
                         href={link.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group flex items-center justify-between rounded-2xl border border-white/15 bg-white/8 px-4 py-3 text-left transition-all hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/15"
+                        className="group flex items-center justify-between rounded-2xl border border-black/10 bg-white px-4 py-3 text-left transition-all hover:-translate-y-0.5 hover:border-black/20 hover:bg-white hover:shadow-sm"
                         whileHover={{ scale: 1.01 }}
                         whileTap={{ scale: 0.985 }}
                       >
                         <div className="flex items-center gap-3">
-                          <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white/80">
+                          <span className="flex h-9 w-9 items-center justify-center rounded-full border border-black/10 bg-black/5 text-black/70">
                             <Icon className="h-4 w-4" />
                           </span>
                           <div>
-                            <p className="text-sm font-bold text-white">{link.label}</p>
-                            <p className="text-xs text-white/50">{link.handle}</p>
+                            <p className="text-sm font-bold text-black">{link.label}</p>
+                            <p className="text-xs text-black/50">{link.handle}</p>
                           </div>
                         </div>
-                        <ArrowUpRight className="h-4 w-4 text-white/30 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-white/60" />
+                        <ArrowUpRight className="h-4 w-4 text-black/30 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-black/60" />
                       </motion.a>
                     );
                   })}

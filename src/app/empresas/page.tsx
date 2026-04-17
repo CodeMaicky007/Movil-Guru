@@ -54,7 +54,7 @@ const plans = [
     price: "Sin mínimos",
     unit: "pago por uso",
     description: "Sin compromisos. Descuento B2B desde la primera reparación.",
-    color: "#0a0a0a",
+    color: "#080e14",
     accent: "#CCFF00",
     features: [
       "10% descuento sobre tarifa estándar",
@@ -190,7 +190,7 @@ export default function EmpresasPage() {
               transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
               className="text-[clamp(3.5rem,11vw,140px)] font-black leading-[0.82] tracking-tighter uppercase text-[#CCFF00] m-0"
               style={{
-                fontFamily: '"Arial Black", Impact, sans-serif',
+                fontFamily: 'var(--font-display), sans-serif',
                 textShadow: "2px 2px 0 #001A99,4px 4px 0 #001A99,6px 6px 0 #001A99",
               }}
             >
@@ -202,11 +202,11 @@ export default function EmpresasPage() {
               transition={{ duration: 0.7, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
               className="text-[clamp(3.5rem,11vw,140px)] font-black leading-[0.82] tracking-tighter uppercase text-white m-0 pl-[8%]"
               style={{
-                fontFamily: '"Arial Black", Impact, sans-serif',
+                fontFamily: 'var(--font-display), sans-serif',
                 textShadow: "2px 2px 0 #001A99,4px 4px 0 #001A99,6px 6px 0 #001A99",
               }}
             >
-              EMPRESAS
+              <span className="text-white">EM</span><span className="text-[#CCFF00]">PRESAS</span>
             </motion.h1>
           </div>
 
@@ -250,18 +250,18 @@ export default function EmpresasPage() {
             >
               <p
                 className="text-[clamp(2.5rem,6vw,4rem)] font-black text-[#0038FF] leading-none tracking-tighter"
-                style={{ fontFamily: '"Arial Black", Impact, sans-serif' }}
+                style={{ fontFamily: 'var(--font-display), sans-serif' }}
               >
                 {s.value}
               </p>
-              <p className="text-[#0a0a0a]/50 text-sm mt-1 font-medium">{s.label}</p>
+              <p className="text-[#080e14]/50 text-sm mt-1 font-medium">{s.label}</p>
             </motion.div>
           ))}
         </div>
       </section>
 
       {/* ── How it works ── */}
-      <section className="bg-[#0a0a0a] py-20 md:py-28">
+      <section className="bg-[#080e14] py-20 md:py-28">
         <div className="max-w-6xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -279,7 +279,8 @@ export default function EmpresasPage() {
             >
               Cero fricción para
               <br />
-              <span className="text-[#CCFF00]">tu departamento IT.</span>
+              <span className="text-[#CCFF00]">tu departamento</span>{" "}
+              <span className="text-[#0038FF]">IT.</span>
             </h2>
           </motion.div>
 
@@ -301,14 +302,20 @@ export default function EmpresasPage() {
               >
                 <p
                   className="text-5xl font-black text-white/5 leading-none mb-4 select-none"
-                  style={{ fontFamily: '"Arial Black", Impact, sans-serif' }}
+                  style={{ fontFamily: 'var(--font-display), sans-serif' }}
                 >
                   {s.step}
                 </p>
                 <div className="w-7 h-7 rounded-full bg-[#0038FF] flex items-center justify-center mb-4">
                   <span className="text-[#CCFF00] text-xs font-black">{i + 1}</span>
                 </div>
-                <h3 className="text-white font-bold text-sm mb-2">{s.title}</h3>
+                <h3 className="text-white font-bold text-sm mb-2">
+                  {s.title.split(' ').map((word, wi) =>
+                    wi === 0
+                      ? <span key={wi} className="text-[#CCFF00]">{word}{' '}</span>
+                      : <span key={wi}>{word}{wi < s.title.split(' ').length - 1 ? ' ' : ''}</span>
+                  )}
+                </h3>
                 <p className="text-white/45 text-xs leading-relaxed">{s.body}</p>
               </motion.div>
             ))}
@@ -329,12 +336,13 @@ export default function EmpresasPage() {
             Planes
           </p>
           <h2
-            className="text-3xl md:text-5xl font-black text-[#0a0a0a] leading-tight tracking-tight"
+            className="text-3xl md:text-5xl font-black text-black leading-tight tracking-tight"
             style={{ fontFamily: "var(--font-display, inherit)" }}
           >
-            El plan que se adapta
+            El plan que{" "}
+            <span className="text-[#0038FF]">se adapta</span>
             <br />
-            <span className="text-[#0038FF]">a tu flota.</span>
+            <span className="text-[#CCFF00]" style={{ WebkitTextStroke: "1px #b8e600" }}>a tu flota.</span>
           </h2>
         </motion.div>
 
@@ -464,10 +472,10 @@ export default function EmpresasPage() {
               Sectores
             </p>
             <h2
-              className="text-3xl md:text-4xl font-black text-[#0a0a0a] leading-tight tracking-tight"
+              className="text-3xl md:text-4xl font-black text-[#080e14] leading-tight tracking-tight"
               style={{ fontFamily: "var(--font-display, inherit)" }}
             >
-              Trabajamos con todos los sectores
+              Trabajamos con <span className="text-[#0038FF]">todos</span> los <span className="text-[#0038FF]">sectores</span>
             </h2>
           </motion.div>
 
@@ -479,7 +487,7 @@ export default function EmpresasPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.07 }}
-                className="group bg-white rounded-2xl p-6 border border-[#0a0a0a]/5 hover:border-[#0038FF]/20 hover:shadow-[0_4px_24px_rgba(0,56,255,0.07)] transition-all duration-200 overflow-hidden relative"
+                className="group bg-white rounded-2xl p-6 border border-[#080e14]/5 hover:border-[#0038FF]/20 hover:shadow-[0_4px_24px_rgba(0,56,255,0.07)] transition-all duration-200 overflow-hidden relative"
               >
                 {/* Accent bar top */}
                 <div
@@ -490,15 +498,18 @@ export default function EmpresasPage() {
                 <p
                   className="text-[3.5rem] font-black leading-none mb-4 select-none"
                   style={{
-                    fontFamily: '"Arial Black", Impact, sans-serif',
+                    fontFamily: 'var(--font-display), sans-serif',
                     WebkitTextStroke: `2px ${s.accent}`,
                     color: "transparent",
                   }}
                 >
                   {s.tag}
                 </p>
-                <h3 className="font-black text-[#0a0a0a] text-sm mb-1.5">{s.name}</h3>
-                <p className="text-[#0a0a0a]/50 text-xs leading-relaxed">{s.desc}</p>
+                <h3 className="font-black text-[#080e14] text-sm mb-1.5">
+                  <span style={{ color: s.accent }}>{s.name.split(' ')[0]}</span>{' '}
+                  {s.name.split(' ').slice(1).join(' ')}
+                </h3>
+                <p className="text-[#080e14]/50 text-xs leading-relaxed">{s.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -506,7 +517,7 @@ export default function EmpresasPage() {
       </section>
 
       {/* ── FAQ ── */}
-      <section className="bg-[#0a0a0a] py-20 md:py-28">
+      <section className="bg-[#080e14] py-20 md:py-28">
         <div className="max-w-3xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -522,7 +533,7 @@ export default function EmpresasPage() {
               className="text-3xl md:text-4xl font-black text-white leading-tight tracking-tight"
               style={{ fontFamily: "var(--font-display, inherit)" }}
             >
-              Todo lo que necesita saber tu IT
+              Todo lo que <span className="text-[#CCFF00]">necesita saber</span> tu IT
             </h2>
           </motion.div>
           {faqs.map((faq, i) => (

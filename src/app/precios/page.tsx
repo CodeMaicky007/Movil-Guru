@@ -117,7 +117,7 @@ export default function PreciosPage() {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-[radial-gradient(ellipse_at_top,rgba(204,255,0,0.1),transparent_65%)] pointer-events-none" />
         <div
           className="absolute right-[2%] top-1/2 -translate-y-1/2 opacity-[0.04] pointer-events-none select-none text-white font-black"
-          style={{ fontSize: "28rem", fontFamily: '"Arial Black", Impact, sans-serif', lineHeight: 1 }}
+          style={{ fontSize: "28rem", fontFamily: 'var(--font-display), sans-serif', lineHeight: 1 }}
         >
           €
         </div>
@@ -141,7 +141,7 @@ export default function PreciosPage() {
               transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
               className="text-[clamp(3.5rem,11vw,140px)] font-black leading-[0.82] tracking-tighter uppercase text-[#CCFF00] m-0"
               style={{
-                fontFamily: '"Arial Black", Impact, sans-serif',
+                fontFamily: 'var(--font-display), sans-serif',
                 textShadow: "2px 2px 0 #001A99,4px 4px 0 #001A99,6px 6px 0 #001A99",
               }}
             >
@@ -153,7 +153,7 @@ export default function PreciosPage() {
               transition={{ duration: 0.7, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
               className="text-[clamp(3.5rem,11vw,140px)] font-black leading-[0.82] tracking-tighter uppercase text-white m-0 pl-[6%]"
               style={{
-                fontFamily: '"Arial Black", Impact, sans-serif',
+                fontFamily: 'var(--font-display), sans-serif',
                 textShadow: "2px 2px 0 #001A99,4px 4px 0 #001A99,6px 6px 0 #001A99",
               }}
             >
@@ -203,8 +203,8 @@ export default function PreciosPage() {
               onClick={() => setActiveBrand(brand)}
               className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 active:scale-95"
               style={{
-                backgroundColor: activeBrand === brand ? "#0038FF" : "#0a0a0a08",
-                color: activeBrand === brand ? "#fff" : "#0a0a0a80",
+                backgroundColor: activeBrand === brand ? "#0038FF" : "#080e1408",
+                color: activeBrand === brand ? "#fff" : "#080e1480",
               }}
             >
               <img
@@ -230,20 +230,20 @@ export default function PreciosPage() {
           >
             <table className="w-full min-w-[640px]">
               <thead>
-                <tr className="border-b-2 border-[#0a0a0a]/8">
-                  <th className="text-left py-3 px-4 text-xs font-black uppercase tracking-wider text-[#0a0a0a]/40">
+                <tr className="border-b-2 border-[#080e14]/8">
+                  <th className="text-left py-3 px-4 text-xs font-black uppercase tracking-wider text-[#080e14]/40">
                     Modelo
                   </th>
-                  <th className="text-right py-3 px-4 text-xs font-black uppercase tracking-wider text-[#0a0a0a]/40">
+                  <th className="text-right py-3 px-4 text-xs font-black uppercase tracking-wider text-[#080e14]/40">
                     Pantalla
                   </th>
-                  <th className="text-right py-3 px-4 text-xs font-black uppercase tracking-wider text-[#0a0a0a]/40">
+                  <th className="text-right py-3 px-4 text-xs font-black uppercase tracking-wider text-[#080e14]/40">
                     Batería
                   </th>
-                  <th className="text-right py-3 px-4 text-xs font-black uppercase tracking-wider text-[#0a0a0a]/40">
+                  <th className="text-right py-3 px-4 text-xs font-black uppercase tracking-wider text-[#080e14]/40">
                     Puerto carga
                   </th>
-                  <th className="text-right py-3 px-4 text-xs font-black uppercase tracking-wider text-[#0a0a0a]/40">
+                  <th className="text-right py-3 px-4 text-xs font-black uppercase tracking-wider text-[#080e14]/40">
                     Cámara
                   </th>
                 </tr>
@@ -255,10 +255,10 @@ export default function PreciosPage() {
                     initial={{ opacity: 0, x: -12 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.3, delay: i * 0.04 }}
-                    className="border-b border-[#0a0a0a]/5 hover:bg-[#0038FF]/[0.02] transition-colors duration-150 group"
+                    className="border-b border-[#080e14]/5 hover:bg-[#0038FF]/[0.02] transition-colors duration-150 group"
                   >
                     <td className="py-3.5 px-4">
-                      <span className="text-sm font-bold text-[#0a0a0a] group-hover:text-[#0038FF] transition-colors duration-200">
+                      <span className="text-sm font-bold text-[#080e14] group-hover:text-[#0038FF] transition-colors duration-200">
                         {row.model}
                       </span>
                     </td>
@@ -266,13 +266,13 @@ export default function PreciosPage() {
                       <span className="text-sm font-black text-[#0038FF]">{row.screen}</span>
                     </td>
                     <td className="py-3.5 px-4 text-right">
-                      <span className="text-sm font-semibold text-[#0a0a0a]/70">{row.battery}</span>
+                      <span className="text-sm font-semibold text-[#080e14]/70">{row.battery}</span>
                     </td>
                     <td className="py-3.5 px-4 text-right">
-                      <span className="text-sm font-semibold text-[#0a0a0a]/70">{row.port}</span>
+                      <span className="text-sm font-semibold text-[#080e14]/70">{row.port}</span>
                     </td>
                     <td className="py-3.5 px-4 text-right">
-                      <span className="text-sm font-semibold text-[#0a0a0a]/70">{row.camera}</span>
+                      <span className="text-sm font-semibold text-[#080e14]/70">{row.camera}</span>
                     </td>
                   </motion.tr>
                 ))}
@@ -285,14 +285,14 @@ export default function PreciosPage() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-xs text-[#0a0a0a]/35 mt-4"
+          className="text-xs text-[#080e14]/35 mt-4"
         >
           * Precios con pieza premium. Pieza original OEM disponible — consulta precio. ¿No ves tu modelo? Contáctanos.
         </motion.p>
       </section>
 
       {/* ── What's included ── */}
-      <section className="bg-[#0a0a0a] py-20 md:py-28">
+      <section className="bg-[#080e14] py-20 md:py-28">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -308,9 +308,9 @@ export default function PreciosPage() {
                 className="text-3xl md:text-5xl font-black text-white leading-tight tracking-tight"
                 style={{ fontFamily: "var(--font-display, inherit)" }}
               >
-                Sin sorpresas.
+                Sin <span className="text-[#CCFF00]">sorpresas.</span>
                 <br />
-                <span className="text-[#CCFF00]">Nunca.</span>
+                <span className="text-[#0038FF]">Nunca.</span>
               </h2>
             </motion.div>
 
@@ -360,9 +360,9 @@ export default function PreciosPage() {
               className="text-3xl md:text-5xl font-black text-white leading-tight tracking-tight mb-4"
               style={{ fontFamily: "var(--font-display, inherit)" }}
             >
-              ¿Tu modelo no aparece?
+              ¿Tu modelo <span className="text-[#CCFF00]">no aparece?</span>
               <br />
-              <span className="text-[#CCFF00]">Te damos precio al instante.</span>
+              <span className="text-[#CCFF00]">Te damos</span> precio <span className="text-[#CCFF00]">al instante.</span>
             </h2>
             <p className="text-white/60 text-base max-w-md mx-auto leading-relaxed mb-8">
               Escríbenos con el modelo y la avería. Te respondemos con presupuesto cerrado en menos de 15 minutos.

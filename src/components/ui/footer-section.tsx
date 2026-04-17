@@ -29,29 +29,37 @@ const footerLinks: FooterSection[] = [
     label: 'Servicios',
     links: [
       { title: 'Reparación de pantalla', href: '/reparacion-pantalla' },
-      { title: 'Cambio de batería', href: '#' },
-      { title: 'Daño por agua', href: '#' },
-      { title: 'Reparación de plegables', href: '#' },
-      { title: 'Recuperación de datos', href: '#' },
-      { title: 'Placa base', href: '#' },
+      { title: 'Cambio de batería', href: '/reparacion-bateria' },
+      { title: 'Daño por agua', href: '/reparacion-agua' },
+      { title: 'Reparación de plegables', href: '/reparacion-plegables' },
+      { title: 'Recuperación de datos', href: '/recuperacion-datos' },
+      { title: 'Placa base', href: '/reparacion-placa' },
     ],
   },
   {
     label: 'Empresa',
     links: [
       { title: 'Quiénes somos', href: '/about' },
-      { title: 'Nuestros técnicos', href: '/team' },
-      { title: 'Política de garantía', href: '/warranty' },
-      { title: 'B2B / Empresas', href: '/business' },
+      { title: 'Opiniones', href: '/opiniones' },
+      { title: 'Política de garantía', href: '/garantia' },
+      { title: 'B2B / Empresas', href: '/empresas' },
     ],
   },
   {
     label: 'Recursos',
     links: [
       { title: 'Rastrear mi reparación', href: '/track' },
-      { title: 'Guía de reparación', href: '/guide' },
+      { title: 'Guía de reparación', href: '/guia' },
       { title: 'Blog', href: '/blog' },
       { title: 'Preguntas frecuentes', href: '/faq' },
+      { title: 'Contacto', href: '/contacto' },
+    ],
+  },
+  {
+    label: 'Legal',
+    links: [
+      { title: 'Política de privacidad', href: '/privacidad' },
+      { title: 'Términos y condiciones', href: '/terminos' },
     ],
   },
   {
@@ -86,7 +94,7 @@ export function Footer() {
             © {new Date().getFullYear()} Movil Guru. Todos los derechos reservados.
           </p>
         </AnimatedContainer>
-        <div className="mt-10 grid grid-cols-2 gap-8 md:grid-cols-4 xl:col-span-2 xl:mt-0">
+        <div className="mt-10 grid grid-cols-2 gap-8 md:grid-cols-5 xl:col-span-2 xl:mt-0">
           {footerLinks.map((section, index) => (
             <AnimatedContainer key={section.label} delay={0.1 + index * 0.1}>
               <div className="mb-10 md:mb-0">

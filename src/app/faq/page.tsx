@@ -167,19 +167,19 @@ function FaqItem({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.35, delay: index * 0.04 }}
-      className="border-b border-[#0a0a0a]/8 last:border-0"
+      className="border-b border-[#080e14]/8 last:border-0"
     >
       <button
         onClick={() => setOpen((v) => !v)}
         className="w-full flex items-start justify-between py-5 text-left group gap-4"
       >
-        <span className="font-semibold text-[#0a0a0a] text-sm md:text-base leading-snug group-hover:text-[#0038FF] transition-colors duration-200">
+        <span className="font-semibold text-[#080e14] text-sm md:text-base leading-snug group-hover:text-[#0038FF] transition-colors duration-200">
           {q}
         </span>
         <span
           className="shrink-0 mt-0.5 w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all duration-300"
           style={{
-            borderColor: open ? accent : "#0a0a0a20",
+            borderColor: open ? accent : "#080e1420",
             backgroundColor: open ? accent : "transparent",
             transform: open ? "rotate(45deg)" : "rotate(0deg)",
           }}
@@ -187,7 +187,7 @@ function FaqItem({
           <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
             <path
               d="M5 1v8M1 5h8"
-              stroke={open ? (accent === "#CCFF00" ? "#000" : "#fff") : "#0a0a0a"}
+              stroke={open ? (accent === "#CCFF00" ? "#000" : "#fff") : "#080e14"}
               strokeOpacity={open ? 1 : 0.4}
               strokeWidth="1.5"
               strokeLinecap="round"
@@ -204,7 +204,7 @@ function FaqItem({
             transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
             className="overflow-hidden"
           >
-            <p className="text-[#0a0a0a]/55 text-sm leading-relaxed pb-5 pr-10">{a}</p>
+            <p className="text-[#080e14]/55 text-sm leading-relaxed pb-5 pr-10">{a}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -230,7 +230,7 @@ export default function FaqPage() {
           className="absolute right-[2%] top-1/2 -translate-y-1/2 opacity-[0.04] pointer-events-none select-none text-white font-black leading-none"
           style={{
             fontSize: "32rem",
-            fontFamily: '"Arial Black", Impact, sans-serif',
+            fontFamily: 'var(--font-display), sans-serif',
             lineHeight: 1,
           }}
         >
@@ -256,7 +256,7 @@ export default function FaqPage() {
               transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
               className="text-[clamp(3rem,10vw,130px)] font-black leading-[0.82] tracking-tighter uppercase text-[#CCFF00] m-0"
               style={{
-                fontFamily: '"Arial Black", Impact, sans-serif',
+                fontFamily: 'var(--font-display), sans-serif',
                 textShadow: "2px 2px 0 #001A99,4px 4px 0 #001A99,6px 6px 0 #001A99",
               }}
             >
@@ -268,7 +268,7 @@ export default function FaqPage() {
               transition={{ duration: 0.7, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
               className="text-[clamp(3rem,10vw,130px)] font-black leading-[0.82] tracking-tighter uppercase text-white m-0 pl-[6%]"
               style={{
-                fontFamily: '"Arial Black", Impact, sans-serif',
+                fontFamily: 'var(--font-display), sans-serif',
                 textShadow: "2px 2px 0 #001A99,4px 4px 0 #001A99,6px 6px 0 #001A99",
               }}
             >
@@ -298,7 +298,7 @@ export default function FaqPage() {
 
           {/* Sidebar — categories */}
           <div className="md:sticky md:top-24">
-            <p className="text-xs font-black uppercase tracking-[0.25em] text-[#0a0a0a]/40 mb-4">
+            <p className="text-xs font-black uppercase tracking-[0.25em] text-[#080e14]/40 mb-4">
               Categorías
             </p>
             <nav className="space-y-1">
@@ -320,7 +320,7 @@ export default function FaqPage() {
                           ? cat.accent === "#CCFF00"
                             ? "#000"
                             : "#fff"
-                          : "#0a0a0a",
+                          : "#080e14",
                         opacity: isActive ? 1 : 0.6,
                       }}
                     >
@@ -333,7 +333,7 @@ export default function FaqPage() {
                           ? cat.accent === "#CCFF00"
                             ? "#00000060"
                             : "#ffffff60"
-                          : "#0a0a0a30",
+                          : "#080e1430",
                       }}
                     >
                       {cat.questions.length}
@@ -346,7 +346,7 @@ export default function FaqPage() {
             {/* Contact nudge */}
             <div className="mt-8 p-5 rounded-2xl bg-[#0038FF]/5 border border-[#0038FF]/10">
               <p className="text-xs font-black text-[#0038FF] mb-1">¿No encuentras tu respuesta?</p>
-              <p className="text-xs text-[#0a0a0a]/50 leading-relaxed mb-3">
+              <p className="text-xs text-[#080e14]/50 leading-relaxed mb-3">
                 Escríbenos por WhatsApp y te respondemos en minutos.
               </p>
               <a
@@ -372,11 +372,11 @@ export default function FaqPage() {
                 transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
               >
                 {/* Category header */}
-                <div className="flex items-end gap-4 mb-8 pb-6 border-b border-[#0a0a0a]/8">
+                <div className="flex items-end gap-4 mb-8 pb-6 border-b border-[#080e14]/8">
                   <p
                     className="text-[5rem] font-black leading-none select-none"
                     style={{
-                      fontFamily: '"Arial Black", Impact, sans-serif',
+                      fontFamily: 'var(--font-display), sans-serif',
                       WebkitTextStroke: `2px ${current.accent}`,
                       color: "transparent",
                     }}
@@ -384,14 +384,20 @@ export default function FaqPage() {
                     {current.tag}
                   </p>
                   <div className="pb-2">
-                    <p className="text-xs font-black uppercase tracking-[0.25em] text-[#0a0a0a]/35 mb-0.5">
+                    <p className="text-xs font-black uppercase tracking-[0.25em] text-[#080e14]/35 mb-0.5">
                       Categoría
                     </p>
                     <h2
-                      className="text-2xl md:text-3xl font-black text-[#0a0a0a] leading-tight tracking-tight"
+                      className="text-2xl md:text-3xl font-black leading-tight tracking-tight"
                       style={{ fontFamily: "var(--font-display, inherit)" }}
                     >
-                      {current.label}
+                      <span className="text-[#080e14]">{current.label.split(" ")[0]}</span>
+                      {current.label.split(" ").length > 1 && (
+                        <> <span style={{ color: current.accent }}>{current.label.split(" ").slice(1).join(" ")}</span></>
+                      )}
+                      {current.label.split(" ").length === 1 && (
+                        <span style={{ color: current.accent }}>.</span>
+                      )}
                     </h2>
                   </div>
                 </div>
@@ -415,7 +421,7 @@ export default function FaqPage() {
       </section>
 
       {/* ── All questions count bar ── */}
-      <section className="bg-[#0a0a0a] py-14">
+      <section className="bg-[#080e14] py-14">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             {categories.map((cat, i) => (
@@ -440,7 +446,7 @@ export default function FaqPage() {
                 <p
                   className="text-2xl font-black leading-none mb-1"
                   style={{
-                    fontFamily: '"Arial Black", Impact, sans-serif',
+                    fontFamily: 'var(--font-display), sans-serif',
                     color: cat.accent,
                   }}
                 >
@@ -472,9 +478,9 @@ export default function FaqPage() {
               className="text-3xl md:text-5xl font-black text-white leading-tight tracking-tight mb-4"
               style={{ fontFamily: "var(--font-display, inherit)" }}
             >
-              ¿Tienes el móvil roto?
+              ¿Tienes el <span className="text-[#CCFF00]">móvil</span> roto?
               <br />
-              <span className="text-[#CCFF00]">Lo reparamos hoy.</span>
+              Lo <span className="text-[#CCFF00]">reparamos</span> hoy.
             </h2>
             <p className="text-white/60 text-base max-w-md mx-auto leading-relaxed mb-8">
               Sin cita previa obligatoria. Diagnóstico gratuito. Garantía incluida desde el primer día.

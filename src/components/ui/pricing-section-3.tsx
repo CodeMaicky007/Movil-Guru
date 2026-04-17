@@ -161,21 +161,32 @@ export default function PricingSection() {
             className="text-4xl font-bold leading-[130%] text-gray-900 mb-4"
             style={{ fontFamily: "var(--font-display, inherit)" }}
           >
-            <VerticalCutReveal
-              splitBy="words"
-              staggerDuration={0.15}
-              staggerFrom="first"
-              reverse={true}
-              containerClassName="justify-start"
-              transition={{
-                type: "spring",
-                stiffness: 250,
-                damping: 40,
-                delay: 0,
-              }}
-            >
-              Precios de Reparación
-            </VerticalCutReveal>
+            <span className="inline-flex flex-wrap gap-x-2 items-baseline">
+              <span style={{ color: "#0038FF" }}>
+                <VerticalCutReveal
+                  splitBy="words"
+                  staggerDuration={0.15}
+                  staggerFrom="first"
+                  reverse={true}
+                  containerClassName="justify-start"
+                  transition={{ type: "spring", stiffness: 250, damping: 40, delay: 0 }}
+                >
+                  Precios de
+                </VerticalCutReveal>
+              </span>
+              <span style={{ color: "#080e14" }}>
+                <VerticalCutReveal
+                  splitBy="words"
+                  staggerDuration={0.15}
+                  staggerFrom="first"
+                  reverse={true}
+                  containerClassName="justify-start"
+                  transition={{ type: "spring", stiffness: 250, damping: 40, delay: 0.3 }}
+                >
+                  Reparación
+                </VerticalCutReveal>
+              </span>
+            </span>
           </h2>
           <TimelineContent
             as="p"
@@ -248,7 +259,9 @@ export default function PricingSection() {
                   </div>
                 </div>
                 <div className="flex justify-between">
-                  <h3 className="text-3xl font-semibold mb-2">{plan.name}</h3>
+                  <h3 className="text-3xl font-semibold mb-2">
+                    <span style={{ color: plan.popular ? "#CCFF00" : "#0038FF" }}>{plan.name}</span>
+                  </h3>
                 </div>
                 <p
                   className={

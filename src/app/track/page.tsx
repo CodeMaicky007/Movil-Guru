@@ -101,20 +101,20 @@ function Timeline({ steps }: { steps: RepairResult["steps"] }) {
             {!isLast && (
               <div
                 className="absolute left-[-18px] top-[22px] w-0.5 h-[calc(100%-6px)]"
-                style={{ backgroundColor: step.done ? "#0038FF" : "#0a0a0a15" }}
+                style={{ backgroundColor: step.done ? "#0038FF" : "#080e1415" }}
               />
             )}
             <div
               className="absolute left-[-22px] top-[6px] w-[9px] h-[9px] rounded-full border-2"
               style={{
-                borderColor: step.done ? "#0038FF" : "#0a0a0a20",
+                borderColor: step.done ? "#0038FF" : "#080e1420",
                 backgroundColor: step.done ? "#0038FF" : "white",
               }}
             />
-            <p className={`text-sm font-semibold leading-tight ${step.done ? "text-[#0a0a0a]" : "text-[#0a0a0a]/35"}`}>
+            <p className={`text-sm font-semibold leading-tight ${step.done ? "text-[#080e14]" : "text-[#080e14]/35"}`}>
               {step.label}
             </p>
-            {step.time && <p className="text-xs text-[#0a0a0a]/40 mt-0.5">{step.time}</p>}
+            {step.time && <p className="text-xs text-[#080e14]/40 mt-0.5">{step.time}</p>}
           </motion.div>
         );
       })}
@@ -172,7 +172,7 @@ export default function TrackPage() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8, ease: "easeInOut" }}
             className="text-[clamp(3rem,10vw,120px)] font-black leading-[0.82] tracking-tighter uppercase text-[#CCFF00] m-0"
-            style={{ fontFamily: '"Arial Black", Impact, sans-serif', textShadow: "2px 2px 0 #001A99,4px 4px 0 #001A99,6px 6px 0 #001A99" }}
+            style={{ fontFamily: 'var(--font-display), sans-serif', textShadow: "2px 2px 0 #001A99,4px 4px 0 #001A99,6px 6px 0 #001A99" }}
           >
             RASTREAR
           </motion.h1>
@@ -181,7 +181,7 @@ export default function TrackPage() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8, ease: "easeInOut" }}
             className="text-[clamp(3rem,10vw,120px)] font-black leading-[0.82] tracking-tighter uppercase text-white m-0"
-            style={{ fontFamily: '"Arial Black", Impact, sans-serif', textShadow: "2px 2px 0 #001A99,4px 4px 0 #001A99,6px 6px 0 #001A99" }}
+            style={{ fontFamily: 'var(--font-display), sans-serif' }}
           >
             REPARACIÓN
           </motion.h1>
@@ -254,14 +254,14 @@ export default function TrackPage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.4 }}
-              className="bg-white rounded-2xl border border-[#0a0a0a]/8 overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.06)]"
+              className="bg-white rounded-2xl border border-[#080e14]/8 overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.06)]"
             >
               {/* Header */}
-              <div className="p-6 md:p-8 border-b border-[#0a0a0a]/5">
+              <div className="p-6 md:p-8 border-b border-[#080e14]/5">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
                   <div>
-                    <p className="text-xs font-black uppercase tracking-wider text-[#0a0a0a]/35 mb-0.5">Código de reparación</p>
-                    <p className="text-2xl font-black text-[#0a0a0a] tracking-tight" style={{ fontFamily: "var(--font-display, inherit)" }}>{result.id}</p>
+                    <p className="text-xs font-black uppercase tracking-wider text-[#080e14]/35 mb-0.5">Código de reparación</p>
+                    <p className="text-2xl font-black text-[#080e14] tracking-tight" style={{ fontFamily: "var(--font-display, inherit)" }}>{result.id}</p>
                   </div>
                   <StatusBadge status={result.status} />
                 </div>
@@ -273,8 +273,8 @@ export default function TrackPage() {
                     { label: "Recogida",    value: result.estimatedPickup },
                   ].map((d) => (
                     <div key={d.label}>
-                      <p className="text-[10px] font-bold uppercase tracking-wider text-[#0a0a0a]/30 mb-0.5">{d.label}</p>
-                      <p className="text-sm font-semibold text-[#0a0a0a]/75">{d.value}</p>
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-[#080e14]/30 mb-0.5">{d.label}</p>
+                      <p className="text-sm font-semibold text-[#080e14]/75">{d.value}</p>
                     </div>
                   ))}
                 </div>
@@ -282,8 +282,8 @@ export default function TrackPage() {
 
               {/* Timeline */}
               <div className="p-6 md:p-8">
-                <p className="text-xs font-black uppercase tracking-wider text-[#0a0a0a]/35 mb-2">Progreso</p>
-                <div className="w-full h-1.5 bg-[#0a0a0a]/5 rounded-full overflow-hidden mb-2">
+                <p className="text-xs font-black uppercase tracking-wider text-[#080e14]/35 mb-2">Progreso</p>
+                <div className="w-full h-1.5 bg-[#080e14]/5 rounded-full overflow-hidden mb-2">
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${(result.steps.filter((s) => s.done).length / result.steps.length) * 100}%` }}
@@ -292,7 +292,7 @@ export default function TrackPage() {
                     style={{ background: result.status === "listo" ? "linear-gradient(90deg, #0038FF, #CCFF00)" : "#0038FF" }}
                   />
                 </div>
-                <p className="text-xs text-[#0a0a0a]/40 mb-4">
+                <p className="text-xs text-[#080e14]/40 mb-4">
                   {result.steps.filter((s) => s.done).length} de {result.steps.length} pasos completados
                 </p>
                 <Timeline steps={result.steps} />
@@ -310,8 +310,8 @@ export default function TrackPage() {
                       </svg>
                     </div>
                     <div>
-                      <p className="font-bold text-sm text-[#0a0a0a]">¡Tu dispositivo está listo!</p>
-                      <p className="text-xs text-[#0a0a0a]/60 mt-0.5">
+                      <p className="font-bold text-sm text-[#080e14]">¡Tu dispositivo está listo!</p>
+                      <p className="text-xs text-[#080e14]/60 mt-0.5">
                         Puedes pasar a recogerlo en horario de taller. Recuerda traer tu comprobante de reparación.
                       </p>
                     </div>
@@ -329,13 +329,13 @@ export default function TrackPage() {
               exit={{ opacity: 0 }}
               className="text-center py-16"
             >
-              <div className="w-16 h-16 rounded-full bg-[#0a0a0a]/5 flex items-center justify-center mx-auto mb-4">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" strokeOpacity="0.25" strokeWidth="2" strokeLinecap="round">
+              <div className="w-16 h-16 rounded-full bg-[#080e14]/5 flex items-center justify-center mx-auto mb-4">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#080e14" strokeOpacity="0.25" strokeWidth="2" strokeLinecap="round">
                   <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /><path d="M8 11h6" />
                 </svg>
               </div>
-              <p className="text-lg font-bold text-[#0a0a0a]">No encontramos esa reparación</p>
-              <p className="text-sm text-[#0a0a0a]/50 mt-1 max-w-sm mx-auto">
+              <p className="text-lg font-bold text-[#080e14]">No encontramos esa reparación</p>
+              <p className="text-sm text-[#080e14]/50 mt-1 max-w-sm mx-auto">
                 Verifica que el código sea correcto. Lo encontrarás en tu comprobante con el formato MG-XXXX-XXXX.
               </p>
             </motion.div>
@@ -344,7 +344,7 @@ export default function TrackPage() {
       </section>
 
       {/* ── How it works ── */}
-      <section className="bg-[#0a0a0a] py-20 md:py-28">
+      <section className="bg-[#080e14] py-20 md:py-28">
         <div className="max-w-6xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -354,14 +354,14 @@ export default function TrackPage() {
           >
             <p className="text-xs font-black uppercase tracking-[0.3em] text-[#CCFF00] mb-3">Transparencia total</p>
             <h2 className="text-3xl md:text-4xl font-black text-white leading-tight" style={{ fontFamily: "var(--font-display, inherit)" }}>
-              Sabes exactamente dónde está tu móvil
+              Sabes exactamente <span className="text-[#0038FF]">dónde está</span> tu <span className="text-[#CCFF00]">móvil</span>
             </h2>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { tag: "01", title: "Seguimiento en tiempo real",   desc: "Cada fase de la reparación se actualiza al instante. Sin llamadas, sin esperas por información." },
-              { tag: "02", title: "Notificación automática",       desc: "Recibes un mensaje por WhatsApp o SMS cuando tu dispositivo cambia de estado y cuando está listo." },
-              { tag: "03", title: "Historial completo",            desc: "Fecha y hora de cada paso. Quién realizó la reparación. Qué pieza se instaló. Todo documentado." },
+              { tag: "01", titleParts: ["Seguimiento en ", "tiempo real"],   desc: "Cada fase de la reparación se actualiza al instante. Sin llamadas, sin esperas por información." },
+              { tag: "02", titleParts: ["Notificación ", "automática"],       desc: "Recibes un mensaje por WhatsApp o SMS cuando tu dispositivo cambia de estado y cuando está listo." },
+              { tag: "03", titleParts: ["Historial ", "completo"],            desc: "Fecha y hora de cada paso. Quién realizó la reparación. Qué pieza se instaló. Todo documentado." },
             ].map((item, i) => (
               <motion.div
                 key={item.tag}
@@ -371,10 +371,12 @@ export default function TrackPage() {
                 transition={{ delay: i * 0.1 }}
                 className="border border-white/8 rounded-2xl p-6"
               >
-                <p className="text-4xl font-black mb-4 leading-none" style={{ fontFamily: '"Arial Black", Impact, sans-serif', WebkitTextStroke: "1.5px #CCFF00", color: "transparent" }}>
+                <p className="text-4xl font-black mb-4 leading-none" style={{ fontFamily: 'var(--font-display), sans-serif', WebkitTextStroke: "1.5px #CCFF00", color: "transparent" }}>
                   {item.tag}
                 </p>
-                <h3 className="text-white font-bold text-base mb-2">{item.title}</h3>
+                <h3 className="text-white font-bold text-base mb-2">
+                  {item.titleParts[0]}<span className="text-[#CCFF00]">{item.titleParts[1]}</span>
+                </h3>
                 <p className="text-white/45 text-sm leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}

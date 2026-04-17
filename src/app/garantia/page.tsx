@@ -47,7 +47,7 @@ const warrantyTiers = [
   {
     label: "Mano de Obra",
     duration: "90 días",
-    color: "#0a0a0a",
+    color: "#080e14",
     textColor: "#fff",
     description:
       "Todo el trabajo técnico realizado en tu dispositivo está garantizado durante 90 días. Si el mismo problema reaparece por un error nuestro, lo resolvemos gratis.",
@@ -188,7 +188,7 @@ export default function GarantiaPage() {
               transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
               className="text-[clamp(3.5rem,11vw,140px)] font-black leading-[0.82] tracking-tighter uppercase text-[#CCFF00] m-0"
               style={{
-                fontFamily: '"Arial Black", Impact, sans-serif',
+                fontFamily: 'var(--font-display), sans-serif',
                 textShadow: "2px 2px 0 #001A99,4px 4px 0 #001A99,6px 6px 0 #001A99",
               }}
             >
@@ -200,7 +200,7 @@ export default function GarantiaPage() {
               transition={{ duration: 0.7, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
               className="text-[clamp(3.5rem,11vw,140px)] font-black leading-[0.82] tracking-tighter uppercase text-white m-0 pl-[8%]"
               style={{
-                fontFamily: '"Arial Black", Impact, sans-serif',
+                fontFamily: 'var(--font-display), sans-serif',
                 textShadow: "2px 2px 0 #001A99,4px 4px 0 #001A99,6px 6px 0 #001A99",
               }}
             >
@@ -248,14 +248,14 @@ export default function GarantiaPage() {
             Coberturas
           </p>
           <h2
-            className="text-3xl md:text-5xl font-black text-[#0a0a0a] leading-tight tracking-tight"
+            className="text-3xl md:text-5xl font-black text-[#080e14] leading-tight tracking-tight"
             style={{ fontFamily: "var(--font-display, inherit)" }}
           >
-            Tres niveles,
+            Tres <span className="text-[#0038FF]">niveles,</span>
             <br />
-            <span className="text-[#0038FF]">una sola promesa.</span>
+            una <span className="text-[#CCFF00]" style={{ WebkitTextStroke: "1px #080e14" }}>sola</span> <span className="text-[#0038FF]">promesa.</span>
           </h2>
-          <p className="mt-4 text-[#0a0a0a]/50 max-w-lg mx-auto leading-relaxed">
+          <p className="mt-4 text-[#080e14]/50 max-w-lg mx-auto leading-relaxed">
             La duración de la garantía depende del tipo de pieza instalada. Siempre te informamos antes de la reparación cuál aplica.
           </p>
         </motion.div>
@@ -278,7 +278,7 @@ export default function GarantiaPage() {
               {tier.color === "#0038FF" && (
                 <div className="absolute top-0 left-0 right-0 h-1 bg-[#CCFF00]" />
               )}
-              {tier.color === "#0a0a0a" && (
+              {tier.color === "#080e14" && (
                 <div className="absolute top-0 left-0 right-0 h-1 bg-[#0038FF]" />
               )}
 
@@ -306,7 +306,7 @@ export default function GarantiaPage() {
                     className="text-4xl font-black leading-none"
                     style={{
                       color: tier.color === "#CCFF00" ? "#0038FF" : "#CCFF00",
-                      fontFamily: '"Arial Black", Impact, sans-serif',
+                      fontFamily: 'var(--font-display), sans-serif',
                       opacity: 0.9,
                     }}
                   >
@@ -358,7 +358,7 @@ export default function GarantiaPage() {
       </section>
 
       {/* ── How to Claim ── */}
-      <section className="bg-[#0a0a0a] py-20 md:py-28">
+      <section className="bg-[#080e14] py-20 md:py-28">
         <div className="max-w-6xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -374,9 +374,9 @@ export default function GarantiaPage() {
               className="text-3xl md:text-5xl font-black text-white leading-tight tracking-tight"
               style={{}}
             >
-              Reclamar la garantía
+              Reclamar <span className="text-[#CCFF00]">la garantía</span>
               <br />
-              <span className="text-[#CCFF00]">es fácil.</span>
+              es <span className="text-[#0038FF]">fácil.</span>
             </h2>
           </motion.div>
 
@@ -384,22 +384,34 @@ export default function GarantiaPage() {
             {[
               {
                 step: "01",
-                title: "Detectas el problema",
+                titleParts: [
+                  { text: "Detectas ", color: "white" },
+                  { text: "el problema", color: "#CCFF00" },
+                ],
                 body: "Observas que la reparación no funciona correctamente o el mismo fallo ha reaparecido.",
               },
               {
                 step: "02",
-                title: "Nos contactas",
+                titleParts: [
+                  { text: "Nos ", color: "white" },
+                  { text: "contactas", color: "#CCFF00" },
+                ],
                 body: "Escríbenos por WhatsApp o llama directamente. Sin formularios, sin burocracia.",
               },
               {
                 step: "03",
-                title: "Traes el dispositivo",
+                titleParts: [
+                  { text: "Traes ", color: "white" },
+                  { text: "el dispositivo", color: "#CCFF00" },
+                ],
                 body: "Visita el taller con tu comprobante de reparación. Es el único documento que necesitas.",
               },
               {
                 step: "04",
-                title: "Lo resolvemos gratis",
+                titleParts: [
+                  { text: "Lo resolvemos ", color: "white" },
+                  { text: "gratis", color: "#CCFF00" },
+                ],
                 body: "Diagnosticamos y reparamos de nuevo sin coste si el fallo está dentro de la garantía.",
               },
             ].map((s, i) => (
@@ -413,14 +425,18 @@ export default function GarantiaPage() {
               >
                 <p
                   className="text-5xl font-black text-white/5 leading-none mb-4 select-none"
-                  style={{ fontFamily: '"Arial Black", Impact, sans-serif' }}
+                  style={{ fontFamily: 'var(--font-display), sans-serif' }}
                 >
                   {s.step}
                 </p>
                 <div className="w-8 h-8 rounded-full bg-[#0038FF] flex items-center justify-center mb-4">
                   <span className="text-[#CCFF00] text-xs font-black">{i + 1}</span>
                 </div>
-                <h3 className="text-white font-bold text-base mb-2">{s.title}</h3>
+                <h3 className="font-bold text-base mb-2">
+                  {s.titleParts.map((part, pi) => (
+                    <span key={pi} style={{ color: part.color }}>{part.text}</span>
+                  ))}
+                </h3>
                 <p className="text-white/50 text-sm leading-relaxed">{s.body}</p>
               </motion.div>
             ))}
@@ -441,14 +457,14 @@ export default function GarantiaPage() {
               Exclusiones
             </p>
             <h2
-              className="text-3xl md:text-4xl font-black text-[#0a0a0a] leading-tight tracking-tight mb-5"
+              className="text-3xl md:text-4xl font-black text-[#080e14] leading-tight tracking-tight mb-5"
               style={{}}
             >
-              Qué no cubre
+              Qué no <span className="text-[#0038FF]">cubre</span>
               <br />
-              la garantía
+              <span className="text-[#CCFF00]">la garantía</span>
             </h2>
-            <p className="text-[#0a0a0a]/55 text-base leading-relaxed">
+            <p className="text-[#080e14]/55 text-base leading-relaxed">
               La transparencia incluye también decirte lo que no está cubierto. Sin sorpresas en el momento menos oportuno.
             </p>
 
@@ -475,18 +491,18 @@ export default function GarantiaPage() {
                   transition={{ duration: 0.35, delay: i * 0.05 }}
                   className="flex items-start gap-3"
                 >
-                  <span className="mt-0.5 shrink-0 w-5 h-5 rounded-full border-2 border-[#0a0a0a]/15 flex items-center justify-center">
+                  <span className="mt-0.5 shrink-0 w-5 h-5 rounded-full border-2 border-[#080e14]/15 flex items-center justify-center">
                     <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
                       <path
                         d="M2 2l4 4M6 2l-4 4"
-                        stroke="#0a0a0a"
+                        stroke="#080e14"
                         strokeOpacity="0.4"
                         strokeWidth="1.5"
                         strokeLinecap="round"
                       />
                     </svg>
                   </span>
-                  <span className="text-[#0a0a0a]/65 text-sm leading-relaxed">{item}</span>
+                  <span className="text-[#080e14]/65 text-sm leading-relaxed">{item}</span>
                 </motion.li>
               ))}
             </ul>
@@ -495,7 +511,7 @@ export default function GarantiaPage() {
       </section>
 
       {/* ── FAQ ── */}
-      <section className="bg-[#0a0a0a] py-20 md:py-28">
+      <section className="bg-[#080e14] py-20 md:py-28">
         <div className="max-w-3xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -511,7 +527,8 @@ export default function GarantiaPage() {
               className="text-3xl md:text-4xl font-black text-white leading-tight tracking-tight"
               style={{}}
             >
-              Todo lo que necesitas saber
+              Todo lo que <span className="text-[#0038FF]">necesitas</span>{" "}
+              <span className="text-[#CCFF00]">saber</span>
             </h2>
           </motion.div>
 
@@ -545,9 +562,9 @@ export default function GarantiaPage() {
               className="text-3xl md:text-5xl font-black text-white leading-tight tracking-tight mb-4"
               style={{}}
             >
-              Tu reparación viene
+              Tu <span className="text-[#CCFF00]">reparación</span> viene
               <br />
-              <span className="text-[#CCFF00]">con garantía incluida.</span>
+              con <span className="text-[#CCFF00]">garantía</span> incluida.
             </h2>
             <p className="text-white/65 text-base md:text-lg max-w-md mx-auto leading-relaxed mb-8">
               Sin coste si no podemos arreglarlo. Sin sorpresas en el precio. Con garantía real desde el primer día.

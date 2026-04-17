@@ -153,7 +153,7 @@ function ConfirmContent() {
 // ─── Page wrapper ─────────────────────────────────────────────────────────────
 export default function ConfirmacionPage() {
   return (
-    <main className="w-full bg-[#060812] min-h-screen relative overflow-hidden">
+    <main className="w-full bg-[#060d12] min-h-screen relative overflow-hidden">
       {/* Ambient */}
       <div className="absolute inset-0 pointer-events-none">
         <div

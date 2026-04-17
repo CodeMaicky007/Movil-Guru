@@ -136,7 +136,7 @@ export default function CarritoPage() {
   }
 
   return (
-    <main className="w-full bg-[#060812] min-h-screen">
+    <main className="w-full bg-[#060d12] min-h-screen">
       <Header dark />
 
       {/* ── Top bar ── */}

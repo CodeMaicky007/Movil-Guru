@@ -156,13 +156,13 @@ export default function BlogPage() {
               initial={{ opacity: 0, x: -40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[clamp(3.5rem,11vw,140px)] font-black leading-[0.82] tracking-tighter uppercase text-[#CCFF00] m-0"
+              className="text-[clamp(3.5rem,11vw,140px)] font-black leading-[0.82] tracking-tighter uppercase m-0"
               style={{
-                fontFamily: '"Arial Black", Impact, sans-serif',
+                fontFamily: 'var(--font-display), sans-serif',
                 textShadow: "2px 2px 0 #001A99,4px 4px 0 #001A99,6px 6px 0 #001A99",
               }}
             >
-              BLOG
+              <span className="text-[#CCFF00]">BL</span><span className="text-white">O</span><span className="text-[#CCFF00]">G</span>
             </motion.h1>
           </div>
 
@@ -249,8 +249,8 @@ export default function BlogPage() {
               onClick={() => setActiveCategory(cat)}
               className="px-4 py-2 rounded-xl text-sm font-bold transition-all duration-200 active:scale-95"
               style={{
-                backgroundColor: activeCategory === cat ? "#0038FF" : "#0a0a0a08",
-                color: activeCategory === cat ? "#fff" : "#0a0a0a80",
+                backgroundColor: activeCategory === cat ? "#0038FF" : "#080e1408",
+                color: activeCategory === cat ? "#fff" : "#080e1480",
               }}
             >
               {cat}
@@ -267,7 +267,7 @@ export default function BlogPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.06 }}
-              className="group rounded-2xl overflow-hidden border border-[#0a0a0a]/5 hover:border-[#0038FF]/20 hover:shadow-[0_4px_24px_rgba(0,56,255,0.06)] transition-all duration-200 block"
+              className="group rounded-2xl overflow-hidden border border-[#080e14]/5 hover:border-[#0038FF]/20 hover:shadow-[0_4px_24px_rgba(0,56,255,0.06)] transition-all duration-200 block"
             >
               <div className="aspect-[16/10] overflow-hidden">
                 <img
@@ -281,16 +281,16 @@ export default function BlogPage() {
                   <span className="text-[10px] font-black uppercase tracking-wider text-[#0038FF]">
                     {post.category}
                   </span>
-                  <span className="w-1 h-1 rounded-full bg-[#0a0a0a]/15" />
-                  <span className="text-[10px] text-[#0a0a0a]/35 font-medium">{post.readTime}</span>
+                  <span className="w-1 h-1 rounded-full bg-[#080e14]/15" />
+                  <span className="text-[10px] text-[#080e14]/35 font-medium">{post.readTime}</span>
                 </div>
-                <h3 className="font-bold text-[#0a0a0a] text-sm leading-snug mb-2 group-hover:text-[#0038FF] transition-colors duration-200 line-clamp-2">
+                <h3 className="font-bold text-[#080e14] text-sm leading-snug mb-2 group-hover:text-[#0038FF] transition-colors duration-200 line-clamp-2">
                   {post.title}
                 </h3>
-                <p className="text-[#0a0a0a]/45 text-xs leading-relaxed line-clamp-2">
+                <p className="text-[#080e14]/45 text-xs leading-relaxed line-clamp-2">
                   {post.excerpt}
                 </p>
-                <p className="text-[10px] text-[#0a0a0a]/30 font-medium mt-3">{post.date}</p>
+                <p className="text-[10px] text-[#080e14]/30 font-medium mt-3">{post.date}</p>
               </div>
             </motion.a>
           ))}
@@ -298,13 +298,13 @@ export default function BlogPage() {
 
         {filtered.length === 0 && (
           <div className="text-center py-20">
-            <p className="text-lg font-bold text-[#0a0a0a]/40">No hay artículos en esta categoría todavía.</p>
+            <p className="text-lg font-bold text-[#080e14]/40">No hay artículos en esta categoría todavía.</p>
           </div>
         )}
       </section>
 
       {/* ── Newsletter ── */}
-      <section className="bg-[#0a0a0a] py-20 md:py-28">
+      <section className="bg-[#080e14] py-20 md:py-28">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -319,7 +319,9 @@ export default function BlogPage() {
               className="text-3xl md:text-4xl font-black text-white leading-tight tracking-tight mb-4"
               style={{ fontFamily: "var(--font-display, inherit)" }}
             >
-              Recibe consejos que protegen tu móvil
+              Recibe consejos que{" "}
+              <span className="text-[#0038FF]">protegen</span>{" "}
+              <span className="text-[#CCFF00]">tu móvil</span>
             </h2>
             <p className="text-white/50 text-sm mb-8 max-w-md mx-auto leading-relaxed">
               Un email al mes con guías, ofertas exclusivas y novedades del sector. Sin spam — lo prometemos.

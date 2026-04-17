@@ -1,7 +1,8 @@
+import React from "react";
 import { Button } from "@/components/ui/button";
 
 interface About3Props {
-  title?: string;
+  title?: React.ReactNode;
   description?: string;
   mainImage?: { src: string; alt: string };
   secondaryImage?: { src: string; alt: string };
@@ -15,7 +16,7 @@ interface About3Props {
   };
   companiesTitle?: string;
   companies?: Array<{ src: string; alt: string }>;
-  achievementsTitle?: string;
+  achievementsTitle?: React.ReactNode;
   achievementsDescription?: string;
   achievements?: Array<{ label: string; value: string }>;
 }
@@ -35,21 +36,21 @@ export const About3 = ({
   },
   companiesTitle = "Reparamos todas las marcas",
   companies = [],
-  achievementsTitle = "Números que lo dicen todo",
+  achievementsTitle = <>Números que <span style={{color:"#CCFF00"}}>lo dicen</span> todo</>,
   achievementsDescription = "Cada cifra representa un cliente que confió en nosotros y no se arrepintió.",
   achievements = [],
 }: About3Props = {}) => {
   return (
-    <section className="py-20 md:py-28 bg-[#060812] text-white">
+    <section className="py-20 md:py-28 bg-white text-black">
       <div className="max-w-6xl mx-auto px-4 md:px-6">
         <div className="mb-14 grid gap-5 text-center md:grid-cols-2 md:text-left">
           <h2
-            className="text-4xl md:text-5xl font-black leading-tight text-white"
+            className="text-4xl md:text-5xl font-black leading-tight text-black"
             style={{ fontFamily: "var(--font-display, inherit)" }}
           >
             {title}
           </h2>
-          <p className="text-white/50 text-lg leading-relaxed self-center">{description}</p>
+          <p className="text-black/50 text-lg leading-relaxed self-center">{description}</p>
         </div>
 
         <div className="grid gap-7 lg:grid-cols-3">
@@ -59,20 +60,20 @@ export const About3 = ({
             className="size-full max-h-[620px] rounded-2xl object-cover lg:col-span-2"
           />
           <div className="flex flex-col gap-7 md:flex-row lg:flex-col">
-            <div className="flex flex-col justify-between gap-6 rounded-2xl bg-white/[0.05] border border-white/10 p-7 md:w-1/2 lg:w-auto">
+            <div className="flex flex-col justify-between gap-6 rounded-2xl bg-black/[0.04] border border-black/10 p-7 md:w-1/2 lg:w-auto">
               <div className="flex items-center gap-2">
-                <div className="bg-white text-black font-black text-xs px-2.5 py-1 rounded-xl rounded-bl-sm">
+                <div className="bg-black text-white font-black text-xs px-2.5 py-1 rounded-xl rounded-bl-sm">
                   MOVIL
                 </div>
-                <div className="bg-[#CCFF00] text-black font-black text-xs px-2.5 py-1 rounded-full border border-foreground/10">
+                <div className="bg-[#CCFF00] text-black font-black text-xs px-2.5 py-1 rounded-full border border-black/10">
                   GURU
                 </div>
               </div>
               <div>
-                <p className="mb-2 text-lg font-black text-white">{breakout.title}</p>
-                <p className="text-white/50 text-sm leading-relaxed">{breakout.description}</p>
+                <p className="mb-2 text-lg font-black text-black">{breakout.title}</p>
+                <p className="text-black/50 text-sm leading-relaxed">{breakout.description}</p>
               </div>
-              <Button variant="outline" className="mr-auto border-white/20 text-white hover:bg-white/10 hover:text-white" asChild>
+              <Button variant="outline" className="mr-auto border-black/20 text-black hover:bg-black/5 hover:text-black" asChild>
                 <a href={breakout.buttonUrl}>{breakout.buttonText}</a>
               </Button>
             </div>
@@ -87,19 +88,19 @@ export const About3 = ({
         {/* Companies / Brands */}
         {companies.length > 0 && (
           <div className="py-20">
-            <p className="text-center text-sm font-black uppercase tracking-widest text-white/40">
+            <p className="text-center text-sm font-black uppercase tracking-widest text-black/40">
               {companiesTitle}
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-6">
               {companies.map((company, idx) => (
-                <div key={idx} className="flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04]">
+                <div key={idx} className="flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-black/10 bg-black/[0.04]">
                   <img
                     src={company.src}
                     alt={company.alt}
                     className="h-5 w-auto md:h-6 object-contain"
                     style={{ filter: 'none' }}
                   />
-                  <span className="text-xs font-semibold text-white/70">{company.alt}</span>
+                  <span className="text-xs font-semibold text-black/70">{company.alt}</span>
                 </div>
               ))}
             </div>

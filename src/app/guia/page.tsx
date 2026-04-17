@@ -241,7 +241,7 @@ export default function GuiaPage() {
               transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
               className="text-[clamp(3rem,10vw,130px)] font-black leading-[0.82] tracking-tighter uppercase text-[#CCFF00] m-0"
               style={{
-                fontFamily: '"Arial Black", Impact, sans-serif',
+                fontFamily: 'var(--font-display), sans-serif',
                 textShadow: "2px 2px 0 #001A99,4px 4px 0 #001A99,6px 6px 0 #001A99",
               }}
             >
@@ -253,11 +253,11 @@ export default function GuiaPage() {
               transition={{ duration: 0.7, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
               className="text-[clamp(3rem,10vw,130px)] font-black leading-[0.82] tracking-tighter uppercase text-white m-0 pl-[6%]"
               style={{
-                fontFamily: '"Arial Black", Impact, sans-serif',
+                fontFamily: 'var(--font-display), sans-serif',
                 textShadow: "2px 2px 0 #001A99,4px 4px 0 #001A99,6px 6px 0 #001A99",
               }}
             >
-              REPARACIÓN
+              <span className="text-white">REPAR</span><span className="text-[#CCFF00]">ACIÓN</span>
             </motion.h1>
           </div>
 
@@ -290,7 +290,7 @@ export default function GuiaPage() {
               transition={{ duration: 0.45, delay: i * 0.06 }}
               className="relative text-left rounded-2xl overflow-hidden border transition-all duration-300 group"
               style={{
-                borderColor: activeGuide === guide.id ? guide.accent : "#0a0a0a10",
+                borderColor: activeGuide === guide.id ? guide.accent : "#080e1410",
                 boxShadow:
                   activeGuide === guide.id
                     ? `0 4px 32px ${guide.accent}18`
@@ -311,7 +311,7 @@ export default function GuiaPage() {
                   <p
                     className="text-[3rem] font-black leading-none select-none"
                     style={{
-                      fontFamily: '"Arial Black", Impact, sans-serif',
+                      fontFamily: 'var(--font-display), sans-serif',
                       WebkitTextStroke: `2px ${guide.accent}`,
                       color: "transparent",
                     }}
@@ -328,17 +328,18 @@ export default function GuiaPage() {
                     >
                       {guide.difficulty}
                     </span>
-                    <span className="text-[10px] text-[#0a0a0a]/30 font-medium">{guide.time}</span>
+                    <span className="text-[10px] text-[#080e14]/30 font-medium">{guide.time}</span>
                   </div>
                 </div>
 
                 <h3
-                  className="font-black text-[#0a0a0a] text-base mb-1 leading-tight group-hover:text-[#0038FF] transition-colors duration-200"
+                  className="font-black text-[#080e14] text-base mb-1 leading-tight transition-colors duration-200"
                   style={{ fontFamily: "var(--font-display, inherit)" }}
                 >
-                  {guide.title}
+                  <span className="text-[#0038FF]">{guide.title.split(' ')[0]}</span>{' '}
+                  <span className="group-hover:text-[#0038FF] transition-colors duration-200">{guide.title.split(' ').slice(1).join(' ')}</span>
                 </h3>
-                <p className="text-[#0a0a0a]/45 text-xs leading-relaxed">{guide.subtitle}</p>
+                <p className="text-[#080e14]/45 text-xs leading-relaxed">{guide.subtitle}</p>
 
                 <div className="mt-3 flex items-center gap-1 text-xs font-bold text-[#0038FF]/60">
                   <span>{activeGuide === guide.id ? "Cerrar guía" : "Ver guía"}</span>
@@ -375,7 +376,7 @@ export default function GuiaPage() {
             {(() => {
               const guide = guides.find((g) => g.id === activeGuide)!;
               return (
-                <div className="bg-[#0a0a0a] py-16 md:py-24">
+                <div className="bg-[#080e14] py-16 md:py-24">
                   <div className="max-w-3xl mx-auto px-6">
                     {/* Guide header */}
                     <motion.div
@@ -388,7 +389,7 @@ export default function GuiaPage() {
                         <p
                           className="text-5xl font-black leading-none select-none"
                           style={{
-                            fontFamily: '"Arial Black", Impact, sans-serif',
+                            fontFamily: 'var(--font-display), sans-serif',
                             WebkitTextStroke: `2px ${guide.accent}`,
                             color: "transparent",
                           }}
@@ -400,7 +401,8 @@ export default function GuiaPage() {
                             className="text-2xl md:text-3xl font-black text-white leading-tight tracking-tight"
                             style={{ fontFamily: "var(--font-display, inherit)" }}
                           >
-                            {guide.title}
+                            <span style={{ color: guide.accent }}>{guide.title.split(' ')[0]}</span>{' '}
+                            {guide.title.split(' ').slice(1).join(' ')}
                           </h2>
                           <p className="text-white/40 text-sm">{guide.subtitle}</p>
                         </div>
@@ -453,7 +455,13 @@ export default function GuiaPage() {
                             {i + 1}
                           </div>
 
-                          <h3 className="text-white font-bold text-base mb-1.5">{step.title}</h3>
+                          <h3 className="text-white font-bold text-base mb-1.5">
+                            {step.title.split(' ').map((word, wi) =>
+                              wi === step.title.split(' ').length - 1
+                                ? <span key={wi} style={{ color: guide.accent }}>{word}</span>
+                                : <span key={wi}>{word}{' '}</span>
+                            )}
+                          </h3>
                           <p className="text-white/55 text-sm leading-relaxed">{step.body}</p>
 
                           {step.tip && (

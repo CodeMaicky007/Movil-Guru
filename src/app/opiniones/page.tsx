@@ -72,7 +72,7 @@ export default function OpinionesPage() {
 
 
   return (
-    <main className="w-full bg-[#060812] min-h-screen">
+    <main className="w-full bg-[#060d12] min-h-screen">
       <Header dark />
 
       {/* ── Hero — Gravity ──────────────────────────────────────────────────
@@ -130,21 +130,21 @@ export default function OpinionesPage() {
 
           {/* Customer quote cards — white bg for maximum contrast */}
           <MatterBody matterBodyOptions={{ friction: 0.5, restitution: 0.3, density: 0.003 }} x="38%" y="5%" angle={3}>
-            <div className="bg-white text-[#060812] text-xs font-semibold leading-snug px-4 py-3 rounded-2xl shadow-2xl border-l-[3px] border-[#CCFF00]" style={{maxWidth: 210}}>
+            <div className="bg-white text-[#060d12] text-xs font-semibold leading-snug px-4 py-3 rounded-2xl shadow-2xl border-l-[3px] border-[#CCFF00]" style={{maxWidth: 210}}>
               "En 40 minutos, pantalla como nueva"
               <span className="block mt-1 text-[10px] text-[#0038FF] font-black">— María G. ⭐⭐⭐⭐⭐</span>
             </div>
           </MatterBody>
 
           <MatterBody matterBodyOptions={{ friction: 0.5, restitution: 0.25, density: 0.003 }} x="60%" y="9%" angle={-4}>
-            <div className="bg-white text-[#060812] text-xs font-semibold leading-snug px-4 py-3 rounded-2xl shadow-2xl border-l-[3px] border-[#CCFF00]" style={{maxWidth: 210}}>
+            <div className="bg-white text-[#060d12] text-xs font-semibold leading-snug px-4 py-3 rounded-2xl shadow-2xl border-l-[3px] border-[#CCFF00]" style={{maxWidth: 210}}>
               "Recuperaron TODAS mis fotos del móvil"
               <span className="block mt-1 text-[10px] text-[#0038FF] font-black">— Laura M. ⭐⭐⭐⭐⭐</span>
             </div>
           </MatterBody>
 
           <MatterBody matterBodyOptions={{ friction: 0.5, restitution: 0.25, density: 0.003 }} x="20%" y="11%" angle={-5}>
-            <div className="bg-white text-[#060812] text-xs font-semibold leading-snug px-4 py-3 rounded-2xl shadow-2xl border-l-[3px] border-[#CCFF00]" style={{maxWidth: 200}}>
+            <div className="bg-white text-[#060d12] text-xs font-semibold leading-snug px-4 py-3 rounded-2xl shadow-2xl border-l-[3px] border-[#CCFF00]" style={{maxWidth: 200}}>
               "Precio justo y garantía de por vida"
               <span className="block mt-1 text-[10px] text-[#0038FF] font-black">— Carlos R. ⭐⭐⭐⭐⭐</span>
             </div>
@@ -201,7 +201,7 @@ export default function OpinionesPage() {
             transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
             className="text-[clamp(3.5rem,11vw,130px)] font-black leading-[0.82] tracking-tighter uppercase text-[#CCFF00] m-0 text-center"
             style={{
-              fontFamily: '"Arial Black", Impact, sans-serif',
+              fontFamily: 'var(--font-display), sans-serif',
               textShadow: "3px 3px 0 #001A99,5px 5px 0 #001A99",
             }}
           >
@@ -213,7 +213,7 @@ export default function OpinionesPage() {
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="text-[clamp(3.5rem,11vw,130px)] font-black leading-[0.82] tracking-tighter uppercase text-white m-0 text-center"
             style={{
-              fontFamily: '"Arial Black", Impact, sans-serif',
+              fontFamily: 'var(--font-display), sans-serif',
               textShadow: "3px 3px 0 #001A99,5px 5px 0 #001A99",
             }}
           >
@@ -222,11 +222,11 @@ export default function OpinionesPage() {
         </div>
 
         {/* Soft gradient at bottom — pointer-events-none so bodies are still draggable there */}
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#060812]/70 to-transparent pointer-events-none z-30" />
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#060d12]/70 to-transparent pointer-events-none z-30" />
       </section>
 
       {/* ── GooeyText morphing — own section ───────────────────────────── */}
-      <section className="relative bg-[#060812] py-20 md:py-28 px-6 overflow-hidden">
+      <section className="relative bg-[#060d12] py-20 md:py-28 px-6 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,56,255,0.12),transparent_60%)] pointer-events-none" />
 
         <div className="relative max-w-4xl mx-auto text-center">
@@ -262,7 +262,7 @@ export default function OpinionesPage() {
       </section>
 
       {/* ── Stats bar ───────────────────────────────────────────────────── */}
-      <section className="bg-[#060812] py-14 px-6">
+      <section className="bg-[#060d12] py-14 px-6">
         <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
           {stats.map((s, i) => (
             <motion.div
@@ -292,7 +292,7 @@ export default function OpinionesPage() {
       </div>
 
       {/* ── 3D Marquee Testimonials ───────────────────────────────────────── */}
-      <section className="bg-[#060812] py-20 px-6 overflow-hidden">
+      <section className="bg-[#060d12] py-20 px-6 overflow-hidden">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
