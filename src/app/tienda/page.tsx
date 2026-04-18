@@ -490,7 +490,7 @@ export default function TiendaPage() {
                 whileHover={{ y: -4 }}
               >
                 <Link
-                  href="#"
+                  href={`/tienda/${cat.id}`}
                   className="group block relative aspect-[3/4] rounded-2xl overflow-hidden bg-neutral-100"
                 >
                   <img

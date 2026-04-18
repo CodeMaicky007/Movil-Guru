@@ -41,6 +41,10 @@ const MapControls = dynamic(
   () => import("@/components/ui/map").then((m) => m.MapControls),
   { ssr: false }
 );
+const Phone3DSection = dynamic(
+  () => import("@/components/ui/phone-3d-section").then((m) => m.Phone3DSection),
+  { ssr: false }
+);
 
 // ─── Data ──────────────────────────────────────────────────────────────────
 const stores = [
@@ -356,6 +360,9 @@ export default function TiendasPage() {
       {/* Offers / Login Section */}
       <OffersSection />
 
+      {/* 3D Phone Cinematic Section */}
+      <Phone3DSection />
+
       {/* CTA Banner */}
       <section className="py-24 px-4" style={{ background: "#fff" }}>
         <div className="max-w-4xl mx-auto">
@@ -459,7 +466,15 @@ function OffersSection() {
       </div>
 
       {/* Radial glow blobs */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      <div
+        className="pointer-events-none absolute inset-0 overflow-hidden"
+        style={{
+          WebkitMaskImage:
+            "linear-gradient(to bottom, black 0%, black 78%, transparent 100%)",
+          maskImage:
+            "linear-gradient(to bottom, black 0%, black 78%, transparent 100%)",
+        }}
+      >
         <motion.div
           className="absolute rounded-full"
           style={{ width: 600, height: 600, top: "-20%", left: "-10%", background: "radial-gradient(circle, rgba(0,56,255,0.07) 0%, transparent 70%)" }}
