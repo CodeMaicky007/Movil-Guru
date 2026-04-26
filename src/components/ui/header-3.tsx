@@ -38,6 +38,7 @@ import {
   Wrench,
   LogOut,
   Store,
+  Phone,
 } from 'lucide-react';
 
 type LinkItem = {
@@ -368,7 +369,7 @@ const accountLinks: LinkItem[] = [
 
 const companyLinks2: LinkItem[] = [
   { title: 'B2B / Empresas', href: '/empresas', icon: Briefcase },
-  { title: 'Rastrear mi reparación', href: '/track', icon: RotateCcw },
+  { title: 'Contacto', href: '/contacto', icon: Phone },
   { title: 'Guía de reparación', href: '/guia', icon: FileText },
   { title: 'Blog', href: '/blog', icon: Leaf },
   { title: 'Preguntas frecuentes', href: '/faq', icon: HelpCircle },

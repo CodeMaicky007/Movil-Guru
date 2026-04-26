@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Link } from "next-view-transitions";
 import { Eye, EyeOff, ArrowRight, Fingerprint, Mail, ShieldCheck, Clock, Star } from "lucide-react";
 import Image from "next/image";
-import logoImg from "../../../logo/logo-Photoroom.png";
+import logoImg from "../../../images/logo/logo-Photoroom.png";
 
 /* ─────────────────────────── Pupil ─────────────────────────── */
 interface PupilProps {

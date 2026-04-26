@@ -12,12 +12,12 @@ if (typeof window !== "undefined") {
 
 // ─── Brand tokens ───────────────────────────────────────────────────────────
 const BRAND = {
-  bg: "#0a0a0a",
+  bg: "#ffffff",
   blue: "#0038FF",
   lime: "#CCFF00",
-  white: "#FFFFFF",
-  muted: "rgba(255,255,255,0.45)",
-  border: "rgba(255,255,255,0.08)",
+  white: "#0a0a0a",
+  muted: "rgba(10,10,10,0.45)",
+  border: "rgba(10,10,10,0.08)",
 };
 
 // ─── Inline styles ──────────────────────────────────────────────────────────
@@ -52,8 +52,8 @@ const STYLES = `
 .mg-grid {
   background-size: 60px 60px;
   background-image:
-    linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+    linear-gradient(to right, rgba(10,10,10,0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(10,10,10,0.05) 1px, transparent 1px);
   mask-image: linear-gradient(to bottom, transparent, black 25%, black 75%, transparent);
   -webkit-mask-image: linear-gradient(to bottom, transparent, black 25%, black 75%, transparent);
 }
@@ -64,8 +64,8 @@ const STYLES = `
   font-weight: 900;
   letter-spacing: -0.04em;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(255,255,255,0.06);
-  background: linear-gradient(180deg, rgba(204,255,0,0.08) 0%, transparent 65%);
+  -webkit-text-stroke: 1px rgba(10,10,10,0.07);
+  background: linear-gradient(180deg, rgba(0,56,255,0.06) 0%, transparent 65%);
   -webkit-background-clip: text;
   background-clip: text;
   white-space: nowrap;
@@ -74,38 +74,38 @@ const STYLES = `
 }
 
 .mg-heading-glow {
-  background: linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.5) 100%);
+  background: linear-gradient(180deg, #0a0a0a 0%, rgba(10,10,10,0.7) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0 0 28px rgba(204,255,0,0.18));
+  filter: drop-shadow(0 0 28px rgba(0,56,255,0.10));
 }
 
 .mg-pill {
-  background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
-  border: 1px solid rgba(255,255,255,0.09);
+  background: linear-gradient(145deg, rgba(10,10,10,0.04) 0%, rgba(10,10,10,0.02) 100%);
+  border: 1px solid rgba(10,10,10,0.10);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 8px 24px -8px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.08);
+  box-shadow: 0 8px 24px -8px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.6);
   transition: background 0.35s cubic-bezier(0.16,1,0.3,1),
               border-color 0.35s cubic-bezier(0.16,1,0.3,1),
               box-shadow 0.35s cubic-bezier(0.16,1,0.3,1),
               color 0.2s ease;
-  color: rgba(255,255,255,0.55);
+  color: rgba(10,10,10,0.55);
 }
 
 .mg-pill:hover {
-  background: linear-gradient(145deg, rgba(204,255,0,0.10) 0%, rgba(204,255,0,0.04) 100%);
-  border-color: rgba(204,255,0,0.30);
-  box-shadow: 0 16px 40px -10px rgba(204,255,0,0.15), inset 0 1px 0 rgba(204,255,0,0.15);
-  color: #ffffff;
+  background: linear-gradient(145deg, rgba(0,56,255,0.06) 0%, rgba(0,56,255,0.02) 100%);
+  border-color: rgba(0,56,255,0.25);
+  box-shadow: 0 16px 40px -10px rgba(0,56,255,0.10), inset 0 1px 0 rgba(0,56,255,0.08);
+  color: #0038FF;
 }
 
 .mg-pill-primary {
-  background: linear-gradient(145deg, rgba(204,255,0,0.12) 0%, rgba(204,255,0,0.05) 100%);
-  border: 1px solid rgba(204,255,0,0.25);
-  box-shadow: 0 8px 24px -8px rgba(204,255,0,0.20), inset 0 1px 0 rgba(204,255,0,0.15);
-  color: #CCFF00;
+  background: linear-gradient(145deg, rgba(0,56,255,0.08) 0%, rgba(0,56,255,0.03) 100%);
+  border: 1px solid rgba(0,56,255,0.22);
+  box-shadow: 0 8px 24px -8px rgba(0,56,255,0.15), inset 0 1px 0 rgba(0,56,255,0.10);
+  color: #0038FF;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   transition: background 0.35s cubic-bezier(0.16,1,0.3,1),
@@ -115,10 +115,10 @@ const STYLES = `
 }
 
 .mg-pill-primary:hover {
-  background: linear-gradient(145deg, rgba(204,255,0,0.22) 0%, rgba(204,255,0,0.10) 100%);
-  border-color: rgba(204,255,0,0.50);
-  box-shadow: 0 16px 40px -8px rgba(204,255,0,0.30), inset 0 1px 0 rgba(204,255,0,0.25);
-  color: #ffffff;
+  background: linear-gradient(145deg, rgba(0,56,255,0.14) 0%, rgba(0,56,255,0.06) 100%);
+  border-color: rgba(0,56,255,0.45);
+  box-shadow: 0 16px 40px -8px rgba(0,56,255,0.20), inset 0 1px 0 rgba(0,56,255,0.18);
+  color: #001f8f;
 }
 `;
 
@@ -176,15 +176,15 @@ MagneticButton.displayName = "MagneticButton";
 const MarqueeItem = () => (
   <div className="flex items-center gap-12 px-6 shrink-0">
     <span>Reparación Garantizada</span>
-    <span style={{ color: "#CCFF00", opacity: 0.5 }}>✦</span>
+    <span style={{ color: "#0038FF", opacity: 0.4 }}>✦</span>
     <span>Diagnóstico Gratis</span>
-    <span style={{ color: "#CCFF00", opacity: 0.5 }}>✦</span>
+    <span style={{ color: "#0038FF", opacity: 0.4 }}>✦</span>
     <span>Técnicos Certificados</span>
-    <span style={{ color: "#CCFF00", opacity: 0.5 }}>✦</span>
+    <span style={{ color: "#0038FF", opacity: 0.4 }}>✦</span>
     <span>Garantía Real</span>
-    <span style={{ color: "#CCFF00", opacity: 0.5 }}>✦</span>
+    <span style={{ color: "#0038FF", opacity: 0.4 }}>✦</span>
     <span>Todas las Marcas</span>
-    <span style={{ color: "#CCFF00", opacity: 0.5 }}>✦</span>
+    <span style={{ color: "#0038FF", opacity: 0.4 }}>✦</span>
   </div>
 );
 
@@ -233,14 +233,14 @@ export function CinematicFooter() {
       <section
         ref={sectionRef}
         className="mg-footer relative w-full min-h-screen flex flex-col justify-between overflow-hidden"
-        style={{ background: "#060812" }}
+        style={{ background: "#ffffff" }}
       >
         {/* Aurora glow */}
         <div
           className="mg-breathe absolute left-1/2 top-1/2 rounded-full pointer-events-none"
           style={{
             width: "70vw", height: "55vh",
-            background: `radial-gradient(circle, rgba(0,56,255,0.12) 0%, rgba(204,255,0,0.08) 50%, transparent 75%)`,
+            background: `radial-gradient(circle, rgba(0,56,255,0.06) 0%, rgba(204,255,0,0.05) 50%, transparent 75%)`,
             filter: "blur(70px)",
           }}
         />
@@ -260,15 +260,15 @@ export function CinematicFooter() {
         <div
           className="relative z-10 w-full overflow-hidden py-4 -rotate-1 scale-105 mt-16"
           style={{
-            borderTop: `1px solid rgba(204,255,0,0.20)`,
-            borderBottom: `1px solid rgba(204,255,0,0.20)`,
-            background: "rgba(6,8,18,0.85)",
+            borderTop: `1px solid rgba(10,10,10,0.08)`,
+            borderBottom: `1px solid rgba(10,10,10,0.08)`,
+            background: "rgba(255,255,255,0.85)",
             backdropFilter: "blur(10px)",
           }}
         >
           <div
             className="mg-marquee-track flex w-max text-xs md:text-sm font-bold tracking-[0.28em] uppercase"
-            style={{ color: "#CCFF00" }}
+            style={{ color: "#0038FF" }}
           >
             <MarqueeItem />
             <MarqueeItem />

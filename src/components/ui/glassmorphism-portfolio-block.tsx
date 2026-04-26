@@ -66,7 +66,7 @@ export function GlassmorphismTeamBlock({
   return (
     <section className="relative overflow-hidden px-4 py-20 md:py-28">
       {/* Background */}
-      <div className="absolute inset-0 bg-[#F8F9FA]" />
+      <div className="absolute inset-0 bg-white" />
 
       <div className="relative z-10 mx-auto max-w-6xl">
         <motion.div
@@ -154,7 +154,7 @@ export function GlassmorphismTeamBlock({
             {/* Right — profile card */}
             <div className="relative">
               <div className="absolute inset-0 rounded-[32px] bg-[#0038FF]/8 blur-3xl" />
-              <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-[28px] border border-black/10 bg-[#F8F9FA] p-8">
+              <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-[28px] border border-black/10 bg-white p-8">
                 <div className="flex flex-col items-center text-center">
                   {/* Avatar */}
                   <motion.div

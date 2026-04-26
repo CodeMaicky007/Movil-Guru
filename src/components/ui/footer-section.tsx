@@ -52,7 +52,6 @@ const footerLinks: FooterSection[] = [
       { title: 'Guía de reparación', href: '/guia' },
       { title: 'Blog', href: '/blog' },
       { title: 'Preguntas frecuentes', href: '/faq' },
-      { title: 'Contacto', href: '/contacto' },
     ],
   },
   {
@@ -60,6 +59,7 @@ const footerLinks: FooterSection[] = [
     links: [
       { title: 'Política de privacidad', href: '/privacidad' },
       { title: 'Términos y condiciones', href: '/terminos' },
+      { title: 'Contacto', href: '/contacto' },
     ],
   },
   {
