@@ -139,7 +139,7 @@ export default function ContactoPage() {
 
       {/* Stats bar */}
       <section className="px-6 pb-14">
-        <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
             { value: "+15.000", label: "Reparaciones al año" },
             { value: "< 2 h", label: "Tiempo medio en tienda" },

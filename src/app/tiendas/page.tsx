@@ -728,7 +728,7 @@ function OffersSection() {
 
         {/* Bottom perks row */}
         <motion.div
-          className="mt-20 pt-12 grid grid-cols-2 md:grid-cols-4 gap-6"
+          className="mt-20 pt-12 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
           style={{ borderTop: "1px solid #e5e7eb" }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

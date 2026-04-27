@@ -97,7 +97,7 @@ export const HeroComponent = () => {
 
 
       {/* Hero Section */}
-      <main className="flex-1 relative z-10 pt-16 pb-32 md:pt-20 md:pb-48 px-4 flex flex-col items-center justify-center w-full max-w-[1440px] mx-auto">
+      <main className="flex-1 relative z-10 pt-16 pb-32 md:pt-20 md:pb-48 px-4 flex flex-col items-center justify-center w-full max-w-[1440px] mx-auto max-lg:pt-24 max-lg:pb-40 max-md:pb-56">
         <div className="relative w-full max-w-5xl mx-auto flex flex-col items-center justify-center text-center z-10 mt-4 mb-16">
 
           {/* Headline Stack */}
@@ -149,7 +149,7 @@ export const HeroComponent = () => {
             <motion.div
               animate={{ y: [0, -15, 0] }}
               transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute bottom-[10%] left-[5%] md:left-[20%] z-30 pointer-events-auto"
+              className="absolute bottom-[10%] left-[5%] md:left-[20%] z-30 pointer-events-auto max-md:bottom-[-5%] max-md:left-[2%] max-sm:scale-75 max-sm:origin-bottom-left"
             >
               <div className="w-40 md:w-52 aspect-[3/3.5] bg-white/20 backdrop-blur-md border border-white/40 rounded-[2rem] p-5 flex flex-col items-center justify-center rotate-[-12deg] shadow-2xl hover:rotate-0 transition-transform duration-500">
                 <div className="w-16 h-16 md:w-24 md:h-24 bg-[#D2B48C] rounded-full flex items-center justify-center mb-4 shadow-inner border-[3px] border-white/50 overflow-hidden">
@@ -173,7 +173,7 @@ export const HeroComponent = () => {
             <motion.div
               animate={{ y: [0, -20, 0] }}
               transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-              className="absolute top-[15%] right-[5%] md:right-[22%] z-30 pointer-events-auto"
+              className="absolute top-[15%] right-[5%] md:right-[22%] z-30 pointer-events-auto max-md:top-[-2%] max-md:right-[2%] max-sm:scale-75 max-sm:origin-top-right"
             >
               <div className="w-40 md:w-52 aspect-[3/3.5] bg-white/20 backdrop-blur-md border border-white/40 rounded-[2rem] p-5 flex flex-col items-center justify-center rotate-[12deg] shadow-2xl hover:rotate-0 transition-transform duration-500">
                 <div className="w-16 h-16 md:w-24 md:h-24 bg-[#2C3E50] rounded-full flex items-center justify-center mb-4 shadow-inner border-[3px] border-white/50 overflow-hidden">
@@ -210,8 +210,8 @@ export const HeroComponent = () => {
       </main>
 
       {/* Bottom Features Strip */}
-      <section className="bg-white text-black rounded-t-[2.5rem] md:rounded-t-[3.5rem] px-6 py-12 md:px-10 md:py-16 relative z-20 shadow-[0_-20px_50px_rgba(0,0,0,0.2)] mt-auto w-full">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+      <section className="bg-white text-black rounded-t-[2.5rem] md:rounded-t-[3.5rem] px-6 py-12 md:px-10 md:py-16 relative z-20 shadow-[0_-20px_50px_rgba(0,0,0,0.2)] mt-auto w-full max-md:px-4">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
 
           {/* Card 1 — Screen Repair */}
           <div className="bg-[#F8F9FA] rounded-[2rem] p-8 flex flex-col items-center text-center relative h-64 border border-gray-100">

@@ -155,7 +155,7 @@ export default function PricingSection() {
       className="px-4 md:px-6 py-20 md:py-28 max-w-6xl mx-auto relative"
       ref={pricingRef}
     >
-      <article className="flex sm:flex-row flex-col sm:pb-0 pb-4 sm:items-center items-start justify-between">
+      <article className="flex lg:flex-row flex-col lg:pb-0 pb-4 lg:items-center items-start justify-between gap-6">
         <div className="text-left mb-6">
           <h2
             className="text-4xl font-bold leading-[130%] text-gray-900 mb-4"
@@ -212,7 +212,7 @@ export default function PricingSection() {
         animationNum={2}
         timelineRef={pricingRef as React.RefObject<HTMLElement | null>}
         customVariants={revealVariants}
-        className="grid md:grid-cols-3 gap-4 mx-auto bg-gradient-to-b from-neutral-100 to-neutral-200 sm:p-3 rounded-lg"
+        className="grid lg:grid-cols-3 gap-4 mx-auto bg-gradient-to-b from-neutral-100 to-neutral-200 sm:p-3 rounded-lg max-lg:gap-6"
       >
         {plans.map((plan, index) => (
           <TimelineContent
@@ -225,7 +225,7 @@ export default function PricingSection() {
             <Card
               className={`relative flex-col flex justify-between ${
                 plan.popular
-                  ? "scale-110 ring-2 ring-neutral-900 bg-gradient-to-t from-black to-neutral-900 text-white"
+                  ? "lg:scale-110 ring-2 ring-neutral-900 bg-gradient-to-t from-black to-neutral-900 text-white"
                   : "border-none shadow-none bg-transparent pt-4 text-gray-900"
               }`}
             >

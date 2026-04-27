@@ -263,7 +263,7 @@ export default function OpinionesPage() {
 
       {/* ── Stats bar ───────────────────────────────────────────────────── */}
       <section className="bg-[#060d12] py-14 px-6">
-        <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {stats.map((s, i) => (
             <motion.div
               key={s.label}

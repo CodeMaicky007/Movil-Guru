@@ -67,21 +67,21 @@ export function Header({ dark = false }: { dark?: boolean }) {
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 mx-auto w-full max-w-6xl border-b border-transparent md:rounded-full md:border md:border-transparent md:transition-all md:duration-300 md:ease-out',
+        'sticky top-0 z-50 mx-auto w-full max-w-6xl border-b border-transparent lg:rounded-full lg:border lg:border-transparent lg:transition-all lg:duration-300 lg:ease-out',
         dark
           ? 'bg-[#060d12]/90 backdrop-blur-md border-white/[0.06]'
           : '',
         {
-          'bg-background/95 supports-[backdrop-filter]:bg-background/50 border-border backdrop-blur-lg md:top-4 md:max-w-5xl md:shadow md:rounded-full':
+          'bg-background/95 supports-[backdrop-filter]:bg-background/50 border-border backdrop-blur-lg lg:top-4 lg:max-w-5xl lg:shadow lg:rounded-full':
             scrolled && !dark && !open,
-          'bg-[#060d12]/95 border-white/[0.10] md:top-4 md:max-w-5xl md:shadow-lg md:border-white/[0.10] md:rounded-full':
+          'bg-[#060d12]/95 border-white/[0.10] lg:top-4 lg:max-w-5xl lg:shadow-lg lg:border-white/[0.10] lg:rounded-full':
             scrolled && dark && !open,
           'bg-background/90': open && !dark,
           'bg-[#060d12]/95': open && dark,
         }
       )}
     >
-      <nav className={cn('flex h-14 w-full items-center justify-between px-4 md:transition-all md:duration-300 md:ease-out', scrolled && 'md:px-2', dark && 'text-white')} style={{ fontFamily: "var(--font-display), sans-serif" }}>
+      <nav className={cn('flex h-14 w-full items-center justify-between px-4 lg:transition-all lg:duration-300 lg:ease-out', scrolled && 'lg:px-2', dark && 'text-white')} style={{ fontFamily: "var(--font-display), sans-serif" }}>
         <div className="flex items-center gap-5">
           <Link href="/" className={cn('rounded-md px-2 py-1 flex items-center gap-1.5', dark ? 'hover:bg-white/10' : 'hover:bg-accent')}>
             <div className={cn('font-black text-xs px-2.5 py-1 rounded-xl rounded-bl-sm', dark ? 'bg-white text-black' : 'bg-foreground text-background')}>
@@ -91,7 +91,7 @@ export function Header({ dark = false }: { dark?: boolean }) {
               GURU
             </div>
           </Link>
-          <NavigationMenu className="hidden md:flex">
+          <NavigationMenu className="hidden lg:flex">
             <NavigationMenuList>
               <NavigationMenuItem>
                 <NavigationMenuTrigger
@@ -170,7 +170,7 @@ export function Header({ dark = false }: { dark?: boolean }) {
             </NavigationMenuList>
           </NavigationMenu>
         </div>
-        <div className="hidden items-center gap-2 md:flex">
+        <div className="hidden items-center gap-2 lg:flex">
           <ProfileMenu dark={dark} />
           <Link href="/tienda/carrito" className={cn('relative flex items-center justify-center size-9 rounded-full border transition-all', dark ? 'border-white/15 text-white hover:border-[#CCFF00]/60 hover:bg-[#CCFF00]/10' : 'border-foreground/10 hover:border-foreground/30')} aria-label="Carrito">
             <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
@@ -181,7 +181,7 @@ export function Header({ dark = false }: { dark?: boolean }) {
           size="icon"
           variant="outline"
           onClick={() => setOpen(!open)}
-          className={cn('md:hidden', dark && 'border-white/30 text-white hover:bg-white/10 hover:text-white')}
+          className={cn('lg:hidden', dark && 'border-white/30 text-white hover:bg-white/10 hover:text-white')}
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label="Toggle menu"
@@ -239,7 +239,7 @@ function MobileMenu({ open, children, className, ...props }: MobileMenuProps) {
       id="mobile-menu"
       className={cn(
         'bg-background/95 supports-[backdrop-filter]:bg-background/50 backdrop-blur-lg',
-        'fixed top-14 right-0 bottom-0 left-0 z-40 flex flex-col overflow-hidden border-y md:hidden'
+        'fixed top-14 right-0 bottom-0 left-0 z-40 flex flex-col overflow-hidden border-y lg:hidden'
       )}
     >
       <div

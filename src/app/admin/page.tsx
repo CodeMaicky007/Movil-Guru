@@ -199,7 +199,7 @@ function ResumenTab({ stats, rows }: { stats: { total: number; ingresos: number;
   const recent = rows.slice(0, 6);
   return (
     <div className="space-y-8">
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
         <StatCard icon={<TrendingUp size={14} />}   label="Reservas totales" value={String(stats.total)} sub="Histórico" />
         <StatCard icon={<Euro size={14} />}         label="Ingresos"         value={`${stats.ingresos} €`} sub="Completadas" />
         <StatCard icon={<Clock size={14} />}        label="Pendientes"       value={String(stats.pendientes)} />

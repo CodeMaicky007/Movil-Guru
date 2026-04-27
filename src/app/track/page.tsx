@@ -265,7 +265,7 @@ export default function TrackPage() {
                   </div>
                   <StatusBadge status={result.status} />
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                   {[
                     { label: "Dispositivo", value: result.device },
                     { label: "Reparación",  value: result.issue },
@@ -357,7 +357,7 @@ export default function TrackPage() {
               Sabes exactamente <span className="text-[#0038FF]">dónde está</span> tu <span className="text-[#CCFF00]">móvil</span>
             </h2>
           </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               { tag: "01", titleParts: ["Seguimiento en ", "tiempo real"],   desc: "Cada fase de la reparación se actualiza al instante. Sin llamadas, sin esperas por información." },
               { tag: "02", titleParts: ["Notificación ", "automática"],       desc: "Recibes un mensaje por WhatsApp o SMS cuando tu dispositivo cambia de estado y cuando está listo." },

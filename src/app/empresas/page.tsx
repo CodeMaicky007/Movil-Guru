@@ -238,7 +238,7 @@ export default function EmpresasPage() {
 
       {/* ── Stats ── */}
       <section className="max-w-6xl mx-auto px-6 py-16 md:py-20">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {stats.map((s, i) => (
             <motion.div
               key={s.label}
@@ -284,7 +284,7 @@ export default function EmpresasPage() {
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-0">
             {[
               { step: "01", title: "Alta como empresa", body: "Rellena el formulario B2B. En menos de 2 horas tienes tu cuenta activa con acceso al portal." },
               { step: "02", title: "Solicitas recogida", body: "Desde el portal o por WhatsApp. Indicamos fecha, hora y número de dispositivos." },
@@ -346,7 +346,7 @@ export default function EmpresasPage() {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {plans.map((plan, i) => (
             <motion.div
               key={plan.name}

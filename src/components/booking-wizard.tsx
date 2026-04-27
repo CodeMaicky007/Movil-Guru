@@ -403,7 +403,7 @@ export function BookingWizard({
                   <div className="inline-block bg-[#0038FF]/8 text-[#0038FF] border border-[#0038FF]/20 text-xs font-black px-3 py-1 rounded-full mb-3 uppercase tracking-wider">Paso 1 de 5</div>
                   <h2 className="text-3xl md:text-4xl font-black text-[#0a0a0a] leading-tight" style={{ fontFamily: "var(--font-display, inherit)" }}>¿De qué marca es tu móvil?</h2>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-md:gap-3">
                   {filteredBrands.map((brand, i) => (
                     <motion.button key={brand.id} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05, duration: 0.35 }} onClick={() => { setSelectedBrand(brand); scrollUp(); }} className="group relative bg-white rounded-2xl p-6 border border-[#0a0a0a]/5 hover:border-[#0038FF]/30 hover:shadow-[0_8px_32px_rgba(0,56,255,0.1)] transition-all duration-200 text-left">
                       <div className="absolute bottom-0 left-0 right-0 h-[3px] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-b-2xl" style={{ backgroundColor: brand.accentColor }} />

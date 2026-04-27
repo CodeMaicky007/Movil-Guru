@@ -423,7 +423,7 @@ export default function FaqPage() {
       {/* ── All questions count bar ── */}
       <section className="bg-[#080e14] py-14">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
             {categories.map((cat, i) => (
               <motion.button
                 key={cat.id}
