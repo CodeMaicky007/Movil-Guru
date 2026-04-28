@@ -17,7 +17,9 @@ export default function ChatWidget() {
   }, [messages]);
 
   useEffect(() => {
-    if (open) setTimeout(() => inputRef.current?.focus(), 200);
+    if (!open) return;
+    const id = setTimeout(() => inputRef.current?.focus(), 200);
+    return () => clearTimeout(id);
   }, [open]);
 
   const handleSend = () => {
@@ -44,6 +46,10 @@ export default function ChatWidget() {
             transition={{ type: 'spring', stiffness: 400, damping: 30 }}
             className="fixed bottom-24 right-4 z-50 w-[360px] max-h-[520px] flex flex-col rounded-2xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.18),0_2px_8px_rgba(0,0,0,0.08)]"
             style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.08)' }}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Chat con Gurú"
+            onKeyDown={(e) => { if (e.key === 'Escape') setOpen(false); }}
           >
             <div
               className="flex items-center justify-between px-4 py-3 flex-shrink-0"
@@ -60,14 +66,14 @@ export default function ChatWidget() {
               </div>
               <button
                 onClick={() => setOpen(false)}
-                className="p-1.5 rounded-lg transition-colors hover:bg-white/10 active:bg-white/20"
+                className="p-1.5 rounded-lg transition-colors hover:bg-white/10 active:bg-white/20 focus-visible:ring-2 focus-visible:ring-orange-500/70 focus-visible:outline-none"
                 aria-label="Cerrar chat"
               >
                 <X size={16} className="text-gray-400" />
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-0" style={{ scrollbarWidth: 'thin', scrollbarColor: '#333 transparent' }}>
+            <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-0" style={{ scrollbarWidth: 'thin', scrollbarColor: '#333 transparent' }} role="log" aria-live="polite" aria-label="Conversación con Gurú">
               {messages.map((msg) => (
                 <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div
@@ -111,7 +117,7 @@ export default function ChatWidget() {
               <button
                 onClick={handleSend}
                 disabled={isLoading || !input.trim()}
-                className="w-9 h-9 rounded-xl flex items-center justify-center transition-opacity disabled:opacity-40 active:scale-95 flex-shrink-0"
+                className="w-9 h-9 rounded-xl flex items-center justify-center transition-opacity disabled:opacity-40 active:scale-95 flex-shrink-0 focus-visible:ring-2 focus-visible:ring-orange-500/70 focus-visible:outline-none"
                 style={{ background: 'linear-gradient(135deg, #FF6B35, #FF8C42)' }}
                 aria-label="Enviar"
               >
@@ -132,7 +138,7 @@ export default function ChatWidget() {
         whileTap={{ scale: 0.94 }}
         className="fixed bottom-4 right-4 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-[0_4px_20px_rgba(255,107,53,0.4),0_2px_8px_rgba(0,0,0,0.2)]"
         style={{ background: 'linear-gradient(135deg, #FF6B35, #FF8C42)' }}
-        aria-label="Abrir asistente Gurú"
+        aria-label={open ? 'Cerrar asistente Gurú' : 'Abrir asistente Gurú'}
       >
         <AnimatePresence mode="wait">
           {open ? (
