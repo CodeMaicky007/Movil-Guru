@@ -9,7 +9,7 @@ type Reservation = {
   id: string; code: string; customer_name: string; phone: string|null; email: string|null;
   device: string; service_id: string|null; store_id: string|null; technician_id: string|null;
   scheduled_for: string|null; price: number; status: Status;
-  services: { nombre: string } | null;
+  services: { nombre: string }[] | null;
 };
 type Service = { id: string; nombre: string; precio_base: number };
 type Tienda = { id: string; nombre: string };
@@ -48,7 +48,7 @@ export default function ReservasClient({
     if (filter !== 'todas' && r.status !== filter) return false;
     if (!query) return true;
     const q = query.toLowerCase();
-    return [r.customer_name, r.device, r.code, r.services?.nombre ?? '', r.email ?? '', r.phone ?? '']
+    return [r.customer_name, r.device, r.code, r.services?.[0]?.nombre ?? '', r.email ?? '', r.phone ?? '']
       .some(v => v.toLowerCase().includes(q));
   }), [rows, filter, query]);
 
@@ -145,7 +145,7 @@ export default function ReservasClient({
                       <span className="text-neutral-300">{r.device}</span>
                     </div>
                   </td>
-                  <td className="px-5 py-3.5 text-neutral-300">{r.services?.nombre ?? '—'}</td>
+                  <td className="px-5 py-3.5 text-neutral-300">{r.services?.[0]?.nombre ?? '—'}</td>
                   <td className="px-5 py-3.5">
                     {canEdit ? (
                       <select
