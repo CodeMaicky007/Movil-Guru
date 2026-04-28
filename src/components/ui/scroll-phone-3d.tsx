@@ -407,10 +407,10 @@ export function ScrollPhone3D() {
                   +180 tiendas · Recogida a domicilio · Diagnóstico gratuito
                 </p>
                 <div className="sp3d-cta-actions">
-                  <a className="sp3d-pill blue" href="/servicios">
+                  <a className="sp3d-pill blue" href="/marcas">
                     Reservar ahora <span className="sp3d-arr">›</span>
                   </a>
-                  <a className="sp3d-pill" href="/servicios">
+                  <a className="sp3d-pill" href="/marcas">
                     Rastrear mi reparación <span className="sp3d-arr">›</span>
                   </a>
                 </div>

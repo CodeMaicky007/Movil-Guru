@@ -360,8 +360,10 @@ export default function TiendasPage() {
       {/* Offers / Login Section */}
       <OffersSection />
 
-      {/* 3D Phone Cinematic Section */}
-      <Phone3DSection />
+      {/* 3D Phone Cinematic Section — desktop only */}
+      <div className="hidden lg:block">
+        <Phone3DSection />
+      </div>
 
       {/* CTA Banner */}
       <section className="py-24 px-4" style={{ background: "#fff" }}>

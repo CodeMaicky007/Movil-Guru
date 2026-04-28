@@ -7,4 +7,29 @@
   - Environments: .env.local
 
  ✓ Starting...
- ✓ Ready in 1569ms
+ ✓ Ready in 1400ms
+ ○ Compiling / ...
+ ✓ Compiled / in 1959ms (1525 modules)
+ GET / 200 in 2066ms
+ ✓ Compiled in 158ms (775 modules)
+ GET / 200 in 39ms
+ GET / 200 in 58ms
+ GET / 200 in 72ms
+ ✓ Compiled /servicios in 459ms (1525 modules)
+ GET /servicios 200 in 576ms
+ GET /servicios 200 in 66ms
+ GET /servicios 200 in 65ms
+ GET / 200 in 55ms
+ ✓ Compiled /precios in 237ms (1523 modules)
+ GET /precios 200 in 356ms
+ GET /precios 200 in 81ms
+ GET /precios 200 in 82ms
+ ✓ Compiled /contacto in 203ms (1545 modules)
+ GET /contacto 200 in 289ms
+ GET /contacto 200 in 47ms
+ GET /contacto 200 in 62ms
+ ✓ Compiled in 230ms (793 modules)
+ ✓ Compiled in 213ms (793 modules)
+ ✓ Compiled in 140ms (793 modules)
+ ✓ Compiled in 233ms (793 modules)
+ ✓ Compiled in 245ms (793 modules)

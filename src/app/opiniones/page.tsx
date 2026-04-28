@@ -190,7 +190,7 @@ export default function OpinionesPage() {
             transition={{ duration: 0.5 }}
             className="mb-5"
           >
-            <span className="bg-[#CCFF00]/15 border border-[#CCFF00]/30 text-[#CCFF00] text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-wider">
+            <span className="bg-[#CCFF00]/15 border border-[#CCFF00]/30 text-[#CCFF00] text-[9px] sm:text-xs font-black px-3 sm:px-4 py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap">
               Movil Guru · Lo que dicen nuestros clientes
             </span>
           </motion.div>
@@ -199,7 +199,7 @@ export default function OpinionesPage() {
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[clamp(3.5rem,11vw,130px)] font-black leading-[0.82] tracking-tighter uppercase text-[#CCFF00] m-0 text-center"
+            className="text-[clamp(2.4rem,11vw,130px)] font-black leading-[0.82] tracking-tighter uppercase text-[#CCFF00] m-0 text-center"
             style={{
               fontFamily: 'var(--font-display), sans-serif',
               textShadow: "3px 3px 0 #001A99,5px 5px 0 #001A99",
@@ -211,7 +211,7 @@ export default function OpinionesPage() {
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[clamp(3.5rem,11vw,130px)] font-black leading-[0.82] tracking-tighter uppercase text-white m-0 text-center"
+            className="text-[clamp(2.4rem,11vw,130px)] font-black leading-[0.82] tracking-tighter uppercase text-white m-0 text-center"
             style={{
               fontFamily: 'var(--font-display), sans-serif',
               textShadow: "3px 3px 0 #001A99,5px 5px 0 #001A99",
@@ -376,7 +376,7 @@ export default function OpinionesPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <a
-                  href="/servicios"
+                  href="/marcas"
                   className="inline-flex items-center justify-center gap-2 bg-[#CCFF00] text-black font-black text-sm px-8 py-3.5 rounded-full hover:scale-105 active:scale-95 transition-transform duration-200"
                   style={{ boxShadow: "0 0 24px rgba(204,255,0,0.5)" }}
                 >

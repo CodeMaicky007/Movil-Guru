@@ -61,7 +61,7 @@ export function GlassmorphismTeamBlock({
   highlights = defaultHighlights,
   contactLinks = defaultContactLinks,
   ctaText = "Reservar con Carlos",
-  ctaHref = "/servicios",
+  ctaHref = "/marcas",
 }: GlassmorphismTeamBlockProps = {}) {
   return (
     <section className="relative overflow-hidden px-4 py-20 md:py-28">

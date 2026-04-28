@@ -208,7 +208,7 @@ export default function PerfilPage() {
                     Tus reparaciones
                   </h2>
                   <Link
-                    href="/servicios"
+                    href="/marcas"
                     className="text-xs font-bold uppercase tracking-widest text-[#CCFF00] hover:underline"
                   >
                     + Nueva

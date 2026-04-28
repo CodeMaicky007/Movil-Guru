@@ -245,7 +245,7 @@ export function AboutHero() {
               transition={{ duration: 0.5, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
             >
               <a
-                href="/servicios"
+                href="/marcas"
                 className="inline-flex items-center gap-2 bg-[#CCFF00] text-black font-black text-sm px-7 py-3.5 rounded-full hover:scale-105 active:scale-95 transition-transform duration-200 shadow-[0_0_24px_rgba(204,255,0,0.45)]"
               >
                 Reservar reparación

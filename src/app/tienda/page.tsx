@@ -704,7 +704,7 @@ export default function TiendaPage() {
       {/* ═══ VALUE BANNER ═══ */}
       <section className="w-full bg-white pb-20 md:pb-28">
         <div className="max-w-[1600px] mx-auto px-6 md:px-10">
-          <div className="grid md:grid-cols-3 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {[
               { icon: Truck, title: "Envío 24h", desc: "Pedidos antes de las 17h, entrega al día siguiente." },
               { icon: Shield, title: "Garantía real", desc: "Cambio sin preguntas durante los primeros 30 días." },

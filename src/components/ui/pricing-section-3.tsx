@@ -304,7 +304,7 @@ export default function PricingSection() {
               </CardContent>
               <CardFooter>
                 <a
-                  href="/servicios"
+                  href="/marcas"
                   className={`w-full mb-6 p-4 text-xl rounded-xl block text-center ${
                     plan.popular
                       ? "bg-gradient-to-t from-neutral-100 to-neutral-300 font-semibold shadow-lg shadow-neutral-500 border border-neutral-400 text-black"

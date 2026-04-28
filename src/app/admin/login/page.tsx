@@ -1,11 +1,13 @@
 'use client';
 import { Suspense, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { createSupabaseBrowserClient } from '@/lib/supabase/client';
 
 function LoginForm() {
   const router = useRouter();
   const params = useSearchParams();
   const from = params.get('from') || '/admin';
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -14,19 +16,15 @@ function LoginForm() {
     e.preventDefault();
     setLoading(true);
     setError('');
-    const res = await fetch('/api/admin/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password }),
-    });
-    if (res.ok) {
-      router.push(from);
-      router.refresh();
-    } else {
-      const data = await res.json().catch(() => ({ error: 'Error' }));
-      setError(data.error || 'Error');
+    const supabase = createSupabaseBrowserClient();
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) {
+      setError('Credenciales incorrectas.');
       setLoading(false);
+      return;
     }
+    router.push(from);
+    router.refresh();
   }
 
   return (
@@ -44,27 +42,33 @@ function LoginForm() {
 
       <h1 className="text-lg font-semibold tracking-tight text-neutral-50">Iniciar sesión</h1>
       <p className="mt-1 text-sm text-neutral-500">
-        Introduce la contraseña de administrador.
+        Accede con tu cuenta de empleado.
       </p>
 
-      <label className="mt-6 block text-xs font-medium text-neutral-400">
-        Contraseña
-      </label>
+      <label className="mt-6 block text-xs font-medium text-neutral-400">Email</label>
+      <input
+        type="email"
+        autoFocus
+        autoComplete="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        className="mt-1.5 w-full rounded-md border border-white/10 bg-[#0e0e10] px-3 py-2 text-sm text-neutral-100 outline-none transition focus:border-[#4B7BD4]"
+      />
+
+      <label className="mt-4 block text-xs font-medium text-neutral-400">Contraseña</label>
       <input
         type="password"
-        autoFocus
+        autoComplete="current-password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         className="mt-1.5 w-full rounded-md border border-white/10 bg-[#0e0e10] px-3 py-2 text-sm text-neutral-100 outline-none transition focus:border-[#4B7BD4]"
       />
 
-      {error && (
-        <p className="mt-3 text-xs text-red-400">{error}</p>
-      )}
+      {error && <p className="mt-3 text-xs text-red-400">{error}</p>}
 
       <button
         type="submit"
-        disabled={loading || !password}
+        disabled={loading || !email || !password}
         className="mt-6 w-full rounded-md bg-neutral-100 px-4 py-2 text-sm font-medium text-neutral-900 transition hover:bg-white disabled:opacity-40"
       >
         {loading ? 'Entrando…' : 'Entrar'}

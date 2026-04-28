@@ -8,7 +8,7 @@ export const vision = {
   eyebrow: "NUESTRA VISIÓN",
   title: "Darle una segunda vida a tu tecnología.",
   body: "Creemos en un futuro más sostenible donde reparar sea siempre la primera opción. Por eso, nos esforzamos en ofrecer un servicio rápido, transparente y con piezas de la mejor calidad.",
-  cta: { href: "/servicios", label: "VER SERVICIOS" }
+  cta: { href: "/marcas", label: "VER SERVICIOS" }
 };
 
 export const team = [

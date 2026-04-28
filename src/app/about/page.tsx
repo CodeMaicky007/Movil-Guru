@@ -30,6 +30,9 @@ function useHorizontalScroll() {
     const track = document.querySelector<HTMLElement>(".mg-content-track");
     if (!outer || !track) return;
 
+    // Disable horizontal scroll-pin on mobile/tablet — fall back to vertical stack.
+    if (window.matchMedia("(max-width: 1023.98px)").matches) return;
+
     const ctx = gsap.context(() => {
       const tween = gsap.to(track, {
         x: () => -(track.scrollWidth - window.innerWidth),
@@ -1751,6 +1754,19 @@ export default function AboutPreviewPage() {
           flex-direction: column;
           justify-content: center;
         }
+        /* On mobile/tablet, fall back to vertical stacking so all content is reachable */
+        @media (max-width: 1023.98px) {
+          .mg-content-outer { overflow: visible; }
+          .mg-content-track {
+            flex-direction: column;
+            transform: none !important;
+          }
+          .mg-h-section {
+            width: 100%;
+            min-height: auto;
+            padding: 4rem 1.5rem;
+          }
+        }
         .anim-title {
           opacity: 0;
           transform: translateY(55px);
@@ -1775,6 +1791,11 @@ export default function AboutPreviewPage() {
             max-width: 52vw;
           }
         }
+        /* Tienda nav link visible on blue bg — override brand blue */
+        header a[href="/tienda"] {
+          color: #CCFF00 !important;
+        }
+
         @media (max-width: 768px) {
           main.mg-about section.scene {
             padding: 0 24px;

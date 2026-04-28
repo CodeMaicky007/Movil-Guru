@@ -398,7 +398,7 @@ export default function TrackPage() {
               ¿Necesitas una reparación?<br /><span className="text-[#CCFF00]">Reserva ahora.</span>
             </h2>
             <p className="text-white/60 text-base max-w-md mx-auto mb-8">Diagnóstico gratuito. La mayoría de reparaciones en menos de 1 hora.</p>
-            <a href="/servicios" className="inline-flex items-center gap-2 bg-[#CCFF00] text-black font-black text-base px-8 py-3.5 rounded-full hover:scale-105 transition-transform duration-200 active:scale-95">
+            <a href="/marcas" className="inline-flex items-center gap-2 bg-[#CCFF00] text-black font-black text-base px-8 py-3.5 rounded-full hover:scale-105 transition-transform duration-200 active:scale-95">
               Reservar reparación
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </a>

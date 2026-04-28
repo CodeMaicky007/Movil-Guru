@@ -46,10 +46,12 @@ type LinkItem = {
   href: string;
   icon: LucideIcon;
   description?: string;
+  logoSrc?: string;
 };
 
 export function Header({ dark = false }: { dark?: boolean }) {
   const [open, setOpen] = React.useState(false);
+  const [showMoreBrands, setShowMoreBrands] = React.useState(false);
   const scrolled = useScroll(10);
   const router = useRouter();
 
@@ -96,28 +98,63 @@ export function Header({ dark = false }: { dark?: boolean }) {
               <NavigationMenuItem>
                 <NavigationMenuTrigger
                   className={cn('bg-transparent', dark && 'text-white hover:bg-white/10 hover:text-white data-[state=open]:bg-white/10')}
-                  onClick={() => router.push('/servicios')}
+                  onClick={() => router.push('/marcas')}
                 >
-                  Servicios
+                  Marcas
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-background p-1 pr-1.5">
-                  <ul className="bg-popover grid w-[500px] grid-cols-2 gap-2 rounded-md border p-2 shadow">
-                    {productLinks.map((item, i) => (
-                      <li key={i}>
-                        <ListItem {...item} />
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="p-2">
-                    <p className="text-muted-foreground text-sm">
-                      ¿Tienes un dispositivo roto?{' '}
-                      <Link
-                        href="#"
-                        className="text-foreground font-medium hover:underline"
+                  <div style={{ width: 560 }}>
+                    <ul className="bg-popover grid grid-cols-2 gap-2 rounded-md border p-2 shadow">
+                      {primaryBrandLinks.map((item, i) => (
+                        <li key={i}>
+                          <ListItem {...item} />
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* Más marcas toggle */}
+                    <div className="px-2 pt-2">
+                      <button
+                        onClick={() => setShowMoreBrands((v) => !v)}
+                        className="w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-accent transition-colors text-sm font-semibold text-muted-foreground hover:text-foreground"
                       >
-                        Obtén un presupuesto gratis
-                      </Link>
-                    </p>
+                        <span className="flex items-center gap-2">
+                          <span className="text-xs font-black uppercase tracking-widest text-[#0038FF]">
+                            {showMoreBrands ? '▲' : '▼'}
+                          </span>
+                          {showMoreBrands ? 'Menos marcas' : 'Más marcas — LG · Nokia · Vivo · HTC · BQ · Meizu · Asus'}
+                        </span>
+                      </button>
+
+                      {/* Extra brands — animated reveal */}
+                      <div
+                        style={{
+                          overflow: 'hidden',
+                          maxHeight: showMoreBrands ? 999 : 0,
+                          opacity: showMoreBrands ? 1 : 0,
+                          transition: 'max-height 0.35s cubic-bezier(0.16,1,0.3,1), opacity 0.25s ease',
+                        }}
+                      >
+                        <ul className="bg-popover grid grid-cols-2 gap-2 rounded-md border p-2 shadow mt-2">
+                          {extraBrandLinks.map((item, i) => (
+                            <li key={i}>
+                              <ListItem {...item} />
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div className="p-2 pt-1">
+                      <p className="text-muted-foreground text-sm">
+                        <Link
+                          href="/marcas"
+                          className="text-foreground font-medium hover:underline"
+                        >
+                          Ver todas las marcas →
+                        </Link>
+                      </p>
+                    </div>
                   </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -203,7 +240,7 @@ export function Header({ dark = false }: { dark?: boolean }) {
               <Store className="size-4" />
               Tiendas
             </Link>
-            <span className="text-sm">Servicios</span>
+            <span className="text-sm">Marcas</span>
             {productLinks.map((link) => (
               <ListItem key={link.title} {...link} />
             ))}
@@ -263,6 +300,7 @@ function ListItem({
   title,
   description,
   icon: Icon,
+  logoSrc,
   className,
   href,
   ...props
@@ -278,7 +316,10 @@ function ListItem({
     >
       <Link href={href}>
         <div className="bg-background/40 flex aspect-square size-12 items-center justify-center rounded-md border shadow-sm">
-          <Icon className="text-foreground size-5" />
+          {logoSrc
+            ? <img src={logoSrc} alt={title} className="size-6 object-contain" />
+            : <Icon className="text-foreground size-5" />
+          }
         </div>
         <div className="flex flex-col items-start justify-center">
           <span className="font-medium">{title}</span>
@@ -289,56 +330,119 @@ function ListItem({
   );
 }
 
-const productLinks: LinkItem[] = [
+const primaryBrandLinks: LinkItem[] = [
   {
-    title: 'Reparación de pantalla',
-    href: '/reparacion-pantalla',
-    description: '¿Pantalla rota o resquebrajada? Lo arreglamos hoy',
+    title: 'iPhone',
+    href: '/reparacion/iphone',
+    description: 'iPhone 4 al 16 Pro Max · Garantía de por vida',
     icon: Smartphone,
+    logoSrc: '/images/Apple.png',
   },
   {
-    title: 'Cambio de batería',
-    href: '/reparacion-bateria',
-    description: 'Recupera la autonomía de todo el día en 20 minutos',
-    icon: Battery,
+    title: 'Samsung Galaxy',
+    href: '/reparacion/samsung',
+    description: 'Galaxy S, A, Z Fold y Flip · Mismo día',
+    icon: Smartphone,
+    logoSrc: '/images/Samsung.png',
   },
   {
-    title: 'Daño por agua',
-    href: '/reparacion-agua',
-    description: 'Limpieza a nivel de placa y recuperación de componentes',
-    icon: Droplets,
+    title: 'Xiaomi',
+    href: '/reparacion/xiaomi',
+    description: 'Xiaomi · Redmi · POCO · Diagnóstico gratis',
+    icon: Smartphone,
+    logoSrc: '/images/Xiaomi.png',
   },
   {
-    title: 'Reparación de cámara',
-    href: '/reparacion-camara',
-    description: 'Lentes borrosas, rotas o desalineadas, solucionadas',
-    icon: Camera,
+    title: 'Huawei',
+    href: '/reparacion/huawei',
+    description: 'P, Mate, Nova series · Presupuesto gratis',
+    icon: Smartphone,
+    logoSrc: '/images/huawei.png',
   },
   {
-    title: 'Reparación de plegables',
-    href: '/reparacion-plegables',
-    description: 'Especialistas en pantalla interior, bisagra y serie Z',
-    icon: LayersIcon,
+    title: 'Google Pixel',
+    href: '/reparacion/pixel',
+    description: 'Pixel 6 al 9 Pro Fold · Garantía incluida',
+    icon: Smartphone,
+    logoSrc: '/images/GooglePixel.png',
   },
   {
-    title: 'Recuperación de datos',
-    href: '/recuperacion-datos',
-    description: 'Recupera datos de dispositivos dañados o muertos',
-    icon: Database,
+    title: 'OnePlus',
+    href: '/reparacion/oneplus',
+    description: 'OnePlus 9 al 13 · Nord series · Técnicos certificados',
+    icon: Smartphone,
+    logoSrc: '/images/oneplus.png',
   },
   {
-    title: 'Puerto de carga',
-    href: '/reparacion-carga',
-    description: 'Reparaciones USB-C, Lightning y Micro-USB',
-    icon: PlugIcon,
+    title: 'Sony Xperia',
+    href: '/reparacion/sony',
+    description: 'Xperia 1, 5 y 10 series · Mismo día',
+    icon: Smartphone,
+    logoSrc: 'https://www.google.com/s2/favicons?domain=sony.com&sz=64',
   },
   {
-    title: 'Placa base',
-    href: '/reparacion-placa',
-    description: 'Microsoldadura y diagnóstico a nivel de componente',
-    icon: Cpu,
+    title: 'Motorola',
+    href: '/reparacion/motorola',
+    description: 'Razr 40, 40 Ultra, 50, 50 Ultra · Plegables',
+    icon: Smartphone,
+    logoSrc: 'https://www.google.com/s2/favicons?domain=motorola.com&sz=64',
   },
 ];
+
+const extraBrandLinks: LinkItem[] = [
+  {
+    title: 'LG',
+    href: '/reparacion/lg',
+    description: 'G, V, Q y K series · Presupuesto gratis',
+    icon: Smartphone,
+    logoSrc: 'https://www.google.com/s2/favicons?domain=lg.com&sz=64',
+  },
+  {
+    title: 'Nokia',
+    href: '/reparacion/nokia',
+    description: 'G, C, X y XR series · Garantía incluida',
+    icon: Smartphone,
+    logoSrc: 'https://www.google.com/s2/favicons?domain=nokia.com&sz=64',
+  },
+  {
+    title: 'Vivo',
+    href: '/reparacion/vivo',
+    description: 'X, V e Y series · Mismo día',
+    icon: Smartphone,
+    logoSrc: 'https://www.google.com/s2/favicons?domain=vivo.com&sz=64',
+  },
+  {
+    title: 'HTC',
+    href: '/reparacion/htc',
+    description: 'U, One y Desire series · Garantía incluida',
+    icon: Smartphone,
+    logoSrc: 'https://www.google.com/s2/favicons?domain=htc.com&sz=64',
+  },
+  {
+    title: 'BQ Aquaris',
+    href: '/reparacion/bq',
+    description: 'Aquaris X, V, U y M series · Diagnóstico gratis',
+    icon: Smartphone,
+    logoSrc: 'https://www.google.com/s2/favicons?domain=bq.com&sz=64',
+  },
+  {
+    title: 'Meizu',
+    href: '/reparacion/meizu',
+    description: 'Meizu 16–21 · Pro · MX series',
+    icon: Smartphone,
+    logoSrc: 'https://www.google.com/s2/favicons?domain=meizu.com&sz=64',
+  },
+  {
+    title: 'ASUS',
+    href: '/reparacion/asus',
+    description: 'ROG Phone · ZenFone series · Técnicos certificados',
+    icon: Smartphone,
+    logoSrc: 'https://www.google.com/s2/favicons?domain=asus.com&sz=64',
+  },
+];
+
+// kept for mobile menu
+const productLinks: LinkItem[] = [...primaryBrandLinks, ...extraBrandLinks];
 
 const companyLinks: LinkItem[] = [
   {

@@ -58,7 +58,7 @@ const ArrowBlack2 = () => (
 );
 
 const CircularBadge = () => (
-  <div className="relative w-28 h-28 md:w-36 md:h-36 bg-[#CCFF00] rounded-full flex items-center justify-center shadow-xl rotate-12 hover:scale-105 transition-transform cursor-pointer border-[3px] border-black/5">
+  <div className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-28 md:h-28 lg:w-36 lg:h-36 bg-[#CCFF00] rounded-full flex items-center justify-center shadow-xl rotate-12 hover:scale-105 transition-transform cursor-pointer border-[3px] border-black/5">
     <div className="absolute inset-1 animate-[spin_10s_linear_infinite]">
       <svg viewBox="0 0 100 100" className="w-full h-full">
         <path
@@ -104,7 +104,7 @@ export const HeroComponent = () => {
           <div className="w-full flex flex-col items-center relative z-10 space-y-2 md:space-y-4">
             <div className="w-full flex justify-center relative z-30">
               <h1
-                className="text-[clamp(4.5rem,12vw,160px)] font-black leading-[0.85] tracking-tighter text-[#CCFF00] m-0 p-0 uppercase"
+                className="text-[clamp(2.7rem,8vw,160px)] font-black leading-[0.85] tracking-tighter text-[#CCFF00] m-0 p-0 uppercase"
                 style={{
                   fontFamily: 'var(--font-display), sans-serif',
                   textShadow:
@@ -117,7 +117,7 @@ export const HeroComponent = () => {
 
             <div className="w-full flex justify-center relative z-20">
               <h1
-                className="text-[clamp(5rem,15vw,220px)] font-black leading-[0.85] tracking-tighter text-white m-0 p-0 uppercase"
+                className="text-[clamp(3.2rem,10vw,220px)] font-black leading-[0.85] tracking-tighter text-white m-0 p-0 uppercase"
                 style={{
                   fontFamily: 'var(--font-display), sans-serif',
                   textShadow:
@@ -130,7 +130,7 @@ export const HeroComponent = () => {
 
             <div className="w-full flex justify-center relative z-10">
               <h1
-                className="text-[clamp(4.5rem,12vw,160px)] font-black leading-[0.85] tracking-tighter m-0 p-0 uppercase"
+                className="text-[clamp(2.7rem,8vw,160px)] font-black leading-[0.85] tracking-tighter m-0 p-0 uppercase"
                 style={{
                   fontFamily: 'var(--font-display), sans-serif',
                   textShadow:
@@ -142,17 +142,17 @@ export const HeroComponent = () => {
             </div>
           </div>
 
-          {/* Floating Cards & Decorative Elements */}
-          <div className="absolute inset-0 w-full h-full pointer-events-none">
+          {/* Floating Cards & Decorative Elements — hidden on mobile */}
+          <div className="hidden md:block absolute inset-0 w-full h-full pointer-events-none">
 
             {/* Repair Status Card 1 — iPhone */}
             <motion.div
               animate={{ y: [0, -15, 0] }}
               transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute bottom-[10%] left-[5%] md:left-[20%] z-30 pointer-events-auto max-md:bottom-[-5%] max-md:left-[2%] max-sm:scale-75 max-sm:origin-bottom-left"
+              className="absolute bottom-[10%] left-[5%] md:left-[20%] z-30 pointer-events-auto max-md:bottom-[-5%] max-md:left-[2%]"
             >
-              <div className="w-40 md:w-52 aspect-[3/3.5] bg-white/20 backdrop-blur-md border border-white/40 rounded-[2rem] p-5 flex flex-col items-center justify-center rotate-[-12deg] shadow-2xl hover:rotate-0 transition-transform duration-500">
-                <div className="w-16 h-16 md:w-24 md:h-24 bg-[#D2B48C] rounded-full flex items-center justify-center mb-4 shadow-inner border-[3px] border-white/50 overflow-hidden">
+              <div className="w-24 sm:w-32 md:w-52 aspect-[3/3.5] bg-white/20 backdrop-blur-md border border-white/40 rounded-[2rem] p-3 sm:p-4 md:p-5 flex flex-col items-center justify-center rotate-[-12deg] shadow-2xl hover:rotate-0 transition-transform duration-500">
+                <div className="w-10 h-10 sm:w-14 sm:h-14 md:w-24 md:h-24 bg-[#D2B48C] rounded-full flex items-center justify-center mb-2 md:mb-4 shadow-inner border-[3px] border-white/50 overflow-hidden">
                   <img
                     src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&backgroundColor=D2B48C"
                     alt="Technician"
@@ -162,9 +162,9 @@ export const HeroComponent = () => {
                 <div className="text-center mt-2">
                   <div className="flex items-center gap-1.5 justify-center">
                     <img src="/images/Apple.png" alt="Apple" className="w-4 h-4 object-contain brightness-0 invert" />
-                    <p className="font-bold text-sm md:text-lg text-white">iPhone 15 Pro Max</p>
+                    <p className="font-bold text-[10px] sm:text-sm md:text-lg text-white">iPhone 15 Pro Max</p>
                   </div>
-                  <p className="text-[10px] md:text-xs text-white/80 mt-1">Pantalla reemplazada · 47 min</p>
+                  <p className="text-[8px] sm:text-[10px] md:text-xs text-white/80 mt-1">Pantalla reemplazada · 47 min</p>
                 </div>
               </div>
             </motion.div>
@@ -173,10 +173,10 @@ export const HeroComponent = () => {
             <motion.div
               animate={{ y: [0, -20, 0] }}
               transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-              className="absolute top-[15%] right-[5%] md:right-[22%] z-30 pointer-events-auto max-md:top-[-2%] max-md:right-[2%] max-sm:scale-75 max-sm:origin-top-right"
+              className="absolute top-[15%] right-[5%] md:right-[22%] z-30 pointer-events-auto max-md:top-[-2%] max-md:right-[2%]"
             >
-              <div className="w-40 md:w-52 aspect-[3/3.5] bg-white/20 backdrop-blur-md border border-white/40 rounded-[2rem] p-5 flex flex-col items-center justify-center rotate-[12deg] shadow-2xl hover:rotate-0 transition-transform duration-500">
-                <div className="w-16 h-16 md:w-24 md:h-24 bg-[#2C3E50] rounded-full flex items-center justify-center mb-4 shadow-inner border-[3px] border-white/50 overflow-hidden">
+              <div className="w-24 sm:w-32 md:w-52 aspect-[3/3.5] bg-white/20 backdrop-blur-md border border-white/40 rounded-[2rem] p-3 sm:p-4 md:p-5 flex flex-col items-center justify-center rotate-[12deg] shadow-2xl hover:rotate-0 transition-transform duration-500">
+                <div className="w-10 h-10 sm:w-14 sm:h-14 md:w-24 md:h-24 bg-[#2C3E50] rounded-full flex items-center justify-center mb-2 md:mb-4 shadow-inner border-[3px] border-white/50 overflow-hidden">
                   <img
                     src="https://api.dicebear.com/7.x/pixel-art/svg?seed=John"
                     alt="Technician"
@@ -186,9 +186,9 @@ export const HeroComponent = () => {
                 <div className="text-center mt-2">
                   <div className="flex items-center gap-1.5 justify-center">
                     <img src="/images/Samsung.png" alt="Samsung" className="w-4 h-4 object-contain brightness-0 invert" />
-                    <p className="font-bold text-sm md:text-lg text-white">Galaxy Z Fold 6</p>
+                    <p className="font-bold text-[10px] sm:text-sm md:text-lg text-white">Galaxy Z Fold 6</p>
                   </div>
-                  <p className="text-[10px] md:text-xs text-white/80 mt-1">Pantalla interior · Mismo día</p>
+                  <p className="text-[8px] sm:text-[10px] md:text-xs text-white/80 mt-1">Pantalla interior · Mismo día</p>
                 </div>
               </div>
             </motion.div>
