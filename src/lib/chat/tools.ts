@@ -89,7 +89,7 @@ export const TOOL_DEFINITIONS: Anthropic.Tool[] = [
   },
 ];
 
-export type ToolInput = Record<string, string | undefined>;
+export type ToolInput = Record<string, unknown>;
 
 export async function executeTool(
   name: string,
@@ -100,10 +100,12 @@ export async function executeTool(
 
   switch (name) {
     case 'buscar_servicios': {
+      const query = typeof input.query === 'string' ? input.query : '';
+      if (!query) return 'Indica un término de búsqueda.';
       const { data, error } = await supabase
         .from('services')
         .select('id, nombre, descripcion, precio_base, duracion_min')
-        .ilike('nombre', `%${input.query}%`)
+        .or(`nombre.ilike.%${query}%,descripcion.ilike.%${query}%`)
         .eq('activo', true)
         .limit(5);
       if (error) return `Error buscando servicios: ${error.message}`;
@@ -112,7 +114,7 @@ export async function executeTool(
     }
 
     case 'consultar_disponibilidad': {
-      const fecha = input.fecha;
+      const fecha = typeof input.fecha === 'string' ? input.fecha : '';
       if (!fecha) return 'Indica una fecha para consultar disponibilidad.';
       const inicio = `${fecha}T00:00:00`;
       const fin = `${fecha}T23:59:59`;
@@ -121,7 +123,7 @@ export async function executeTool(
         .select('scheduled_for')
         .gte('scheduled_for', inicio)
         .lte('scheduled_for', fin)
-        .in('status', ['pendiente', 'confirmada']);
+        .in('status', ['pendiente', 'en_curso']);
       if (error) return `Error consultando disponibilidad: ${error.message}`;
       const ocupadas = (data ?? []).map((r) => r.scheduled_for);
       const horas = ['09:00', '10:00', '11:00', '12:00', '13:00', '16:00', '17:00', '18:00'];
@@ -153,10 +155,12 @@ export async function executeTool(
     }
 
     case 'buscar_productos': {
+      const query = typeof input.query === 'string' ? input.query : '';
+      if (!query) return 'Indica un término de búsqueda.';
       const { data, error } = await supabase
         .from('products')
         .select('id, nombre, descripcion, precio, categoria, imagen_url')
-        .ilike('nombre', `%${input.query}%`)
+        .ilike('nombre', `%${query}%`)
         .limit(5);
       if (error) return `Error buscando productos: ${error.message}`;
       if (!data || data.length === 0) return 'No encontré productos que coincidan con esa búsqueda.';
@@ -165,10 +169,13 @@ export async function executeTool(
 
     case 'ver_mis_reservas': {
       if (!userId) return JSON.stringify({ error: 'requiere_login', mensaje: 'Necesitas iniciar sesión para ver tus reservas.' });
+      const { data: userData } = await supabase.auth.getUser();
+      const userEmail = userData?.user?.email;
+      if (!userEmail) return 'No se pudo obtener tu información de usuario.';
       const { data, error } = await supabase
         .from('reservations')
         .select('id, code, device, scheduled_for, status, services(nombre)')
-        .eq('email', userId)
+        .eq('email', userEmail)
         .order('created_at', { ascending: false })
         .limit(5);
       if (error) return `Error consultando reservas: ${error.message}`;
