@@ -35,10 +35,10 @@ El archivo actual tiene `const AI_API_KEY = 'sk-ant-...'` que es sintaxis JS inv
 Reemplazar esa línea por:
 
 ```
-ANTHROPIC_API_KEY=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
+ANTHROPIC_API_KEY=sk-ant-...tu-key-aqui...
 ```
 
-> Usa el valor exacto que ya tienes en el archivo — solo elimina `const AI_API_KEY = ` y las comillas.
+> Usa el valor de tu API key de Anthropic.
 
 - [ ] **Step 2: Instalar el SDK de Anthropic**
 
