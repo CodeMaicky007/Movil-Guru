@@ -2,8 +2,28 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Loader2 } from 'lucide-react';
+import { MessageCircle, X, Send, Loader2, ExternalLink } from 'lucide-react';
 import { useChat } from './useChat';
+
+const NAV_REGEX = /\[\[NAV:([^|]+)\|([^\]]+)\]\]/g;
+
+function parseMessageContent(content: string): Array<{ type: 'text'; text: string } | { type: 'nav'; ruta: string; label: string }> {
+  const parts: Array<{ type: 'text'; text: string } | { type: 'nav'; ruta: string; label: string }> = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+  NAV_REGEX.lastIndex = 0;
+  while ((match = NAV_REGEX.exec(content)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push({ type: 'text', text: content.slice(lastIndex, match.index) });
+    }
+    parts.push({ type: 'nav', ruta: match[1], label: match[2] });
+    lastIndex = match.index + match[0].length;
+  }
+  if (lastIndex < content.length) {
+    parts.push({ type: 'text', text: content.slice(lastIndex) });
+  }
+  return parts;
+}
 
 export default function ChatWidget() {
   const [open, setOpen] = useState(false);
@@ -74,28 +94,52 @@ export default function ChatWidget() {
             </div>
 
             <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-0" style={{ scrollbarWidth: 'thin', scrollbarColor: '#333 transparent' }} role="log" aria-live="polite" aria-label="Conversación con Gurú">
-              {messages.map((msg) => (
-                <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div
-                    className={`max-w-[82%] px-3 py-2 rounded-2xl text-sm leading-relaxed ${
-                      msg.role === 'user' ? 'text-white rounded-br-sm' : 'text-gray-200 rounded-bl-sm'
-                    }`}
-                    style={
-                      msg.role === 'user'
-                        ? { background: 'linear-gradient(135deg, #FF6B35, #FF8C42)' }
-                        : { background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)' }
-                    }
-                  >
-                    {msg.content || (
-                      <span className="flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '0ms' }} />
-                        <span className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '150ms' }} />
-                        <span className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '300ms' }} />
-                      </span>
+              {messages.map((msg) => {
+                const parts = msg.content ? parseMessageContent(msg.content) : [];
+                return (
+                  <div key={msg.id} className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'} gap-2`}>
+                    {/* Burbuja de texto */}
+                    {(parts.length === 0 || parts.some((p) => p.type === 'text' && p.text.trim())) && (
+                      <div
+                        className={`max-w-[82%] px-3 py-2 rounded-2xl text-sm leading-relaxed ${
+                          msg.role === 'user' ? 'text-white rounded-br-sm' : 'text-gray-200 rounded-bl-sm'
+                        }`}
+                        style={
+                          msg.role === 'user'
+                            ? { background: 'linear-gradient(135deg, #FF6B35, #FF8C42)' }
+                            : { background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)' }
+                        }
+                      >
+                        {parts.length === 0 ? (
+                          <span className="flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '0ms' }} />
+                            <span className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '150ms' }} />
+                            <span className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '300ms' }} />
+                          </span>
+                        ) : (
+                          parts.filter((p) => p.type === 'text').map((p, i) =>
+                            p.type === 'text' ? <span key={i}>{p.text.trim()}</span> : null
+                          )
+                        )}
+                      </div>
+                    )}
+                    {/* Botones de navegación */}
+                    {parts.filter((p) => p.type === 'nav').map((p, i) =>
+                      p.type === 'nav' ? (
+                        <a
+                          key={i}
+                          href={p.ruta}
+                          className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium text-white transition-opacity hover:opacity-90 active:opacity-75 focus-visible:ring-2 focus-visible:ring-orange-500/70 focus-visible:outline-none"
+                          style={{ background: 'linear-gradient(135deg, #FF6B35, #FF8C42)' }}
+                        >
+                          <ExternalLink size={14} />
+                          {p.label}
+                        </a>
+                      ) : null
                     )}
                   </div>
-                </div>
-              ))}
+                );
+              })}
               <div ref={bottomRef} />
             </div>
 

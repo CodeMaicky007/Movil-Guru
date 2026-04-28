@@ -56,6 +56,7 @@ export async function POST(req: Request) {
         let continueLoop = true;
         let iterations = 0;
         const MAX_TOOL_ITERATIONS = 5;
+        let navLink: { ruta: string; label: string } | null = null;
 
         while (continueLoop) {
           if (iterations++ >= MAX_TOOL_ITERATIONS) {
@@ -75,7 +76,6 @@ export async function POST(req: Request) {
           const message = choice.message;
 
           if (choice.finish_reason === 'tool_calls' && message.tool_calls?.length) {
-            // Añadir la respuesta del asistente con las tool calls
             conversationMessages.push({
               role: 'assistant',
               content: message.content ?? '',
@@ -83,10 +83,17 @@ export async function POST(req: Request) {
               tool_calls: message.tool_calls,
             });
 
-            // Ejecutar cada tool y añadir el resultado
             for (const toolCall of message.tool_calls) {
               const input = JSON.parse(toolCall.function.arguments || '{}') as ToolInput;
               const result = await executeTool(toolCall.function.name, input, userId);
+
+              // Capturar el destino de navegar_a para inyectarlo al final del stream
+              if (toolCall.function.name === 'navegar_a') {
+                try {
+                  navLink = JSON.parse(result) as { ruta: string; label: string };
+                } catch { /* ignorar */ }
+              }
+
               conversationMessages.push({
                 role: 'tool',
                 tool_call_id: toolCall.id,
@@ -102,6 +109,12 @@ export async function POST(req: Request) {
               controller.enqueue(encoder.encode(chunk));
               await new Promise((r) => setTimeout(r, 15));
             }
+
+            // Si hubo navegación, añadir token especial que el widget convierte en botón
+            if (navLink) {
+              controller.enqueue(encoder.encode(`\n[[NAV:${navLink.ruta}|${navLink.label}]]`));
+            }
+
             continueLoop = false;
           }
         }
