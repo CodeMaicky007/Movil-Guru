@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Syne } from "next/font/google";
 import { ViewTransitions } from 'next-view-transitions';
+import ChatWidget from '@/components/chat/ChatWidget';
 import "./globals.css";
 
 const syne = Syne({
@@ -22,7 +23,10 @@ export default function RootLayout({
   return (
     <ViewTransitions>
       <html lang="es">
-        <body className={`${syne.variable} ${syne.className}`}>{children}</body>
+        <body className={`${syne.variable} ${syne.className}`}>
+          {children}
+          <ChatWidget />
+        </body>
       </html>
     </ViewTransitions>
   );
