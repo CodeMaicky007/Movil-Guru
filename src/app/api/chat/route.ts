@@ -1,13 +1,13 @@
-import Anthropic from '@anthropic-ai/sdk';
+import Groq from 'groq-sdk';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { SYSTEM_PROMPT } from '@/lib/chat/system-prompt';
 import { TOOL_DEFINITIONS, executeTool, ToolInput } from '@/lib/chat/tools';
 
-if (!process.env.ANTHROPIC_API_KEY) {
-  throw new Error('ANTHROPIC_API_KEY is not set');
+if (!process.env.GROQ_API_KEY) {
+  throw new Error('GROQ_API_KEY is not set');
 }
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 const MAX_MESSAGES = 20;
 const MAX_INPUT_LENGTH = 500;
@@ -28,16 +28,13 @@ export async function POST(req: Request) {
     }
   }
 
-  // Validar longitud del último mensaje del usuario
   const lastUser = rawMessages.filter((m) => m.role === 'user').at(-1);
   if (lastUser && lastUser.content.length > MAX_INPUT_LENGTH) {
     return new Response('Mensaje demasiado largo.', { status: 400 });
   }
 
-  // Truncar historial
   const messages = rawMessages.slice(-MAX_MESSAGES);
 
-  // Obtener usuario logueado
   const supabase = createSupabaseServerClient();
   const { data: { user } } = await supabase.auth.getUser();
   const userId = user?.id ?? null;
@@ -47,57 +44,63 @@ export async function POST(req: Request) {
   const stream = new ReadableStream({
     async start(controller) {
       try {
-        // Bucle: Claude puede llamar varias tools antes de responder
-        const conversationMessages: Anthropic.MessageParam[] = messages.map((m) => ({
-          role: m.role,
-          content: m.content,
-        }));
+        type ChatMessage =
+          | { role: 'system' | 'user' | 'assistant'; content: string }
+          | { role: 'tool'; tool_call_id: string; content: string };
+
+        const conversationMessages: ChatMessage[] = [
+          { role: 'system', content: SYSTEM_PROMPT },
+          ...messages.map((m) => ({ role: m.role as 'user' | 'assistant', content: m.content })),
+        ];
 
         let continueLoop = true;
         let iterations = 0;
         const MAX_TOOL_ITERATIONS = 5;
+
         while (continueLoop) {
           if (iterations++ >= MAX_TOOL_ITERATIONS) {
             controller.enqueue(encoder.encode('Lo siento, no he podido completar la solicitud en este momento.'));
             break;
           }
-          const response = await anthropic.messages.create({
-            model: 'claude-sonnet-4-6',
+
+          const response = await groq.chat.completions.create({
+            model: 'llama-3.3-70b-versatile',
             max_tokens: 1024,
-            system: SYSTEM_PROMPT,
             tools: TOOL_DEFINITIONS,
-            messages: conversationMessages,
-            stream: false,
+            tool_choice: 'auto',
+            messages: conversationMessages as Parameters<typeof groq.chat.completions.create>[0]['messages'],
           });
 
-          if (response.stop_reason === 'tool_use') {
-            // Ejecutar todas las tools que Claude ha pedido
-            const assistantContent = response.content;
-            conversationMessages.push({ role: 'assistant', content: assistantContent });
+          const choice = response.choices[0];
+          const message = choice.message;
 
-            const toolResults: Anthropic.ToolResultBlockParam[] = [];
-            for (const block of assistantContent) {
-              if (block.type === 'tool_use') {
-                const result = await executeTool(block.name, block.input as ToolInput, userId);
-                toolResults.push({
-                  type: 'tool_result',
-                  tool_use_id: block.id,
-                  content: result,
-                });
-              }
+          if (choice.finish_reason === 'tool_calls' && message.tool_calls?.length) {
+            // Añadir la respuesta del asistente con las tool calls
+            conversationMessages.push({
+              role: 'assistant',
+              content: message.content ?? '',
+              // @ts-expect-error tool_calls is valid here
+              tool_calls: message.tool_calls,
+            });
+
+            // Ejecutar cada tool y añadir el resultado
+            for (const toolCall of message.tool_calls) {
+              const input = JSON.parse(toolCall.function.arguments || '{}') as ToolInput;
+              const result = await executeTool(toolCall.function.name, input, userId);
+              conversationMessages.push({
+                role: 'tool',
+                tool_call_id: toolCall.id,
+                content: result,
+              });
             }
-            conversationMessages.push({ role: 'user', content: toolResults });
           } else {
-            // stop_reason === 'end_turn': enviar la respuesta al cliente
-            for (const block of response.content) {
-              if (block.type === 'text') {
-                const words = block.text.split(' ');
-                for (let i = 0; i < words.length; i++) {
-                  const chunk = i === words.length - 1 ? words[i] : words[i] + ' ';
-                  controller.enqueue(encoder.encode(chunk));
-                  await new Promise((r) => setTimeout(r, 15));
-                }
-              }
+            // Respuesta final — enviar al cliente palabra a palabra
+            const text = message.content ?? '';
+            const words = text.split(' ');
+            for (let i = 0; i < words.length; i++) {
+              const chunk = i === words.length - 1 ? words[i] : words[i] + ' ';
+              controller.enqueue(encoder.encode(chunk));
+              await new Promise((r) => setTimeout(r, 15));
             }
             continueLoop = false;
           }

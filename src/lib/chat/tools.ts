@@ -1,90 +1,108 @@
-import Anthropic from '@anthropic-ai/sdk';
+import { type ChatCompletionTool } from 'groq-sdk/resources/chat/completions';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 
-export const TOOL_DEFINITIONS: Anthropic.Tool[] = [
+export const TOOL_DEFINITIONS: ChatCompletionTool[] = [
   {
-    name: 'buscar_servicios',
-    description: 'Busca servicios de reparación disponibles. Úsala cuando el usuario pregunte por precios, tipos de reparación o qué servicios hay disponibles.',
-    input_schema: {
-      type: 'object',
-      properties: {
-        query: {
-          type: 'string',
-          description: 'Término de búsqueda, por ejemplo "pantalla iPhone" o "batería Samsung"',
+    type: 'function',
+    function: {
+      name: 'buscar_servicios',
+      description: 'Busca servicios de reparación disponibles. Úsala cuando el usuario pregunte por precios, tipos de reparación o qué servicios hay disponibles.',
+      parameters: {
+        type: 'object',
+        properties: {
+          query: {
+            type: 'string',
+            description: 'Término de búsqueda, por ejemplo "pantalla iPhone" o "batería Samsung"',
+          },
         },
+        required: ['query'],
       },
-      required: ['query'],
     },
   },
   {
-    name: 'consultar_disponibilidad',
-    description: 'Consulta los huecos disponibles para reservar una cita. Úsala cuando el usuario quiera pedir cita o saber cuándo puede venir.',
-    input_schema: {
-      type: 'object',
-      properties: {
-        fecha: {
-          type: 'string',
-          description: 'Fecha en formato YYYY-MM-DD, por ejemplo "2026-05-10"',
+    type: 'function',
+    function: {
+      name: 'consultar_disponibilidad',
+      description: 'Consulta los huecos disponibles para reservar una cita. Úsala cuando el usuario quiera pedir cita o saber cuándo puede venir.',
+      parameters: {
+        type: 'object',
+        properties: {
+          fecha: {
+            type: 'string',
+            description: 'Fecha en formato YYYY-MM-DD, por ejemplo "2026-05-10"',
+          },
         },
+        required: ['fecha'],
       },
-      required: ['fecha'],
     },
   },
   {
-    name: 'crear_reserva',
-    description: 'Crea una nueva reserva para el usuario. Solo disponible si el usuario está logueado. Requiere nombre del cliente, dispositivo y fecha/hora.',
-    input_schema: {
-      type: 'object',
-      properties: {
-        customer_name: { type: 'string', description: 'Nombre completo del cliente' },
-        phone: { type: 'string', description: 'Teléfono de contacto' },
-        device: { type: 'string', description: 'Dispositivo a reparar, ej: "iPhone 15 Pro"' },
-        service_id: { type: 'string', description: 'ID del servicio de la tool buscar_servicios' },
-        scheduled_for: { type: 'string', description: 'Fecha y hora en formato ISO, ej: "2026-05-10T10:00:00"' },
-        notes: { type: 'string', description: 'Notas adicionales opcionales' },
+    type: 'function',
+    function: {
+      name: 'crear_reserva',
+      description: 'Crea una nueva reserva para el usuario. Solo disponible si el usuario está logueado. Requiere nombre del cliente, dispositivo y fecha/hora.',
+      parameters: {
+        type: 'object',
+        properties: {
+          customer_name: { type: 'string', description: 'Nombre completo del cliente' },
+          phone: { type: 'string', description: 'Teléfono de contacto' },
+          device: { type: 'string', description: 'Dispositivo a reparar, ej: "iPhone 15 Pro"' },
+          service_id: { type: 'string', description: 'ID del servicio de la tool buscar_servicios' },
+          scheduled_for: { type: 'string', description: 'Fecha y hora en formato ISO, ej: "2026-05-10T10:00:00"' },
+          notes: { type: 'string', description: 'Notas adicionales opcionales' },
+        },
+        required: ['customer_name', 'device'],
       },
-      required: ['customer_name', 'device'],
     },
   },
   {
-    name: 'buscar_productos',
-    description: 'Busca productos en la tienda online de movil.guru (fundas, cargadores, cristales, etc.).',
-    input_schema: {
-      type: 'object',
-      properties: {
-        query: {
-          type: 'string',
-          description: 'Término de búsqueda, por ejemplo "funda iPhone 15" o "cargador rápido"',
+    type: 'function',
+    function: {
+      name: 'buscar_productos',
+      description: 'Busca productos en la tienda online de movil.guru (fundas, cargadores, cristales, etc.).',
+      parameters: {
+        type: 'object',
+        properties: {
+          query: {
+            type: 'string',
+            description: 'Término de búsqueda, por ejemplo "funda iPhone 15" o "cargador rápido"',
+          },
         },
+        required: ['query'],
       },
-      required: ['query'],
     },
   },
   {
-    name: 'ver_mis_reservas',
-    description: 'Muestra las reservas del usuario logueado. Solo disponible si el usuario está logueado.',
-    input_schema: {
-      type: 'object',
-      properties: {},
-      required: [],
+    type: 'function',
+    function: {
+      name: 'ver_mis_reservas',
+      description: 'Muestra las reservas del usuario logueado. Solo disponible si el usuario está logueado.',
+      parameters: {
+        type: 'object',
+        properties: {},
+        required: [],
+      },
     },
   },
   {
-    name: 'navegar_a',
-    description: 'Devuelve una URL interna del sitio para que el usuario pueda navegar a ella. Úsala cuando el usuario quiera ir a una sección específica.',
-    input_schema: {
-      type: 'object',
-      properties: {
-        ruta: {
-          type: 'string',
-          description: 'Ruta interna, por ejemplo "/tienda", "/tiendas", "/precios", "/contacto", "/faq", "/guia", "/marcas", "/reparacion"',
+    type: 'function',
+    function: {
+      name: 'navegar_a',
+      description: 'Devuelve una URL interna del sitio para que el usuario pueda navegar a ella. Úsala cuando el usuario quiera ir a una sección específica.',
+      parameters: {
+        type: 'object',
+        properties: {
+          ruta: {
+            type: 'string',
+            description: 'Ruta interna, por ejemplo "/tienda", "/tiendas", "/precios", "/contacto", "/faq", "/guia", "/marcas", "/reparacion"',
+          },
+          label: {
+            type: 'string',
+            description: 'Texto descriptivo del enlace para mostrar al usuario',
+          },
         },
-        label: {
-          type: 'string',
-          description: 'Texto descriptivo del enlace para mostrar al usuario',
-        },
+        required: ['ruta', 'label'],
       },
-      required: ['ruta', 'label'],
     },
   },
 ];
