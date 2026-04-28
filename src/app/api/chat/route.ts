@@ -3,6 +3,10 @@ import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { SYSTEM_PROMPT } from '@/lib/chat/system-prompt';
 import { TOOL_DEFINITIONS, executeTool, ToolInput } from '@/lib/chat/tools';
 
+if (!process.env.ANTHROPIC_API_KEY) {
+  throw new Error('ANTHROPIC_API_KEY is not set');
+}
+
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 const MAX_MESSAGES = 20;
@@ -11,6 +15,18 @@ const MAX_INPUT_LENGTH = 500;
 export async function POST(req: Request) {
   const body = await req.json().catch(() => ({}));
   const rawMessages: { role: 'user' | 'assistant'; content: string }[] = body.messages ?? [];
+
+  if (!Array.isArray(rawMessages)) {
+    return new Response('Formato inválido.', { status: 400 });
+  }
+  for (const m of rawMessages) {
+    if (m.role !== 'user' && m.role !== 'assistant') {
+      return new Response('Rol de mensaje inválido.', { status: 400 });
+    }
+    if (typeof m.content !== 'string') {
+      return new Response('Contenido de mensaje inválido.', { status: 400 });
+    }
+  }
 
   // Validar longitud del último mensaje del usuario
   const lastUser = rawMessages.filter((m) => m.role === 'user').at(-1);
@@ -38,7 +54,13 @@ export async function POST(req: Request) {
         }));
 
         let continueLoop = true;
+        let iterations = 0;
+        const MAX_TOOL_ITERATIONS = 5;
         while (continueLoop) {
+          if (iterations++ >= MAX_TOOL_ITERATIONS) {
+            controller.enqueue(encoder.encode('Lo siento, no he podido completar la solicitud en este momento.'));
+            break;
+          }
           const response = await anthropic.messages.create({
             model: 'claude-sonnet-4-6',
             max_tokens: 1024,
@@ -82,7 +104,8 @@ export async function POST(req: Request) {
         }
       } catch (err) {
         const msg = err instanceof Error ? err.message : 'Error desconocido';
-        controller.enqueue(encoder.encode(`Lo siento, ha ocurrido un error: ${msg}`));
+        console.error('[chat] error:', msg);
+        controller.enqueue(encoder.encode('Lo siento, ha ocurrido un error. Inténtalo de nuevo.'));
       } finally {
         controller.close();
       }

@@ -105,7 +105,7 @@ export async function executeTool(
       const { data, error } = await supabase
         .from('services')
         .select('id, nombre, descripcion, precio_base, duracion_min')
-        .or(`nombre.ilike.%${query}%,descripcion.ilike.%${query}%`)
+        .ilike('nombre', `%${query}%`)
         .eq('activo', true)
         .limit(5);
       if (error) return `Error buscando servicios: ${error.message}`;
