@@ -50,7 +50,7 @@ export async function POST(req: Request) {
     async start(controller) {
       try {
         type ChatMessage =
-          | { role: 'system' | 'user' | 'assistant'; content: string }
+          | { role: 'system' | 'user' | 'assistant'; content: string | null }
           | { role: 'tool'; tool_call_id: string; content: string };
 
         const conversationMessages: ChatMessage[] = [
@@ -83,7 +83,7 @@ export async function POST(req: Request) {
           if (choice.finish_reason === 'tool_calls' && message.tool_calls?.length) {
             conversationMessages.push({
               role: 'assistant',
-              content: message.content ?? '',
+              content: message.content ?? null,
               // @ts-expect-error tool_calls is valid here
               tool_calls: message.tool_calls,
             });
