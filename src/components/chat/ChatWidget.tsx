@@ -90,6 +90,12 @@ function LiquidButton({ open, onClick }: { open: boolean; onClick: () => void })
 export default function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState('');
+  const [showGreeting, setShowGreeting] = useState(true);
+
+  useEffect(() => {
+    const id = setTimeout(() => setShowGreeting(false), 10000);
+    return () => clearTimeout(id);
+  }, []);
   const { messages, sendMessage, isLoading } = useChat();
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -276,6 +282,40 @@ export default function ChatWidget() {
                 }
               </button>
             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Greeting bubble */}
+      <AnimatePresence>
+        {showGreeting && !open && (
+          <motion.div
+            initial={{ opacity: 0, y: 12, scale: 0.92 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 8, scale: 0.92 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 28 }}
+            className="fixed bottom-28 right-6 z-50 max-w-[220px] cursor-pointer select-none"
+            onClick={() => { setShowGreeting(false); setOpen(true); }}
+            style={{
+              background: '#ffffff',
+              border: '1.5px solid rgba(0,56,255,0.12)',
+              borderRadius: '16px 16px 4px 16px',
+              padding: '12px 16px',
+              boxShadow: '0 8px 32px rgba(0,56,255,0.14), 0 2px 8px rgba(0,0,0,0.07)',
+              fontFamily: 'var(--font-display, Syne, sans-serif)',
+            }}
+          >
+            <p className="text-sm font-semibold leading-snug" style={{ color: '#0f172a', letterSpacing: '-0.01em' }}>
+              ¡Hola! Soy <span style={{ color: '#0038FF' }}>GURÚ</span>, tu asistente de IA. Pregúntame lo que quieras.
+            </p>
+            {/* Timer bar */}
+            <motion.div
+              className="mt-2 h-0.5 rounded-full origin-left"
+              initial={{ scaleX: 1 }}
+              animate={{ scaleX: 0 }}
+              transition={{ duration: 10, ease: 'linear' }}
+              style={{ background: '#0038FF' }}
+            />
           </motion.div>
         )}
       </AnimatePresence>
