@@ -114,7 +114,17 @@ export async function executeTool(
   input: ToolInput,
   userId: string | null,
 ): Promise<string> {
-  const supabase = createSupabaseServerClient();
+  // navegar_a never needs Supabase
+  if (name === 'navegar_a') {
+    return JSON.stringify({ ruta: input.ruta, label: input.label });
+  }
+
+  let supabase: ReturnType<typeof createSupabaseServerClient>;
+  try {
+    supabase = createSupabaseServerClient();
+  } catch {
+    return 'Servicio de datos temporalmente no disponible.';
+  }
 
   switch (name) {
     case 'buscar_servicios': {
@@ -199,10 +209,6 @@ export async function executeTool(
       if (error) return `Error consultando reservas: ${error.message}`;
       if (!data || data.length === 0) return 'No tienes reservas registradas.';
       return JSON.stringify(data);
-    }
-
-    case 'navegar_a': {
-      return JSON.stringify({ ruta: input.ruta, label: input.label });
     }
 
     default:
