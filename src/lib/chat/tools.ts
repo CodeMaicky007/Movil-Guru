@@ -94,7 +94,7 @@ export const TOOL_DEFINITIONS: ChatCompletionTool[] = [
         properties: {
           ruta: {
             type: 'string',
-            description: 'Ruta interna, por ejemplo "/tienda", "/tiendas", "/precios", "/contacto", "/faq", "/guia", "/marcas", "/reparacion"',
+            description: 'Ruta interna, por ejemplo "/tienda", "/tiendas", "/contacto", "/faq", "/guia", "/marcas", "/reparacion"',
           },
           label: {
             type: 'string',

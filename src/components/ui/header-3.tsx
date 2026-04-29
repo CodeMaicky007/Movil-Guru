@@ -188,11 +188,6 @@ export function Header({ dark = false }: { dark?: boolean }) {
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuLink className="px-4" asChild>
-                <Link href="/precios" className={cn('rounded-md p-2', dark ? 'text-white hover:bg-white/10' : 'hover:bg-accent')}>
-                  Precios
-                </Link>
-              </NavigationMenuLink>
-              <NavigationMenuLink className="px-4" asChild>
                 <Link href="/tiendas" className={cn('rounded-md p-2 flex items-center gap-1.5', dark ? 'text-white hover:bg-white/10' : 'hover:bg-accent')}>
                   <Store className="size-3.5" />
                   Tiendas

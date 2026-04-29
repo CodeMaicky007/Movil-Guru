@@ -109,7 +109,6 @@ RUTAS DEL SITIO:
 - Carga → /reparacion-carga
 - Por marca → /marcas
 - Tienda accesorios → /tienda
-- Precios → /precios
 - Tiendas/ubicaciones → /tiendas
 - Contacto → /contacto
 - FAQ → /faq
