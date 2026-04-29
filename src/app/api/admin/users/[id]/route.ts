@@ -1,7 +1,8 @@
-import { NextResponse } from 'next/server';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { createSupabaseAdminClient } from '@/lib/supabase/admin';
 import { requireApiUser } from '@/lib/auth';
+
+export const dynamic = 'force-dynamic';
 
 // PATCH /api/admin/users/:id — actualizar role / store_id / active / full_name
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {

@@ -1,6 +1,7 @@
-import { NextResponse } from 'next/server';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { requireApiUser } from '@/lib/auth';
+
+export const dynamic = 'force-dynamic';
 
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {
   try { await requireApiUser(); } catch (r) { return r as Response; }

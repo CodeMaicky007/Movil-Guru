@@ -1,7 +1,8 @@
-import { NextResponse } from 'next/server';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { createSupabaseAdminClient } from '@/lib/supabase/admin';
 import { requireApiUser } from '@/lib/auth';
+
+export const dynamic = 'force-dynamic';
 
 // GET /api/admin/users — listar empleados (RLS filtra automáticamente).
 export async function GET() {

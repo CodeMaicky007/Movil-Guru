@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { requireApiUser } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 // GET /api/admin/time-entries?profile_id=...&from=YYYY-MM-DD&to=...
 // - Por defecto: últimos 30 días del usuario actual.
 // - Admin/manager pueden pasar profile_id; RLS filtra el resto.

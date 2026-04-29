@@ -3,6 +3,8 @@ import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { SYSTEM_PROMPT } from '@/lib/chat/system-prompt';
 import { TOOL_DEFINITIONS, executeTool, ToolInput } from '@/lib/chat/tools';
 
+export const dynamic = 'force-dynamic';
+
 const MAX_MESSAGES = 20;
 const MAX_INPUT_LENGTH = 500;
 

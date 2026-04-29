@@ -1,5 +1,6 @@
-import { NextResponse } from 'next/server';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
+
+export const dynamic = 'force-dynamic';
 
 // Logout: cierra la sesión Supabase. El login se hace desde el cliente.
 export async function DELETE() {
