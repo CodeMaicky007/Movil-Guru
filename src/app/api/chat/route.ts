@@ -31,7 +31,7 @@ async function callGroq(
       const groq = new Groq({ apiKey: keys[i] });
       const response = await groq.chat.completions.create({
         model: 'llama-3.1-8b-instant',
-        max_tokens: 512,
+        max_tokens: 150,
         messages,
       });
       return response.choices[0].message.content ?? '';
