@@ -52,25 +52,15 @@ function LiquidButton({ open, onClick }: { open: boolean; onClick: () => void })
       whileTap={{ scale: 0.9 }}
       className="fixed bottom-6 right-6 z-50 w-16 h-16 flex items-center justify-center focus-visible:outline-none"
       aria-label={open ? 'Cerrar asistente Gurú' : 'Abrir asistente Gurú'}
-      style={{ filter: open ? 'drop-shadow(0 8px 28px rgba(0,56,255,0.5))' : 'drop-shadow(0 8px 24px rgba(0,0,0,0.25))' }}
+      style={{ filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.22))' }}
     >
-      {/* Blob background — solo visible cuando está abierto (botón de cierre) */}
-      {open && (
-        <motion.span
-          className="absolute inset-0"
-          animate={{ clipPath: BLOB_SHAPES[blobIdx] }}
-          transition={{ duration: 1.8, ease: [0.37, 0, 0.63, 1] }}
-          style={{ background: 'linear-gradient(135deg, #0038FF 0%, #0025cc 100%)' }}
-        />
-      )}
-
       {/* Click ripple */}
       <AnimatePresence>
         {ripple && (
           <motion.span
             key="ripple"
-            className="absolute"
-            initial={{ width: 16, height: 16, borderRadius: '50%', x: -8, y: -8, opacity: 0.7 }}
+            className="absolute rounded-full"
+            initial={{ width: 16, height: 16, x: -8, y: -8, opacity: 0.6 }}
             animate={{ width: 80, height: 80, x: -40, y: -40, opacity: 0 }}
             exit={{}}
             transition={{ duration: 0.55, ease: 'easeOut' }}
@@ -79,14 +69,15 @@ function LiquidButton({ open, onClick }: { open: boolean; onClick: () => void })
         )}
       </AnimatePresence>
 
-      {/* Icon */}
+      {/* Icon — head image siempre, cambia según estado */}
       <AnimatePresence mode="wait">
         {open ? (
-          <motion.div key="close" initial={{ rotate: -90, opacity: 0, scale: 0.7 }} animate={{ rotate: 0, opacity: 1, scale: 1 }} exit={{ rotate: 90, opacity: 0, scale: 0.7 }} transition={{ duration: 0.2 }} className="relative z-10">
-            <X size={24} className="text-white" strokeWidth={2.5} />
+          <motion.div key="off" initial={{ scale: 0.7, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.7, opacity: 0 }} transition={{ duration: 0.2 }} className="relative z-10 w-full h-full flex items-center justify-center">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/guru-headoff.png" alt="Cerrar Gurú" className="w-14 h-14 object-contain rounded-full" />
           </motion.div>
         ) : (
-          <motion.div key="bot" initial={{ scale: 0.7, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.7, opacity: 0 }} transition={{ duration: 0.2 }} className="relative z-10 w-full h-full flex items-center justify-center">
+          <motion.div key="on" initial={{ scale: 0.7, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.7, opacity: 0 }} transition={{ duration: 0.2 }} className="relative z-10 w-full h-full flex items-center justify-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/guru-head.png" alt="Gurú" className="w-14 h-14 object-contain rounded-full" />
           </motion.div>
@@ -151,12 +142,9 @@ export default function ChatWidget() {
             >
               <div className="flex items-center gap-3">
                 <div className="relative">
-                  <div
-                    className="w-9 h-9 rounded-full flex items-center justify-center"
-                    style={{ background: 'rgba(255,255,255,0.15)', border: '1.5px solid rgba(255,255,255,0.25)' }}
-                  >
+                  <div className="w-10 h-10 rounded-full overflow-hidden" style={{ border: '2px solid rgba(255,255,255,0.3)' }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src="/guru-bot.png" alt="" className="w-6 h-6 object-contain" style={{ filter: 'brightness(0) invert(1)' }} />
+                    <img src="/guru-head.png" alt="Gurú" className="w-full h-full object-cover" />
                   </div>
                   {/* Online indicator */}
                   <span
