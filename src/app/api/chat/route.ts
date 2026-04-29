@@ -3,16 +3,14 @@ import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { SYSTEM_PROMPT } from '@/lib/chat/system-prompt';
 import { TOOL_DEFINITIONS, executeTool, ToolInput } from '@/lib/chat/tools';
 
-if (!process.env.GROQ_API_KEY) {
-  throw new Error('GROQ_API_KEY is not set');
-}
-
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
-
 const MAX_MESSAGES = 20;
 const MAX_INPUT_LENGTH = 500;
 
 export async function POST(req: Request) {
+  if (!process.env.GROQ_API_KEY) {
+    return new Response('Servicio no disponible.', { status: 503 });
+  }
+  const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
   const body = await req.json().catch(() => ({}));
   const rawMessages: { role: 'user' | 'assistant'; content: string }[] = body.messages ?? [];
 
