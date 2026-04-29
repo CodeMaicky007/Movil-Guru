@@ -6,12 +6,57 @@ export const dynamic = 'force-dynamic';
 const MAX_MESSAGES = 20;
 const MAX_INPUT_LENGTH = 500;
 
+// Lee todas las keys disponibles. Soporta GROQ_API_KEYS (separadas por coma)
+// y GROQ_API_KEY (clave única, compatibilidad hacia atrás).
+function getGroqKeys(): string[] {
+  const multi = process.env.GROQ_API_KEYS;
+  if (multi) return multi.split(',').map((k) => k.trim()).filter(Boolean);
+  const single = process.env.GROQ_API_KEY;
+  if (single) return [single.trim()];
+  return [];
+}
+
+function isRateLimit(err: unknown): boolean {
+  const msg = err instanceof Error ? err.message : String(err);
+  return msg.includes('429') || msg.toLowerCase().includes('rate limit') || msg.toLowerCase().includes('rate_limit');
+}
+
+// Intenta la llamada a Groq con cada key en orden.
+// Si una devuelve 429, pasa automáticamente a la siguiente.
+async function callGroq(
+  keys: string[],
+  messages: { role: 'system' | 'user' | 'assistant'; content: string }[],
+): Promise<string> {
+  let lastError: unknown;
+
+  for (let i = 0; i < keys.length; i++) {
+    try {
+      const groq = new Groq({ apiKey: keys[i] });
+      const response = await groq.chat.completions.create({
+        model: 'llama-3.1-8b-instant',
+        max_tokens: 512,
+        messages,
+      });
+      return response.choices[0].message.content ?? '';
+    } catch (err) {
+      lastError = err;
+      if (isRateLimit(err) && i < keys.length - 1) {
+        console.warn(`[chat] key ${i + 1} rate-limited, switching to key ${i + 2}`);
+        continue;
+      }
+      break;
+    }
+  }
+
+  throw lastError;
+}
+
 export async function POST(req: Request) {
-  if (!process.env.GROQ_API_KEY) {
+  const keys = getGroqKeys();
+  if (keys.length === 0) {
     return new Response('Servicio no disponible.', { status: 503 });
   }
 
-  const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
   const body = await req.json().catch(() => ({}));
   const rawMessages: { role: 'user' | 'assistant'; content: string }[] = body.messages ?? [];
 
@@ -38,16 +83,11 @@ export async function POST(req: Request) {
   const stream = new ReadableStream({
     async start(controller) {
       try {
-        const response = await groq.chat.completions.create({
-          model: 'llama-3.1-8b-instant',
-          max_tokens: 512,
-          messages: [
-            { role: 'system', content: SYSTEM_PROMPT },
-            ...messages.map((m) => ({ role: m.role as 'user' | 'assistant', content: m.content })),
-          ],
-        });
+        const text = await callGroq(keys, [
+          { role: 'system', content: SYSTEM_PROMPT },
+          ...messages.map((m) => ({ role: m.role as 'user' | 'assistant', content: m.content })),
+        ]);
 
-        const text = response.choices[0].message.content ?? '';
         const words = text.split(' ');
         for (let i = 0; i < words.length; i++) {
           controller.enqueue(encoder.encode(i < words.length - 1 ? words[i] + ' ' : words[i]));
@@ -55,10 +95,9 @@ export async function POST(req: Request) {
         }
       } catch (err) {
         const msg = err instanceof Error ? err.message : String(err);
-        console.error('[chat] error:', msg);
-        const isRateLimit = msg.includes('429') || msg.toLowerCase().includes('rate limit');
-        const reply = isRateLimit
-          ? 'Estoy recibiendo muchas consultas en este momento. Espera unos segundos e inténtalo de nuevo.'
+        console.error('[chat] all keys failed:', msg);
+        const reply = isRateLimit(err)
+          ? 'Estoy recibiendo muchas consultas ahora mismo. Espera unos segundos e inténtalo de nuevo.'
           : 'Lo siento, ha ocurrido un error. Inténtalo de nuevo.';
         controller.enqueue(encoder.encode(reply));
       } finally {
