@@ -35,9 +35,14 @@ export async function POST(req: Request) {
 
   const messages = rawMessages.slice(-MAX_MESSAGES);
 
-  const supabase = createSupabaseServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  const userId = user?.id ?? null;
+  let userId: string | null = null;
+  try {
+    const supabase = createSupabaseServerClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    userId = user?.id ?? null;
+  } catch {
+    // Supabase not configured or unavailable — proceed without user context
+  }
 
   const encoder = new TextEncoder();
 
