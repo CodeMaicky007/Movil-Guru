@@ -6,14 +6,11 @@ export const dynamic = 'force-dynamic';
 const MAX_MESSAGES = 20;
 const MAX_INPUT_LENGTH = 500;
 
-// Lee todas las keys disponibles. Soporta GROQ_API_KEYS (separadas por coma)
-// y GROQ_API_KEY (clave única, compatibilidad hacia atrás).
+// Lee todas las keys disponibles. Soporta múltiples keys separadas por coma
+// en GROQ_API_KEYS o GROQ_API_KEY (ambas variables, cualquier formato).
 function getGroqKeys(): string[] {
-  const multi = process.env.GROQ_API_KEYS;
-  if (multi) return multi.split(',').map((k) => k.trim()).filter(Boolean);
-  const single = process.env.GROQ_API_KEY;
-  if (single) return [single.trim()];
-  return [];
+  const raw = process.env.GROQ_API_KEYS ?? process.env.GROQ_API_KEY ?? '';
+  return raw.split(',').map((k) => k.trim()).filter(Boolean);
 }
 
 function isRateLimit(err: unknown): boolean {
