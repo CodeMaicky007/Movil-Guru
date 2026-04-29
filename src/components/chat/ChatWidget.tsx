@@ -90,9 +90,12 @@ function LiquidButton({ open, onClick }: { open: boolean; onClick: () => void })
 export default function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState('');
-  const [showGreeting, setShowGreeting] = useState(true);
+  const [showGreeting, setShowGreeting] = useState(false);
 
   useEffect(() => {
+    if (sessionStorage.getItem('guru_greeted')) return;
+    sessionStorage.setItem('guru_greeted', '1');
+    setShowGreeting(true);
     const id = setTimeout(() => setShowGreeting(false), 10000);
     return () => clearTimeout(id);
   }, []);
