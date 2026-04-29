@@ -56,7 +56,11 @@ export async function POST(req: Request) {
       } catch (err) {
         const msg = err instanceof Error ? err.message : String(err);
         console.error('[chat] error:', msg);
-        controller.enqueue(encoder.encode('Lo siento, ha ocurrido un error. Inténtalo de nuevo.'));
+        const isRateLimit = msg.includes('429') || msg.toLowerCase().includes('rate limit');
+        const reply = isRateLimit
+          ? 'Estoy recibiendo muchas consultas en este momento. Espera unos segundos e inténtalo de nuevo.'
+          : 'Lo siento, ha ocurrido un error. Inténtalo de nuevo.';
+        controller.enqueue(encoder.encode(reply));
       } finally {
         controller.close();
       }

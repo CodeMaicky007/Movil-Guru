@@ -8,6 +8,10 @@ export interface Message {
   content: string;
 }
 
+// Mensajes enviados al API: solo los últimos N intercambios para ahorrar tokens.
+// El usuario ve toda la conversación en pantalla, pero la IA solo recibe contexto reciente.
+const CONTEXT_WINDOW = 6; // 3 intercambios usuario/asistente
+
 export function useChat() {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -17,7 +21,6 @@ export function useChat() {
     },
   ]);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const messagesRef = useRef(messages);
   const abortRef = useRef<AbortController | null>(null);
 
@@ -28,7 +31,6 @@ export function useChat() {
   const sendMessage = useCallback(async (text: string) => {
     if (!text.trim() || isLoading) return;
 
-    // Cancelar cualquier request previo
     abortRef.current?.abort();
     const abort = new AbortController();
     abortRef.current = abort;
@@ -41,20 +43,21 @@ export function useChat() {
 
     setMessages((prev) => [...prev, userMessage]);
     setIsLoading(true);
-    setError(null);
 
     const assistantId = crypto.randomUUID();
     setMessages((prev) => [...prev, { id: assistantId, role: 'assistant', content: '' }]);
 
     try {
-      const allMessages = [...messagesRef.current, userMessage]
+      // Solo enviamos los últimos CONTEXT_WINDOW mensajes al API (sin el mensaje de bienvenida)
+      const history = [...messagesRef.current, userMessage]
         .filter((m) => m.id !== 'welcome')
+        .slice(-CONTEXT_WINDOW)
         .map(({ role, content }) => ({ role, content }));
 
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: allMessages }),
+        body: JSON.stringify({ messages: history }),
         signal: abort.signal,
       });
 
@@ -75,7 +78,6 @@ export function useChat() {
             prev.map((m) => (m.id === assistantId ? { ...m, content: accumulated } : m)),
           );
         }
-        // Fix 3: Flush final del decoder para caracteres multibyte (ej: acentos españoles)
         const remaining = decoder.decode();
         if (remaining) {
           accumulated += remaining;
@@ -88,8 +90,6 @@ export function useChat() {
       }
     } catch (err) {
       if (err instanceof Error && err.name === 'AbortError') return;
-      const msg = err instanceof Error ? err.message : 'Error de conexión';
-      setError(msg);
       setMessages((prev) =>
         prev.map((m) =>
           m.id === assistantId
@@ -102,5 +102,5 @@ export function useChat() {
     }
   }, [isLoading]);
 
-  return { messages, sendMessage, isLoading, error };
+  return { messages, sendMessage, isLoading };
 }
