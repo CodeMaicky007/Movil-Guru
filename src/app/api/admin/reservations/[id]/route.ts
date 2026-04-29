@@ -1,3 +1,4 @@
+import { NextResponse } from 'next/server';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { requireApiUser } from '@/lib/auth';
 
