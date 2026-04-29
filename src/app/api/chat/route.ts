@@ -119,8 +119,9 @@ export async function POST(req: Request) {
           }
         }
       } catch (err) {
-        const msg = err instanceof Error ? err.message : 'Error desconocido';
-        console.error('[chat] error:', msg);
+        const msg = err instanceof Error ? err.message : String(err);
+        const stack = err instanceof Error ? err.stack : '';
+        console.error('[chat] error:', msg, stack);
         controller.enqueue(encoder.encode('Lo siento, ha ocurrido un error. Inténtalo de nuevo.'));
       } finally {
         controller.close();
