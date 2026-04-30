@@ -1,11 +1,14 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+const useIsoLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 const Header = dynamic(
   () => import("@/components/ui/header-3").then((m) => m.Header),
@@ -35,7 +38,7 @@ const MovilGuruBento = dynamic(
 if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
 
 function useHorizontalScroll() {
-  useEffect(() => {
+  useIsoLayoutEffect(() => {
     const outer = document.querySelector<HTMLElement>(".mg-content-outer");
     const track = document.querySelector<HTMLElement>(".mg-content-track");
     if (!outer || !track) return;
@@ -49,6 +52,7 @@ function useHorizontalScroll() {
         scrollTrigger: {
           trigger: outer,
           pin: true,
+          pinType: "transform",
           scrub: 1.2,
           end: () => "+=" + (track.scrollWidth - window.innerWidth),
           invalidateOnRefresh: true,
@@ -125,12 +129,24 @@ function useHorizontalScroll() {
       });
     });
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      document
+        .querySelectorAll<HTMLElement>(".pin-spacer, .gsap-pin-spacer")
+        .forEach((spacer) => {
+          const parent = spacer.parentNode;
+          if (!parent) return;
+          while (spacer.firstChild) {
+            parent.insertBefore(spacer.firstChild, spacer);
+          }
+          parent.removeChild(spacer);
+        });
+    };
   }, []);
 }
 
 function useVerticalAnimations() {
-  useEffect(() => {
+  useIsoLayoutEffect(() => {
     let refreshTimers: ReturnType<typeof setTimeout>[] = [];
     const ctx = gsap.context(() => {
       gsap.utils.toArray<HTMLElement>(".v-reveal").forEach((el) => {
