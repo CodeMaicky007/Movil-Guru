@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic"
 import React, { Suspense } from "react"
 import { motion } from "motion/react"
-import { Link } from "next-view-transitions"
+import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { Check, Package, Truck, Home, ArrowRight, RotateCcw, MapPin } from "lucide-react"
 

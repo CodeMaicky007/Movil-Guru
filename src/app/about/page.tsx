@@ -755,7 +755,6 @@ export default function AboutPreviewPage() {
       window.removeEventListener("resize", onResize);
       ctaEl?.removeEventListener("click", onCta);
       triggers.forEach((t) => t.kill());
-      ScrollTrigger.getAll().forEach((t) => t.kill());
       renderer.dispose();
       scene.traverse((o) => {
         const mesh = o as THREE.Mesh;

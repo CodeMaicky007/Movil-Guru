@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { Link } from 'next-view-transitions';
+import Link from 'next/link';
 import type { ComponentProps, ReactNode } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import {

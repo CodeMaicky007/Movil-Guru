@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { X, Send, Loader2, ExternalLink } from 'lucide-react';
 import { useChat } from './useChat';
 
@@ -293,6 +293,7 @@ export default function ChatWidget() {
       <AnimatePresence>
         {showGreeting && !open && (
           <motion.div
+            key="greeting"
             initial={{ opacity: 0, y: 12, scale: 0.92 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.92 }}

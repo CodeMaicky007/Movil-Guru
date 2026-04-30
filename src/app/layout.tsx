@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Syne } from "next/font/google";
-import { ViewTransitions } from 'next-view-transitions';
 import ChatWidget from '@/components/chat/ChatWidget';
 import "./globals.css";
 
@@ -21,13 +20,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ViewTransitions>
-      <html lang="es">
-        <body className={`${syne.variable} ${syne.className}`}>
-          {children}
-          <ChatWidget />
-        </body>
-      </html>
-    </ViewTransitions>
+    <html lang="es" suppressHydrationWarning>
+      <body className={`${syne.variable} ${syne.className}`} suppressHydrationWarning>
+        {children}
+        <ChatWidget />
+      </body>
+    </html>
   );
 }

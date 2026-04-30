@@ -1,8 +1,8 @@
 "use client";
 import dynamic from "next/dynamic";
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "next-view-transitions";
+import { motion, AnimatePresence } from "motion/react";
+import Link from "next/link";
 import {
   Mail,
   Lock,

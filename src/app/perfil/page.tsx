@@ -1,8 +1,8 @@
 "use client";
 import dynamic from "next/dynamic";
 import React from "react";
-import { motion } from "framer-motion";
-import { Link } from "next-view-transitions";
+import { motion } from "motion/react";
+import Link from "next/link";
 import {
   Smartphone,
   Calendar,

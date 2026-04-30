@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic"
 import React, { useState } from "react"
 import { motion, AnimatePresence } from "motion/react"
-import { Link } from "next-view-transitions"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useCart, CartItem } from "@/context/cart-context"
 import { Minus, Plus, X, ShoppingBag, ArrowRight, Tag, Truck, Shield, Zap } from "lucide-react"

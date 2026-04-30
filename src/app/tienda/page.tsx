@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import React, { useState } from "react";
 import { motion } from "motion/react";
-import { Link } from "next-view-transitions";
+import Link from "next/link";
 import {
   ShoppingBag,
   Heart,

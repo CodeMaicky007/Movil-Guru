@@ -7,7 +7,7 @@ import {
   useSpring,
   useMotionValue,
   useScroll,
-} from "framer-motion";
+} from "motion/react";
 
 type AnimationPhase = "scatter" | "line" | "circle" | "bottom-strip";
 

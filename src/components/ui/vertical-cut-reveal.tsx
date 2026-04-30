@@ -8,8 +8,8 @@ import {
   useRef,
   useState,
 } from 'react'
-import { motion } from 'framer-motion'
-import type { AnimationOptions } from 'framer-motion'
+import { motion } from 'motion/react'
+import type { AnimationOptions } from 'motion/react'
 
 type DynamicAnimationOptions = AnimationOptions & { delay?: number; [key: string]: unknown }
 import { cn } from '@/lib/utils'

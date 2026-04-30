@@ -2,7 +2,7 @@
 
 import type React from "react"
 import { useState, useRef } from "react"
-import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from "framer-motion"
+import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from "motion/react"
 
 interface LocationMapProps {
   location?: string

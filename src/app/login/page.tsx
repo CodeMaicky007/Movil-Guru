@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
-import { Link } from "next-view-transitions";
+import { motion } from "motion/react";
+import Link from "next/link";
 import { Eye, EyeOff, ArrowRight, Fingerprint, Mail, ShieldCheck, Clock, Star } from "lucide-react";
 import Image from "next/image";
 import logoImg from "../../../images/logo/logo-Photoroom.png";

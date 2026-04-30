@@ -1,7 +1,7 @@
 'use client';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { useState, useMemo } from 'react';
 
 const Header = dynamic(
@@ -309,6 +309,7 @@ export default function MarcasPage() {
             <AnimatePresence>
               {search && (
                 <motion.button
+                  key="clear-search"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
@@ -346,6 +347,7 @@ export default function MarcasPage() {
           <AnimatePresence>
             {filtered.length === 0 && (
               <motion.div
+                key="empty-state"
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}

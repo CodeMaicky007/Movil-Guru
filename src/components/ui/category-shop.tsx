@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic"
 import React, { useMemo, useState } from "react"
 import { motion, AnimatePresence } from "motion/react"
-import { Link } from "next-view-transitions"
+import Link from "next/link"
 import {
   ArrowRight,
   Heart,
