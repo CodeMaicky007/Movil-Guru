@@ -1,0 +1,492 @@
+You are given a task to integrate an existing React component in the codebase
+
+The codebase should support:
+- shadcn project structure  
+- Tailwind CSS
+- Typescript
+
+If it doesn't, provide instructions on how to setup project via shadcn CLI, install Tailwind or Typescript.
+
+Determine the default path for components and styles. 
+If default path for components is not /components/ui, provide instructions on why it's important to create this folder
+Copy-paste this component to /components/ui folder:
+```tsx
+bento-grid.tsx
+"use client";
+
+import * as React from "react";
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+
+// Animation variants for the container to stagger children
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+// Animation variants for each grid item
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 10,
+    },
+  },
+};
+
+/**
+ * Props for the BentoGridShowcase component.
+ * Each prop represents a "slot" in the grid.
+ */
+interface BentoGridShowcaseProps {
+  /** Slot for the top-left card (Integrations) */
+  integrations: React.ReactNode;
+  /** Slot for the top-right card (Feature Tags) */
+  featureTags: React.ReactNode;
+  /** Slot for the tall middle card (Main Feature) */
+  mainFeature: React.ReactNode;
+  /** Slot for the middle-left card (Secondary Feature) */
+  secondaryFeature: React.ReactNode;
+  /** Slot for the middle-right card (Statistic) */
+  statistic: React.ReactNode;
+  /** Slot for the bottom-left card (Journey) */
+  journey: React.ReactNode;
+  /** Optional class names for the grid container */
+  className?: string;
+}
+
+/**
+ * A responsive, animated 3-column bento grid layout component.
+ * It arranges six content slots in a specific 3-row vertical layout.
+ */
+export const BentoGridShowcase = ({
+  integrations,
+  featureTags,
+  mainFeature,
+  secondaryFeature,
+  statistic,
+  journey,
+  className,
+}: BentoGridShowcaseProps) => {
+  return (
+    <motion.section
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className={cn(
+        // Core grid layout: 1 col on mobile, 3 on desktop
+        "grid w-full grid-cols-1 gap-6 md:grid-cols-3",
+        // Defines 3 explicit rows on medium screens and up
+        "md:grid-rows-3",
+        // Use minmax to ensure cards can grow but have a minimum height
+        "auto-rows-[minmax(200px,auto)]",
+        className
+      )}
+    >
+      {/* The order of these divs is important for CSS grid auto-placement 
+        to match the new layout.
+      */}
+
+      {/* Slot 1: Integrations (1,1) */}
+      <motion.div variants={itemVariants} className="md:col-span-1 md:row-span-1">
+        {integrations}
+      </motion.div>
+
+      {/* Slot 2: Main Feature (1,2) - Spans 3 rows */}
+      <motion.div variants={itemVariants} className="md:col-span-1 md:row-span-3">
+        {mainFeature}
+      </motion.div>
+
+      {/* Slot 3: Feature Tags (1,3) */}
+      <motion.div variants={itemVariants} className="md:col-span-1 md:row-span-1">
+        {featureTags}
+      </motion.div>
+
+      {/* Slot 4: Secondary Feature (2,1) */}
+      <motion.div variants={itemVariants} className="md:col-span-1 md:row-span-1">
+        {secondaryFeature}
+      </motion.div>
+
+      {/* Slot 5: Statistic (2,3) - Spans 2 rows */}
+      <motion.div variants={itemVariants} className="md:col-span-1 md:row-span-2">
+        {statistic}
+      </motion.div>
+
+      {/* Slot 6: Journey (3,1) */}
+      <motion.div variants={itemVariants} className="md:col-span-1 md:row-span-1">
+        {journey}
+      </motion.div>
+    </motion.section>
+  );
+};
+
+demo.tsx
+import * as React from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { BentoGridShowcase } from "@/components/ui/bento-grid";
+import {
+  Calendar,
+  HeartPulse,
+  Plus,
+  Slack,
+  Zap,
+} from "lucide-react";
+
+// --- Helper Components for the Demo ---
+// These components represent the content for each slot.
+// I've updated the image URLs to match your new layout.
+
+const IntegrationsCard = () => (
+  <Card className="h-full">
+    <CardHeader>
+      <CardTitle className="text-lg">Integrations</CardTitle>
+      <CardDescription>
+        Easily integrations of third party apps.
+      </CardDescription>
+    </CardHeader>
+    <CardContent className="flex items-center justify-center gap-4">
+      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
+        <Calendar className="h-6 w-6 text-muted-foreground" />
+      </div>
+      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
+        <Slack className="h-6 w-6 text-muted-foreground" />
+      </div>
+      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">
+        <Zap className="h-6 w-6 text-muted-foreground" />
+      </div>
+    </CardContent>
+  </Card>
+);
+
+const FeatureTagsCard = () => (
+  <Card className="h-full">
+    <CardContent className="flex h-full flex-col justify-center gap-3 p-6">
+      <Badge
+        variant="outline"
+        className="w-fit items-center gap-1.5 border-purple-300 py-1.5 px-3 text-purple-700 dark:border-purple-700 dark:text-purple-300"
+      >
+        Innovative <Plus className="h-3 w-3" />
+      </Badge>
+      <Badge
+        variant="secondary"
+        className="w-fit items-center gap-1.5 bg-purple-100 py-1.5 px-3 text-purple-700 hover:bg-purple-200 dark:bg-purple-900/50 dark:text-purple-300 dark:hover:bg-purple-900/80"
+      >
+        Revolutionary
+      </Badge>
+      <Badge
+        variant="outline"
+        className="w-fit items-center gap-1.5 border-purple-300 py-1.5 px-3 text-purple-700 dark:border-purple-700 dark:text-purple-300"
+      >
+        Empowering <Plus className="h-3 w-3" />
+      </Badge>
+    </CardContent>
+  </Card>
+);
+
+const MainFeatureCard = () => (
+  <Card className="relative h-full w-full overflow-hidden">
+    <div className="absolute top-6 left-6 z-10 rounded-lg bg-background/50 p-2 backdrop-blur-sm">
+      <p className="text-xl font-bold tracking-tighter">Doc Hands.</p>
+    </div>
+    <img
+      src="https://plus.unsplash.com/premium_photo-1705883267055-b4000d390bae?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzN8fFNtaWxpbmclMjB3b21hbiUyMGluJTIwYSUyMHBpbmslMjBqYWNrZXR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=900"
+      alt="Smiling woman in a pink traditional dress"
+      className="h-full w-full object-cover"
+    />
+  </Card>
+);
+
+const StatCard = () => (
+  <Card className="flex h-full flex-col justify-between bg-lime-100/80 p-6 dark:bg-lime-950/80">
+    <HeartPulse className="h-8 w-8 text-lime-700 dark:text-lime-300" />
+    <div>
+      <p className="text-6xl font-bold text-lime-900 dark:text-lime-100">95%</p>
+      <p className="text-sm text-lime-800 dark:text-lime-200">
+        Clinical and Medical care satisfaction with DocHands Platforms.
+      </p>
+    </div>
+  </Card>
+);
+
+const SecondaryFeatureCard = () => (
+  <Card className="relative h-full w-full overflow-hidden">
+    <img
+      src="https://images.unsplash.com/photo-1667133295352-ef4c83620e8e?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjd8fGRlbnRpc3R8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=900"
+      alt="Close-up of a smiling woman"
+      className="h-60 w-full object-cover"
+    />
+    <div className="absolute inset-0 bg-gradient-to-t from-blue-500/30 via-transparent to-transparent dark:from-blue-900/40" />
+    <p className="absolute bottom-6 left-6 z-10 max-w-[80%] text-xl font-bold text-white [text-shadow:_0_1px_4px_rgb(0_0_0_/_30%)]">
+      Small changes and big impact on the way!
+    </p>
+  </Card>
+);
+
+const JourneyCard = () => (
+  <Card className="relative h-full w-full overflow-hidden p-6">
+    <CardTitle className="text-lg">Weekly Journey</CardTitle>
+    <CardDescription>
+      Workflow and Patient journey mapping within 02-03 Weeks.
+    </CardDescription>
+    {/* Avatar constellation */}
+    <div className="absolute -right-4 -bottom-4 h-48 w-48">
+      <div className="absolute top-8 left-20">
+        <Avatar>
+          <AvatarImage src="https://api.uifaces.co/our-content/faces/49.jpg" />
+          <AvatarFallback>A</AvatarFallback>
+        </Avatar>
+      </div>
+      <div className="absolute top-24 left-8">
+        <Avatar>
+          <AvatarImage src="https://api.uifaces.co/our-content/faces/14.jpg" />
+          <AvatarFallback>B</AvatarFallback>
+        </Avatar>
+      </div>
+    </div>
+  </Card>
+);
+
+// --- The Default Demo ---
+export default function BentoGridShowcaseDemo() {
+  return (
+    <div className="w-full p-4 md:p-10">
+      <div className="mb-8">
+        <h1 className="text-center text-4xl font-bold tracking-tight">
+          Virtual Medical Care
+        </h1>
+        <p className="text-center text-lg text-muted-foreground">
+          Full range of solutions to effectively enhance your virtual care.
+        </p>
+      </div>
+
+      <BentoGridShowcase
+        integrations={<IntegrationsCard />}
+        featureTags={<FeatureTagsCard />}
+        mainFeature={<MainFeatureCard />}
+        secondaryFeature={<SecondaryFeatureCard />}
+        statistic={<StatCard />}
+        journey={<JourneyCard />}
+      />
+    </div>
+  );
+}
+```
+
+Copy-paste these files for dependencies:
+```tsx
+shadcn/badge
+import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
+
+import { cn } from "@/lib/utils"
+
+const badgeVariants = cva(
+  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+  {
+    variants: {
+      variant: {
+        default:
+          "border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
+        secondary:
+          "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        destructive:
+          "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
+        outline: "text-foreground",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  },
+)
+
+export interface BadgeProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof badgeVariants> {}
+
+function Badge({ className, variant, ...props }: BadgeProps) {
+  return (
+    <div className={cn(badgeVariants({ variant }), className)} {...props} />
+  )
+}
+
+export { Badge, badgeVariants }
+
+```
+```tsx
+shadcn/avatar
+"use client"
+
+import * as React from "react"
+import * as AvatarPrimitive from "@radix-ui/react-avatar"
+
+import { cn } from "@/lib/utils"
+
+const Avatar = React.forwardRef<
+  React.ElementRef<typeof AvatarPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>
+>(({ className, ...props }, ref) => (
+  <AvatarPrimitive.Root
+    ref={ref}
+    className={cn(
+      "relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full",
+      className,
+    )}
+    {...props}
+  />
+))
+Avatar.displayName = AvatarPrimitive.Root.displayName
+
+const AvatarImage = React.forwardRef<
+  React.ElementRef<typeof AvatarPrimitive.Image>,
+  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>
+>(({ className, ...props }, ref) => (
+  <AvatarPrimitive.Image
+    ref={ref}
+    className={cn("aspect-square h-full w-full", className)}
+    {...props}
+  />
+))
+AvatarImage.displayName = AvatarPrimitive.Image.displayName
+
+const AvatarFallback = React.forwardRef<
+  React.ElementRef<typeof AvatarPrimitive.Fallback>,
+  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Fallback>
+>(({ className, ...props }, ref) => (
+  <AvatarPrimitive.Fallback
+    ref={ref}
+    className={cn(
+      "flex h-full w-full items-center justify-center rounded-full bg-muted",
+      className,
+    )}
+    {...props}
+  />
+))
+AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName
+
+export { Avatar, AvatarImage, AvatarFallback }
+
+```
+```tsx
+shadcn/card
+import * as React from "react"
+
+import { cn } from "@/lib/utils"
+
+const Card = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(
+      "rounded-lg border bg-card text-card-foreground shadow-sm",
+      className,
+    )}
+    {...props}
+  />
+))
+Card.displayName = "Card"
+
+const CardHeader = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("flex flex-col space-y-1.5 p-6", className)}
+    {...props}
+  />
+))
+CardHeader.displayName = "CardHeader"
+
+const CardTitle = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLHeadingElement>
+>(({ className, ...props }, ref) => (
+  <h3
+    ref={ref}
+    className={cn(
+      "text-2xl font-semibold leading-none tracking-tight",
+      className,
+    )}
+    {...props}
+  />
+))
+CardTitle.displayName = "CardTitle"
+
+const CardDescription = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => (
+  <p
+    ref={ref}
+    className={cn("text-sm text-muted-foreground", className)}
+    {...props}
+  />
+))
+CardDescription.displayName = "CardDescription"
+
+const CardContent = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
+))
+CardContent.displayName = "CardContent"
+
+const CardFooter = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("flex items-center p-6 pt-0", className)}
+    {...props}
+  />
+))
+CardFooter.displayName = "CardFooter"
+
+export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
+
+```
+
+Install NPM dependencies:
+```bash
+framer-motion, class-variance-authority, @radix-ui/react-avatar
+```
+
+Implementation Guidelines
+ 1. Analyze the component structure and identify all required dependencies
+ 2. Review the component's argumens and state
+ 3. Identify any required context providers or hooks and install them
+ 4. Questions to Ask
+ - What data/props will be passed to this component?
+ - Are there any specific state management requirements?
+ - Are there any required assets (images, icons, etc.)?
+ - What is the expected responsive behavior?
+ - What is the best place to use this component in the app?
+
+Steps to integrate
+ 0. Copy paste all the code above in the correct directories
+ 1. Install external dependencies
+ 2. Fill image assets with Unsplash stock images you know exist
+ 3. Use lucide-react icons for svgs or logos if component requires them
