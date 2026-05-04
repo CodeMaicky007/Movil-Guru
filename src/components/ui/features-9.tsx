@@ -1,14 +1,25 @@
 'use client'
+import { motion } from 'motion/react'
 import { Activity, Map as MapIcon, MessageCircle } from 'lucide-react'
 import DottedMap from 'dotted-map'
 import { Area, AreaChart, CartesianGrid } from 'recharts'
 import { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'
 
+const fadeUp = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+}
+
 export function Features() {
     return (
         <section className="px-4 py-16 md:py-32">
-            <div className="mx-auto grid max-w-5xl border border-[#CCFF00] md:grid-cols-2">
-                <div>
+            <motion.div
+                className="mx-auto grid max-w-5xl border border-[#CCFF00] md:grid-cols-2"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.1 }}
+            >
+                <motion.div variants={fadeUp}>
                     <div className="p-6 sm:p-12">
                         <span className="text-muted-foreground flex items-center gap-2">
                             <MapIcon className="size-4" />
@@ -31,8 +42,11 @@ export function Features() {
                             <Map />
                         </div>
                     </div>
-                </div>
-                <div className="overflow-hidden border-t border-[#CCFF00] bg-zinc-50 p-6 sm:p-12 md:border-0 md:border-l md:border-l-[#CCFF00] dark:bg-transparent">
+                </motion.div>
+                <motion.div
+                    variants={{ hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] } } }}
+                    className="overflow-hidden border-t border-[#CCFF00] bg-zinc-50 p-6 sm:p-12 md:border-0 md:border-l md:border-l-[#CCFF00] dark:bg-transparent"
+                >
                     <div className="relative z-10">
                         <span className="text-muted-foreground flex items-center gap-2">
                             <MessageCircle className="size-4" />
@@ -57,11 +71,23 @@ export function Features() {
                             <span className="text-muted-foreground block text-right text-xs">Ahora</span>
                         </div>
                     </div>
-                </div>
-                <div className="col-span-full border-y border-y-[#CCFF00] p-12">
+                </motion.div>
+                <motion.div
+                    className="col-span-full border-y border-y-[#CCFF00] p-12"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.5 }}
+                    transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                >
                     <p className="text-center text-4xl font-semibold lg:text-7xl">99.99% Garantía</p>
-                </div>
-                <div className="relative col-span-full">
+                </motion.div>
+                <motion.div
+                    className="relative col-span-full"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                >
                     <div className="absolute z-10 max-w-lg px-6 pr-12 pt-6 md:px-12 md:pt-12">
                         <span className="text-muted-foreground flex items-center gap-2">
                             <Activity className="size-4" />
@@ -73,8 +99,8 @@ export function Features() {
                         </p>
                     </div>
                     <MonitoringChart />
-                </div>
-            </div>
+                </motion.div>
+            </motion.div>
         </section>
     )
 }

@@ -1,0 +1,162 @@
+You are given a task to integrate an existing React component in the codebase
+
+The codebase should support:
+- shadcn project structure  
+- Tailwind CSS
+- Typescript
+
+If it doesn't, provide instructions on how to setup project via shadcn CLI, install Tailwind or Typescript.
+
+Determine the default path for components and styles. 
+If default path for components is not /components/ui, provide instructions on why it's important to create this folder
+Copy-paste this component to /components/ui folder:
+```tsx
+about-section-2.tsx
+"use client";
+import { TimelineContent } from "@/components/ui/timeline-animation";
+import { Zap } from "lucide-react";
+import { useRef } from "react";
+
+export default function AboutSection2() {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const revealVariants = {
+    visible: (i: number) => ({
+      y: 0,
+      opacity: 1,
+      filter: "blur(0px)",
+      transition: {
+        delay: i * 1.5,
+        duration: 0.7,
+      },
+    }),
+    hidden: {
+      filter: "blur(10px)",
+      y: 40,
+      opacity: 0,
+    },
+  };
+  const textVariants = {
+    visible: (i: number) => ({
+      filter: "blur(0px)",
+      opacity: 1,
+      transition: {
+        delay: i * 0.3,
+        duration: 0.7,
+      },
+    }),
+    hidden: {
+      filter: "blur(10px)",
+      opacity: 0,
+    },
+  };
+  return (
+    <section className="py-32 px-4 bg-gray-50 min-h-screen">
+      <div className="max-w-6xl mx-auto" ref={heroRef}>
+        <div className="flex flex-col lg:flex-row items-start gap-8">
+          {/* Right side - Content */}
+          <div className="flex-1">
+            <TimelineContent
+              as="h1"
+              animationNum={0}
+              timelineRef={heroRef}
+              customVariants={revealVariants}
+              className="sm:text-4xl text-2xl md:text-5xl !leading-[110%] font-semibold text-gray-900 mb-8"
+            >
+              We are{" "}
+              <TimelineContent
+                as="span"
+                animationNum={1}
+                timelineRef={heroRef}
+                customVariants={textVariants}
+                className="text-blue-600 border-2 border-blue-500 inline-block xl:h-16  border-dotted px-2 rounded-md"
+              >
+                rethinking
+              </TimelineContent>{" "}
+              vehicle charging to be more reliable and always you-first. Our
+              goal is to continually raise the bar and{" "}
+              <TimelineContent
+                as="span"
+                animationNum={2}
+                timelineRef={heroRef}
+                customVariants={textVariants}
+                className="text-orange-600 border-2 border-orange-500 inline-block xl:h-16 border-dotted px-2 rounded-md"
+              >
+                challenge
+              </TimelineContent>{" "}
+              how things could{" "}
+              <TimelineContent
+                as="span"
+                animationNum={3}
+                timelineRef={heroRef}
+                customVariants={textVariants}
+                className="text-green-600 border-2 border-green-500 inline-block xl:h-16 border-dotted px-2 rounded-md"
+              >
+                work for you.
+              </TimelineContent>
+            </TimelineContent>
+
+            <div className="mt-12 flex gap-2 justify-between">
+              <TimelineContent
+                as="div"
+                animationNum={4}
+                timelineRef={heroRef}
+                customVariants={textVariants}
+                className="mb-4 sm:text-xl text-xs"
+              >
+                <div className=" font-medium text-gray-900 mb-1 capitalize">
+                  We are Electra and we will
+                </div>
+                <div className=" text-gray-600 font-semibold uppercase">
+                  take you further
+                </div>
+              </TimelineContent>
+
+              <TimelineContent
+                as="button"
+                animationNum={5}
+                timelineRef={heroRef}
+                customVariants={textVariants}
+                className="bg-blue-600 gap-2 font-medium shadow-lg shadow-blue-600 text-white h-12 px-4 rounded-full text-sm inline-flex items-center cursor-pointer"
+              >
+                <Zap fill="white" size={16} />
+                About Electra
+              </TimelineContent>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+demo.tsx
+import AboutSection2  from "@/components/ui/about-section-2";
+
+export default function DemoOne() {
+  return <AboutSection2 />;
+}
+
+```
+
+Install NPM dependencies:
+```bash
+lucide-react
+```
+
+Implementation Guidelines
+ 1. Analyze the component structure and identify all required dependencies
+ 2. Review the component's argumens and state
+ 3. Identify any required context providers or hooks and install them
+ 4. Questions to Ask
+ - What data/props will be passed to this component?
+ - Are there any specific state management requirements?
+ - Are there any required assets (images, icons, etc.)?
+ - What is the expected responsive behavior?
+ - What is the best place to use this component in the app?
+
+Steps to integrate
+ 0. Copy paste all the code above in the correct directories
+ 1. Install external dependencies
+ 2. Fill image assets with Unsplash stock images you know exist
+ 3. Use lucide-react icons for svgs or logos if component requires them

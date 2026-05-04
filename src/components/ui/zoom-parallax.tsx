@@ -17,6 +17,10 @@ import { useEffect, useRef } from "react";
 
 interface BaseItem {
   alt?: string;
+  /** Texto que aparece como overlay sobre la imagen */
+  label?: string;
+  /** Etiqueta pequeña encima del label principal */
+  eyebrow?: string;
 }
 
 interface ImageItem extends BaseItem {
@@ -163,6 +167,30 @@ export function ZoomParallax({ items }: ZoomParallaxProps) {
                     alt={item.alt || `Parallax image ${index + 1}`}
                     className="h-full w-full object-cover"
                   />
+                )}
+
+                {/* Gradient overlay + text label */}
+                {(item.label || item.eyebrow) && (
+                  <div
+                    className="absolute inset-0 flex flex-col justify-end p-3"
+                    style={{
+                      background: "linear-gradient(to top, rgba(10,16,40,0.85) 0%, rgba(10,16,40,0.3) 50%, transparent 100%)",
+                    }}
+                  >
+                    {item.eyebrow && (
+                      <span
+                        className="text-[7px] font-black uppercase tracking-[0.25em] mb-0.5"
+                        style={{ color: "#CCFF00" }}
+                      >
+                        {item.eyebrow}
+                      </span>
+                    )}
+                    {item.label && (
+                      <span className="text-[10px] font-black uppercase leading-tight text-white">
+                        {item.label}
+                      </span>
+                    )}
+                  </div>
                 )}
               </div>
             </motion.div>

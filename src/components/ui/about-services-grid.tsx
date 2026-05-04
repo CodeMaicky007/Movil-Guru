@@ -15,6 +15,7 @@ import {
   Clock,
 } from "lucide-react"
 import { motion, useInView, useSpring, useTransform } from "motion/react"
+import { ScrollReveal, RevealItem } from "@/components/ui/scroll-reveal"
 
 interface ServiceItemProps {
   icon: React.ReactNode
@@ -166,14 +167,20 @@ export function AboutServicesGrid() {
 
       <div className="mx-auto max-w-6xl relative z-10">
         {/* Header */}
-        <div className="flex flex-col items-center mb-16 text-center">
-          <div className="flex items-center gap-2 mb-3">
+        <ScrollReveal className="flex flex-col items-center mb-16 text-center" amount={0.2}>
+          <motion.div
+            className="flex items-center gap-2 mb-3"
+            initial={{ opacity: 0, scaleX: 0.6 }}
+            whileInView={{ opacity: 1, scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          >
             <span className="inline-block h-px w-8" style={{ background: "#CCFF00" }} />
             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#0038FF]">
               Nuestros servicios
             </span>
             <span className="inline-block h-px w-8" style={{ background: "#CCFF00" }} />
-          </div>
+          </motion.div>
           <h2
             className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase leading-[0.95] tracking-[-0.035em]"
             style={{ fontFamily: "var(--font-display), sans-serif" }}
@@ -181,7 +188,7 @@ export function AboutServicesGrid() {
             Todo lo que tu <span style={{ color: "#0038FF" }}>móvil</span>{" "}
             <span style={{ color: "#CCFF00" }}>necesita.</span>
           </h2>
-        </div>
+        </ScrollReveal>
 
         {/* Services grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
@@ -193,7 +200,7 @@ export function AboutServicesGrid() {
           </div>
 
           {/* Center image */}
-          <div className="flex justify-center items-center order-first md:order-none mb-8 md:mb-0">
+          <ScrollReveal direction="none" delay={0.1} className="flex justify-center items-center order-first md:order-none mb-8 md:mb-0">
             <div className="relative w-full max-w-xs">
               {/* Lime border accent */}
               <div
@@ -224,7 +231,7 @@ export function AboutServicesGrid() {
                 </div>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* Right column */}
           <div className="space-y-12">
@@ -235,35 +242,14 @@ export function AboutServicesGrid() {
         </div>
 
         {/* Stats */}
-        <div className="mt-20 grid grid-cols-2 lg:grid-cols-4 gap-5">
+        <ScrollReveal stagger className="mt-20 grid grid-cols-2 lg:grid-cols-4 gap-5" amount={0.1}>
           {STATS.map((stat, i) => (
-            <StatCounter key={stat.label} {...stat} delay={i * 0.1} />
+            <RevealItem key={stat.label}>
+              <StatCounter {...stat} delay={i * 0.1} />
+            </RevealItem>
           ))}
-        </div>
+        </ScrollReveal>
 
-        {/* CTA banner */}
-        <motion.div
-          ref={ctaRef}
-          className="mt-14 rounded-2xl p-8 flex flex-col md:flex-row items-center justify-between gap-6"
-          style={{ background: "#0038FF" }}
-          initial={{ opacity: 0, y: 30 }}
-          animate={isCtaInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <div>
-            <h3 className="text-2xl font-black uppercase text-white leading-tight tracking-[-0.02em]">
-              ¿Tu móvil tiene algún problema?
-            </h3>
-            <p className="text-white/70 mt-1 text-sm">Diagnóstico gratuito, sin compromiso, en cualquiera de nuestras tiendas.</p>
-          </div>
-          <a
-            href="/reparacion"
-            className="shrink-0 inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-black uppercase tracking-wider transition-transform duration-200 hover:scale-[1.04] active:scale-95 shadow-[0_10px_30px_-8px_rgba(204,255,0,0.5)]"
-            style={{ background: "#CCFF00", color: "#0A1F3A" }}
-          >
-            Pedir cita <ArrowRight className="w-4 h-4" />
-          </a>
-        </motion.div>
       </div>
     </section>
   )

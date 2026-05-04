@@ -81,7 +81,7 @@ function FeatureRow({ item }: { item: FeatureItem }) {
   return (
     <div
       ref={ref}
-      className={`flex min-h-screen flex-col items-center justify-center gap-12 py-24 md:flex-row md:gap-32 md:py-0 ${
+      className={`flex flex-col items-center justify-center gap-12 py-36 md:flex-row md:gap-32 md:py-56 ${
         item.reverse ? "md:flex-row-reverse" : ""
       }`}
     >
@@ -181,7 +181,7 @@ export function ParallaxFeatureSection({
   return (
     <section className={`relative w-full bg-white px-4 ${className}`}>
       <div
-        className="relative w-full rounded-b-[2.5rem] px-6 py-20 sm:px-12 sm:py-28"
+        className="relative w-full rounded-b-[2.5rem] px-6 py-14 sm:px-12 sm:py-20"
         style={{ background: "#0038FF", color: "#FFFFFF" }}
       >
         {/* Accent glow blob — top left */}
@@ -212,7 +212,7 @@ export function ParallaxFeatureSection({
             </span>
           </div>
 
-          <div className="mt-12 flex flex-col">
+          <div className="mt-6 flex flex-col">
             {items.map((item) => (
               <FeatureRow key={item.id} item={item} />
             ))}

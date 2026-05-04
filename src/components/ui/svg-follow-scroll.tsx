@@ -35,6 +35,24 @@ const Skiper19 = () => {
           className="absolute -right-[40%] top-0 z-0"
           scrollYProgress={scrollYProgress}
         />
+
+        {/* Guru Robot — entry animation wrapper */}
+        <motion.div
+          className="absolute bottom-[48%] left-[-8%] z-10 w-[220px] sm:w-[280px] lg:w-[340px] pointer-events-none"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <motion.img
+            src="/images/GURU_BOT/Gururobot.png"
+            alt="Guru Robot"
+            className="w-full select-none"
+            style={{
+              y: useTransform(scrollYProgress, [0, 0.4], [0, 50]),
+              opacity: useTransform(scrollYProgress, [0, 0.35], [1, 0]),
+            }}
+          />
+        </motion.div>
       </div>
 
       <div className="w-full translate-y-[80vh] overflow-hidden rounded-t-[2.5rem] bg-[#0038FF] px-4 pb-12 text-white">

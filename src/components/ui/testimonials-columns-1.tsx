@@ -136,19 +136,33 @@ export const Testimonials = () => {
             Reparaciones reales. Resultados reales. Descubre lo que dicen nuestros clientes.
           </p>
         </motion.div>
-        <div className="flex justify-center gap-6 mt-10 [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)] max-h-[740px] overflow-hidden">
-          <TestimonialsColumn testimonials={firstColumn} duration={15} />
-          <TestimonialsColumn
-            testimonials={secondColumn}
-            className="hidden md:block"
-            duration={19}
-          />
-          <TestimonialsColumn
-            testimonials={thirdColumn}
-            className="hidden lg:block"
-            duration={17}
-          />
-        </div>
+        <motion.div
+          className="flex justify-center gap-6 mt-10 [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)] max-h-[740px] overflow-hidden"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.15, delayChildren: 0.1 } },
+          }}
+        >
+          {[
+            { testimonials: firstColumn, duration: 15, className: "" },
+            { testimonials: secondColumn, duration: 19, className: "hidden md:block" },
+            { testimonials: thirdColumn, duration: 17, className: "hidden lg:block" },
+          ].map((col, i) => (
+            <motion.div
+              key={i}
+              className={col.className}
+              variants={{
+                hidden: { opacity: 0, y: 30, filter: "blur(6px)" },
+                visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+              }}
+            >
+              <TestimonialsColumn testimonials={col.testimonials} duration={col.duration} />
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );
