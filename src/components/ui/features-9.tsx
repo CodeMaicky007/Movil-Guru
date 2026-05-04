@@ -7,7 +7,7 @@ import { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } f
 export function Features() {
     return (
         <section className="px-4 py-16 md:py-32">
-            <div className="mx-auto grid max-w-5xl border md:grid-cols-2">
+            <div className="mx-auto grid max-w-5xl border border-[#CCFF00] md:grid-cols-2">
                 <div>
                     <div className="p-6 sm:p-12">
                         <span className="text-muted-foreground flex items-center gap-2">
@@ -32,7 +32,7 @@ export function Features() {
                         </div>
                     </div>
                 </div>
-                <div className="overflow-hidden border-t bg-zinc-50 p-6 sm:p-12 md:border-0 md:border-l dark:bg-transparent">
+                <div className="overflow-hidden border-t border-[#CCFF00] bg-zinc-50 p-6 sm:p-12 md:border-0 md:border-l md:border-l-[#CCFF00] dark:bg-transparent">
                     <div className="relative z-10">
                         <span className="text-muted-foreground flex items-center gap-2">
                             <MessageCircle className="size-4" />
@@ -58,7 +58,7 @@ export function Features() {
                         </div>
                     </div>
                 </div>
-                <div className="col-span-full border-y p-12">
+                <div className="col-span-full border-y border-y-[#CCFF00] p-12">
                     <p className="text-center text-4xl font-semibold lg:text-7xl">99.99% Garantía</p>
                 </div>
                 <div className="relative col-span-full">

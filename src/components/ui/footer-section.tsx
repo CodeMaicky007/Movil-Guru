@@ -52,6 +52,7 @@ const footerLinks: FooterSection[] = [
       { title: 'Guía de reparación', href: '/guia' },
       { title: 'Blog', href: '/blog' },
       { title: 'Preguntas frecuentes', href: '/faq' },
+      { title: 'Valora el servicio', href: '/valoracion' },
     ],
   },
   {

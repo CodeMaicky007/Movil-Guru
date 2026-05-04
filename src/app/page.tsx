@@ -922,7 +922,7 @@ export default function Home() {
             4px 4px 0 var(--mg-blue-deep), 6px 6px 0 var(--mg-blue-deep);
         }
         .mg-about .headline-xl {
-          font-size: clamp(48px, 10vw, 140px);
+          font-size: clamp(32px, 6vw, 88px);
           font-weight: 800;
           letter-spacing: -0.05em;
           color: var(--mg-lime);
@@ -1834,7 +1834,7 @@ export default function Home() {
             right: 24px !important;
           }
           .mg-about .headline-xl {
-            font-size: clamp(42px, 13vw, 96px);
+            font-size: clamp(28px, 8vw, 60px);
           }
           .mg-about .headline-lg {
             font-size: clamp(32px, 9vw, 64px);
@@ -1867,13 +1867,13 @@ export default function Home() {
           <div className="hero-text-block">
             <span className="eyebrow">Expertos reparando móviles</span>
             <h1 className="headline-xl mg-shadow-triple">
-              Tu móvil,
+              ¿Pantalla rota?
               <br />
               <span
                 style={{ color: "var(--mg-white)" }}
                 className="mg-shadow-triple"
               >
-                como nuevo.
+                Te lo reparamos.
               </span>
             </h1>
           </div>

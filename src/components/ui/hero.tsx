@@ -115,19 +115,6 @@ export const HeroComponent = () => {
 
           {/* Headline Stack */}
           <div className="w-full flex flex-col items-center relative z-10 space-y-2 md:space-y-4">
-            <div className="w-full flex justify-center relative z-30">
-              <h1
-                className="text-[clamp(2rem,6vw,120px)] font-black leading-[0.85] tracking-tighter text-[#CCFF00] m-0 p-0 uppercase whitespace-nowrap"
-                style={{
-                  fontFamily: 'var(--font-display), sans-serif',
-                  textShadow:
-                    '1px 1px 0 #001A99, 2px 2px 0 #001A99, 3px 3px 0 #001A99, 4px 4px 0 #001A99, 5px 5px 0 #001A99, 6px 6px 0 #001A99, 7px 7px 0 #001A99, 8px 8px 0 #001A99, 9px 9px 0 #001A99, 10px 10px 0 #001A99, 11px 11px 0 #001A99, 12px 12px 0 #001A99, 13px 13px 0 #001A99, 14px 14px 0 #001A99',
-                }}
-              >
-                ¿PANTALLA ROTA?
-              </h1>
-            </div>
-
             <div className="w-full flex justify-center relative z-20">
               <h1
                 className="text-[clamp(3.2rem,10vw,220px)] font-black leading-[0.85] tracking-tighter text-white m-0 p-0 uppercase"
@@ -137,13 +124,13 @@ export const HeroComponent = () => {
                     '1px 1px 0 #001A99, 2px 2px 0 #001A99, 3px 3px 0 #001A99, 4px 4px 0 #001A99, 5px 5px 0 #001A99, 6px 6px 0 #001A99, 7px 7px 0 #001A99, 8px 8px 0 #001A99, 9px 9px 0 #001A99, 10px 10px 0 #001A99, 11px 11px 0 #001A99, 12px 12px 0 #001A99, 13px 13px 0 #001A99, 14px 14px 0 #001A99',
                 }}
               >
-                LO DEJAMOS
+                TU MÓVIL,
               </h1>
             </div>
 
             <div className="w-full flex justify-center relative z-10">
               <h1
-                className="text-[clamp(2.7rem,8vw,160px)] font-black leading-[0.85] tracking-tighter m-0 p-0 uppercase"
+                className="text-[clamp(3.2rem,10vw,220px)] font-black leading-[0.85] tracking-tighter m-0 p-0 uppercase"
                 style={{
                   fontFamily: 'var(--font-display), sans-serif',
                   textShadow:
@@ -166,20 +153,20 @@ export const HeroComponent = () => {
               transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
               className="absolute bottom-[10%] left-[5%] md:left-[20%] z-30 pointer-events-auto max-md:bottom-[-5%] max-md:left-[2%]"
             >
-              <div className="w-24 sm:w-32 md:w-52 aspect-[3/3.5] bg-white/20 backdrop-blur-md border border-white/40 rounded-[2rem] p-3 sm:p-4 md:p-5 flex flex-col items-center justify-center rotate-[-12deg] shadow-2xl hover:rotate-0 transition-transform duration-500">
-                <div className="w-10 h-10 sm:w-14 sm:h-14 md:w-24 md:h-24 bg-[#D2B48C] rounded-full flex items-center justify-center mb-2 md:mb-4 shadow-inner border-[3px] border-white/50 overflow-hidden">
+              <div className="w-20 sm:w-28 md:w-36 aspect-[3/3.5] bg-white/20 backdrop-blur-md border border-white/40 rounded-[1.5rem] p-2 sm:p-3 md:p-4 flex flex-col items-center justify-center rotate-[-12deg] shadow-2xl hover:rotate-0 transition-transform duration-500">
+                <div className="w-8 h-8 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-[#D2B48C] rounded-full flex items-center justify-center mb-1.5 md:mb-2 shadow-inner border-[3px] border-white/50 overflow-hidden">
                   <img
                     src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&backgroundColor=D2B48C"
                     alt="Technician"
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="text-center mt-2">
-                  <div className="flex items-center gap-1.5 justify-center">
-                    <img src="/images/Apple.png" alt="Apple" className="w-4 h-4 object-contain brightness-0 invert" />
-                    <p className="font-bold text-[10px] sm:text-sm md:text-lg text-white">iPhone 15 Pro Max</p>
+                <div className="text-center mt-1">
+                  <div className="flex items-center gap-1 justify-center">
+                    <img src="/images/Apple.png" alt="Apple" className="w-3 h-3 object-contain brightness-0 invert" />
+                    <p className="font-bold text-[8px] sm:text-[10px] md:text-xs text-white">iPhone 15 Pro Max</p>
                   </div>
-                  <p className="text-[8px] sm:text-[10px] md:text-xs text-white/80 mt-1">Pantalla reemplazada · 47 min</p>
+                  <p className="text-[7px] sm:text-[8px] md:text-[10px] text-white/80 mt-0.5">Pantalla reemplazada · 47 min</p>
                 </div>
               </div>
             </motion.div>
@@ -190,20 +177,20 @@ export const HeroComponent = () => {
               transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
               className="absolute top-[15%] right-[5%] md:right-[22%] z-30 pointer-events-auto max-md:top-[-2%] max-md:right-[2%]"
             >
-              <div className="w-24 sm:w-32 md:w-52 aspect-[3/3.5] bg-white/20 backdrop-blur-md border border-white/40 rounded-[2rem] p-3 sm:p-4 md:p-5 flex flex-col items-center justify-center rotate-[12deg] shadow-2xl hover:rotate-0 transition-transform duration-500">
-                <div className="w-10 h-10 sm:w-14 sm:h-14 md:w-24 md:h-24 bg-[#2C3E50] rounded-full flex items-center justify-center mb-2 md:mb-4 shadow-inner border-[3px] border-white/50 overflow-hidden">
+              <div className="w-20 sm:w-28 md:w-36 aspect-[3/3.5] bg-white/20 backdrop-blur-md border border-white/40 rounded-[1.5rem] p-2 sm:p-3 md:p-4 flex flex-col items-center justify-center rotate-[12deg] shadow-2xl hover:rotate-0 transition-transform duration-500">
+                <div className="w-8 h-8 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-[#2C3E50] rounded-full flex items-center justify-center mb-1.5 md:mb-2 shadow-inner border-[3px] border-white/50 overflow-hidden">
                   <img
                     src="https://api.dicebear.com/7.x/pixel-art/svg?seed=John"
                     alt="Technician"
                     className="w-full h-full object-cover scale-150"
                   />
                 </div>
-                <div className="text-center mt-2">
-                  <div className="flex items-center gap-1.5 justify-center">
-                    <img src="/images/Samsung.png" alt="Samsung" className="w-4 h-4 object-contain brightness-0 invert" />
-                    <p className="font-bold text-[10px] sm:text-sm md:text-lg text-white">Galaxy Z Fold 6</p>
+                <div className="text-center mt-1">
+                  <div className="flex items-center gap-1 justify-center">
+                    <img src="/images/Samsung.png" alt="Samsung" className="w-3 h-3 object-contain brightness-0 invert" />
+                    <p className="font-bold text-[8px] sm:text-[10px] md:text-xs text-white">Galaxy Z Fold 6</p>
                   </div>
-                  <p className="text-[8px] sm:text-[10px] md:text-xs text-white/80 mt-1">Pantalla interior · Mismo día</p>
+                  <p className="text-[7px] sm:text-[8px] md:text-[10px] text-white/80 mt-0.5">Pantalla interior · Mismo día</p>
                 </div>
               </div>
             </motion.div>
