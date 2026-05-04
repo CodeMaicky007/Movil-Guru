@@ -9,7 +9,7 @@ export async function GET(req: Request) {
     try { await requireApiUser(); } catch (r) { return r as Response; }
     const url = new URL(req.url);
     const status = url.searchParams.get('status');
-    const supabase = createSupabaseServerClient();
+    const supabase = await createSupabaseServerClient();
     let q = supabase
       .from('reservations')
       .select('id, code, customer_name, phone, email, device, service_id, store_id, technician_id, scheduled_for, price, status, notes, created_at, services(nombre), tiendas(nombre)')
@@ -29,7 +29,7 @@ export async function POST(req: Request) {
     try { me = await requireApiUser(['admin','manager']); } catch (r) { return r as Response; }
 
     const body = await req.json().catch(() => ({}));
-    const supabase = createSupabaseServerClient();
+    const supabase = await createSupabaseServerClient();
     const insert = {
       customer_name: body.customer_name,
       phone: body.phone ?? null,

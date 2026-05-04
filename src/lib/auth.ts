@@ -17,7 +17,7 @@ export type SessionUser = {
  * Devuelve el perfil del usuario autenticado, o null si no hay sesión.
  */
 export const getSessionUser = cache(async (): Promise<SessionUser | null> => {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return null;
 

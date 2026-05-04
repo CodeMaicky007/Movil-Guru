@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic';
 
 export default async function ClientesPage() {
   await requireUser(['admin','manager']);
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const since = new Date(); since.setFullYear(since.getFullYear() - 1);
   const { data: rows } = await supabase
     .from('reservations')

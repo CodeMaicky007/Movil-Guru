@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 
 export default async function EmpleadosPage() {
   const me = await requireUser(['admin','manager']);
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
 
   const [{ data: users }, { data: tiendas }] = await Promise.all([
     supabase.from('profiles').select('id, email, full_name, role, store_id, active, created_at').order('created_at', { ascending: false }),

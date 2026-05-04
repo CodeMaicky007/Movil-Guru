@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic';
 // GET /api/admin/users — listar empleados (RLS filtra automáticamente).
 export async function GET() {
   try { await requireApiUser(['admin','manager']); } catch (r) { return r as Response; }
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase
     .from('profiles')
     .select('id, email, full_name, role, store_id, active, created_at')

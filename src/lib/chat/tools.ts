@@ -119,9 +119,9 @@ export async function executeTool(
     return JSON.stringify({ ruta: input.ruta, label: input.label });
   }
 
-  let supabase: ReturnType<typeof createSupabaseServerClient>;
+  let supabase: Awaited<ReturnType<typeof createSupabaseServerClient>>;
   try {
-    supabase = createSupabaseServerClient();
+    supabase = await createSupabaseServerClient();
   } catch {
     return 'Servicio de datos temporalmente no disponible.';
   }

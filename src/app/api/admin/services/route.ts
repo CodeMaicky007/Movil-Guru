@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try { await requireApiUser(); } catch (r) { return r as Response; }
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase.from('services')
     .select('*').order('nombre');
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
@@ -17,7 +17,7 @@ export async function POST(req: Request) {
   try { await requireApiUser(['admin']); } catch (r) { return r as Response; }
   const body = await req.json().catch(() => ({}));
   if (!body.nombre) return NextResponse.json({ error: 'nombre obligatorio' }, { status: 400 });
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase.from('services').insert({
     nombre: body.nombre,
     descripcion: body.descripcion ?? null,

@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 
 export default async function FichajePage() {
   const me = await requireUser();
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
 
   const since = new Date();
   since.setDate(since.getDate() - 14);

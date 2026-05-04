@@ -17,7 +17,7 @@ export async function GET(req: Request) {
     const from = url.searchParams.get('from');
     const to   = url.searchParams.get('to');
 
-    const supabase = createSupabaseServerClient();
+    const supabase = await createSupabaseServerClient();
     let q = supabase
       .from('time_entries')
       .select('id, profile_id, store_id, clock_in, clock_out, break_minutes, note')

@@ -11,7 +11,7 @@ export async function POST(req: Request) {
   const breakMinutes = Number(body.break_minutes ?? 0);
   const note: string | null = body.note ?? null;
 
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const { data: open, error: e1 } = await supabase
     .from('time_entries').select('id').eq('profile_id', me.id).is('clock_out', null).maybeSingle();
   if (e1) return NextResponse.json({ error: e1.message }, { status: 400 });

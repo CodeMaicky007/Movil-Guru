@@ -8,7 +8,7 @@ export async function POST() {
   let me;
   try { me = await requireApiUser(); } catch (r) { return r as Response; }
 
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
 
   // Si ya hay un fichaje abierto, devolver ése.
   const { data: open } = await supabase

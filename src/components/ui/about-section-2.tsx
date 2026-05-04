@@ -5,12 +5,14 @@ import { useRef } from "react";
 export default function AboutSection2() {
   const heroRef = useRef<HTMLDivElement>(null);
 
+  const ease = [0.22, 1, 0.36, 1] as const;
+
   const revealVariants = {
     visible: (i: number) => ({
       y: 0,
       opacity: 1,
       filter: "blur(0px)",
-      transition: { delay: i * 1.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+      transition: { delay: i * 1.2, duration: 0.8, ease },
     }),
     hidden: { filter: "blur(12px)", y: 40, opacity: 0 },
   };
@@ -19,7 +21,7 @@ export default function AboutSection2() {
     visible: (i: number) => ({
       filter: "blur(0px)",
       opacity: 1,
-      transition: { delay: i * 0.35, duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+      transition: { delay: i * 0.35, duration: 0.7, ease },
     }),
     hidden: { filter: "blur(10px)", opacity: 0 },
   };

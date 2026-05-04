@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 
 export default async function ReservasPage() {
   const me = await requireUser();
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
 
   let tecnicosQ = supabase.from('profiles')
     .select('id, full_name, email, store_id')

@@ -15,7 +15,7 @@ function startOfWeek() {
 
 export default async function ResumenPage() {
   const me = await requireUser(['admin','manager']);
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
 
   const monthStart = startOfMonth().toISOString();
   const weekStart  = startOfWeek().toISOString();
