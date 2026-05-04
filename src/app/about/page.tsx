@@ -1,2137 +1,453 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+/**
+ * /about — Página About con storytelling scroll-driven (estilo Apple).
+ *
+ * Reglas:
+ *  - No redefine tipografías ni colores globales (usa los del CSS base).
+ *  - Reutiliza Header y Footer del sistema existente.
+ *  - Animaciones ligadas al scroll con motion/react (ya en el stack).
+ *  - Estructura modular: cada bloque es un componente independiente.
+ *  - Pinning vía `position: sticky` (sin overrides globales).
+ */
+
 import dynamic from "next/dynamic";
-import * as THREE from "three";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRef } from "react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useSpring,
+  type MotionValue,
+} from "motion/react";
+import { Skiper19 } from "@/components/ui/svg-follow-scroll";
+import { ParallaxFeatureSection } from "@/components/ui/parallax-scroll-feature-section";
+import { ZoomParallax } from "@/components/ui/zoom-parallax";
+import { Features as FeaturesSection } from "@/components/ui/features-9";
+
+/**
+ * Items del zoom parallax — el slot central (index 0) es el vídeo que avanza
+ * con el scroll; el resto son fotografías del taller Movil Guru.
+ */
+const ZOOM_IMAGES = [
+  {
+    type: "video" as const,
+    src: "/images/about/hero-video.mp4",
+    alt: "Movil Guru en acción",
+  },
+  {
+    src: "/images/about/closeup-shot-person-repair-mobile-mobile-repair-smartphone-workshop.jpg",
+    alt: "Reparación de placa base en taller",
+  },
+  {
+    src: "/images/about/hands-remove-gsm-sim-card-from-nest-motherboard-electronic-device-that-was-broken.jpg",
+    alt: "Extracción de tarjeta SIM",
+  },
+  {
+    src: "/images/about/electronic-technician-showing-modern-smartphone-with-broken-body-repair-shop.jpg",
+    alt: "Móvil con cuerpo roto en reparación",
+  },
+  {
+    src: "/images/about/electronic-technician-holds-two-identical-smartphones-comparison-one-hand-broken-another-new.jpg",
+    alt: "Comparación de móvil roto y nuevo",
+  },
+  {
+    src: "/images/about/attractive-young-man-technician-using-soldering-iron-while-trying-fix-hardware-damaged-smartphone.jpg",
+    alt: "Técnico soldando placa de smartphone",
+  },
+  {
+    src: "/images/about/closeup-shot-person-repair-mobile-mobile-repair-smartphone-workshop.jpg",
+    alt: "Detalle de reparación",
+  },
+];
 
 const Header = dynamic(
   () => import("@/components/ui/header-3").then((m) => m.Header),
   { ssr: false }
 );
-
 const Footer = dynamic(
   () => import("@/components/ui/footer-section").then((m) => m.Footer),
   { ssr: false }
 );
 
-const RulesShowcase = dynamic(
-  () => import("@/components/ui/spatial-rules-showcase"),
-  { ssr: false }
-);
-
-if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
-
-function useHorizontalScroll() {
-  useEffect(() => {
-    const outer = document.querySelector<HTMLElement>(".mg-content-outer");
-    const track = document.querySelector<HTMLElement>(".mg-content-track");
-    if (!outer || !track) return;
-
-    // Disable horizontal scroll-pin on mobile/tablet — fall back to vertical stack.
-    if (window.matchMedia("(max-width: 1023.98px)").matches) return;
-
-    const ctx = gsap.context(() => {
-      const tween = gsap.to(track, {
-        x: () => -(track.scrollWidth - window.innerWidth),
-        ease: "none",
-        scrollTrigger: {
-          trigger: outer,
-          pin: true,
-          scrub: 1.2,
-          end: () => "+=" + (track.scrollWidth - window.innerWidth),
-          invalidateOnRefresh: true,
-        },
-      });
-
-      track.querySelectorAll<HTMLElement>(".mg-h-section").forEach((section) => {
-        const els = section.querySelectorAll<HTMLElement>(".anim-title");
-        const subs = section.querySelectorAll<HTMLElement>(".anim-sub");
-        els.forEach((el, i) => {
-          gsap.fromTo(
-            el,
-            { opacity: 0, y: 80, clipPath: "inset(0 0 100% 0)" },
-            {
-              opacity: 1,
-              y: 0,
-              clipPath: "inset(0 0 0% 0)",
-              duration: 1.15,
-              delay: i * 0.08,
-              ease: "power4.out",
-              scrollTrigger: {
-                trigger: section,
-                containerAnimation: tween,
-                start: "left 85%",
-                toggleActions: "play none none reverse",
-              },
-            }
-          );
-        });
-        subs.forEach((el, i) => {
-          gsap.fromTo(
-            el,
-            { opacity: 0, y: 30 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.7,
-              delay: 0.15 + i * 0.07,
-              ease: "power2.out",
-              scrollTrigger: {
-                trigger: section,
-                containerAnimation: tween,
-                start: "left 80%",
-                toggleActions: "play none none reverse",
-              },
-            }
-          );
-        });
-
-        const cards = section.querySelectorAll<HTMLElement>(
-          ".story-facts .fact, .founders-gallery .founder-item"
-        );
-        if (cards.length > 0) {
-          gsap.fromTo(
-            cards,
-            { opacity: 0, y: 60, scale: 0.92 },
-            {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              duration: 0.85,
-              stagger: 0.1,
-              ease: "power3.out",
-              clearProps: "transform",
-              scrollTrigger: {
-                trigger: section,
-                containerAnimation: tween,
-                start: "left 75%",
-                toggleActions: "play none none reverse",
-              },
-            }
-          );
-        }
-      });
-    });
-
-    return () => ctx.revert();
-  }, []); // selectors are static — intentional empty deps
+/* ─────────────────────────────────────────────────────────────────────
+ * Indicador de scroll: barra fina superior que crece con el progreso.
+ * ──────────────────────────────────────────────────────────────────── */
+function ScrollIndicator() {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 25,
+    restDelta: 0.001,
+  });
+  return (
+    <motion.div
+      aria-hidden
+      className="fixed left-0 right-0 top-0 z-[60] h-[2px] origin-left"
+      style={{ scaleX, background: "#CCFF00" }}
+    />
+  );
 }
 
-function useVerticalAnimations() {
-  useEffect(() => {
-    let refreshTimers: ReturnType<typeof setTimeout>[] = [];
-    const ctx = gsap.context(() => {
-      gsap.utils.toArray<HTMLElement>(".v-reveal").forEach((el) => {
-        gsap.fromTo(
-          el,
-          { opacity: 0, y: 80, clipPath: "inset(0 0 100% 0)" },
-          {
-            opacity: 1,
-            y: 0,
-            clipPath: "inset(0 0 0% 0)",
-            duration: 1.15,
-            ease: "power4.out",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 85%",
-              toggleActions: "play none none reverse",
-            },
-          }
+/* ─────────────────────────────────────────────────────────────────────
+ * Helper: revelado de palabras dependiente del progreso de un ref.
+ * Cada palabra recibe una ventana del rango [0,1] y se opacifica al pasar.
+ * ──────────────────────────────────────────────────────────────────── */
+function ScrollRevealHeading({
+  text,
+  className = "",
+  start = 0,
+  end = 1,
+  progress,
+}: {
+  text: string;
+  className?: string;
+  start?: number;
+  end?: number;
+  progress: MotionValue<number>;
+}) {
+  const words = text.split(" ");
+  return (
+    <h2 className={className} aria-label={text}>
+      {words.map((w, i) => {
+        const span = (end - start) / words.length;
+        const wStart = start + span * i;
+        const wEnd = wStart + span * 0.9;
+        return (
+          <Word key={i} progress={progress} start={wStart} end={wEnd}>
+            {w}
+          </Word>
         );
-      });
-
-      gsap.utils.toArray<HTMLElement>(".v-fade-up").forEach((el) => {
-        gsap.fromTo(
-          el,
-          { opacity: 0, y: 32 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.85,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 88%",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
-      });
-
-      gsap.utils.toArray<HTMLElement>(".v-stagger-group").forEach((group) => {
-        const items = group.querySelectorAll<HTMLElement>(":scope > *");
-        if (items.length === 0) return;
-        const fromLeft = group.dataset.from === "left";
-        gsap.fromTo(
-          items,
-          fromLeft
-            ? { opacity: 0, x: -60 }
-            : { opacity: 0, y: 50, scale: 0.96 },
-          {
-            opacity: 1,
-            x: 0,
-            y: 0,
-            scale: 1,
-            duration: 0.85,
-            stagger: 0.1,
-            ease: "power3.out",
-            clearProps: "transform",
-            scrollTrigger: {
-              trigger: group,
-              start: "top 80%",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
-      });
-    });
-
-    // Dynamic imports (Header, Footer, RulesShowcase) load after mount and shift
-    // the page layout. Refresh triggers a few times so positions stay accurate.
-    refreshTimers.push(setTimeout(() => ScrollTrigger.refresh(), 300));
-    refreshTimers.push(setTimeout(() => ScrollTrigger.refresh(), 1200));
-    refreshTimers.push(setTimeout(() => ScrollTrigger.refresh(), 2500));
-
-    const onLoad = () => ScrollTrigger.refresh();
-    window.addEventListener("load", onLoad);
-
-    return () => {
-      refreshTimers.forEach(clearTimeout);
-      window.removeEventListener("load", onLoad);
-      ctx.revert();
-    };
-  }, []);
+      })}
+    </h2>
+  );
 }
 
-const founders = [
-  {
-    name: "Miguel Ángel Vega",
-    role: "Co-fundador & CEO",
-    detail: "Obsesionado con que cada cliente salga con el móvil perfecto.",
-    img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop",
-  },
-  {
-    name: "Alex Torres",
-    role: "Co-fundador & Técnico Jefe",
-    detail: "10 años abriendo dispositivos. Ninguno se ha resistido.",
-    img: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=800&auto=format&fit=crop",
-  },
-  {
-    name: "Sofía Márquez",
-    role: "Directora de Operaciones",
-    detail: "La que hace que todo funcione sin que nadie se entere.",
-    img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=800&auto=format&fit=crop",
-  },
-  {
-    name: "Carlos Ruiz",
-    role: "Técnico Senior",
-    detail: "Especialista en placas base y daños por agua.",
-    img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800&auto=format&fit=crop",
-  },
-  {
-    name: "Elena Vargas",
-    role: "Atención al Cliente",
-    detail: "Porque tratar bien a las personas es parte de la reparación.",
-    img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=800&auto=format&fit=crop",
-  },
-];
+function Word({
+  children,
+  progress,
+  start,
+  end,
+}: {
+  children: React.ReactNode;
+  progress: MotionValue<number>;
+  start: number;
+  end: number;
+}) {
+  const opacity = useTransform(progress, [start, end], [0.15, 1]);
+  const y = useTransform(progress, [start, end], [12, 0]);
+  return (
+    <motion.span
+      aria-hidden
+      style={{ opacity, y, display: "inline-block" }}
+      className="mr-[0.25em]"
+    >
+      {children}
+    </motion.span>
+  );
+}
 
-const proceso = [
-  {
-    n: "01",
-    title: "Diagnóstico gratis",
-    body: "Revisión completa en 15 minutos. Te decimos qué pasa y cuánto cuesta antes de hacer nada.",
-  },
-  {
-    n: "02",
-    title: "Presupuesto cerrado",
-    body: "Precio fijo por escrito. Sin extras ni letra pequeña al recoger.",
-  },
-  {
-    n: "03",
-    title: "Reparación al momento",
-    body: "La mayoría de averías resueltas en el día. Pantallas, baterías y conectores en 30 min.",
-  },
-  {
-    n: "04",
-    title: "Test 360°",
-    body: "Revisamos el móvil entero antes de entregártelo. Garantía activada desde ese segundo.",
-  },
-];
+/* ─────────────────────────────────────────────────────────────────────
+ * 1. INTRO — headline que se construye palabra a palabra con el scroll.
+ * ──────────────────────────────────────────────────────────────────── */
+function IntroSection() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
 
-const testimonios = [
-  {
-    quote:
-      "Me cambiaron la pantalla del iPhone en 25 minutos y me dieron garantía de por vida. Nunca más pisé otra tienda.",
-    name: "Laura G.",
-    meta: "iPhone 14 Pro · Pantalla",
-  },
-  {
-    quote:
-      "Llevé un Samsung que otros habían rechazado por daño por agua. Me lo arreglaron y sigue funcionando dos años después.",
-    name: "Diego R.",
-    meta: "Galaxy S22 · Placa base",
-  },
-  {
-    quote:
-      "Transparencia total. Me enseñaron la batería original y la nueva antes de montarla. Ojalá todos los negocios fueran así.",
-    name: "Marta P.",
-    meta: "Pixel 7 · Batería",
-  },
-];
-
-export default function AboutPreviewPage() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const loaderRef = useRef<HTMLDivElement>(null);
-  const progressRef = useRef<HTMLDivElement>(null);
-  const ctaRef = useRef<HTMLButtonElement>(null);
-  const scrollBtnRef = useRef<HTMLButtonElement>(null);
-
-  useHorizontalScroll();
-  useVerticalAnimations();
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const loaderEl = loaderRef.current;
-    const progressBar = progressRef.current;
-    if (!canvas || !loaderEl || !progressBar) return;
-
-    const scene = new THREE.Scene();
-    scene.background = null;
-
-    const camera = new THREE.PerspectiveCamera(
-      35,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      100
-    );
-    camera.position.set(0, 0, 8);
-
-    const renderer = new THREE.WebGLRenderer({
-      canvas,
-      antialias: true,
-      alpha: true,
-      powerPreference: "high-performance",
-    });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (renderer as any).outputColorSpace = THREE.SRGBColorSpace;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.15;
-
-    scene.add(new THREE.AmbientLight(0xffffff, 0.35));
-    const keyLight = new THREE.DirectionalLight(0xffffff, 3.0);
-    keyLight.position.set(5, 6, 5);
-    scene.add(keyLight);
-    const fillLight = new THREE.DirectionalLight(0x88aaff, 1.2);
-    fillLight.position.set(-5, 2, 4);
-    scene.add(fillLight);
-    const rimLight = new THREE.DirectionalLight(0xffffff, 2.0);
-    rimLight.position.set(0, 3, -6);
-    scene.add(rimLight);
-    const accent = new THREE.PointLight(0xffaa66, 1.5, 20);
-    accent.position.set(3, -2, 3);
-    scene.add(accent);
-
-    const pmrem = new THREE.PMREMGenerator(renderer);
-    const envCanvas = document.createElement("canvas");
-    envCanvas.width = 256;
-    envCanvas.height = 256;
-    const ectx = envCanvas.getContext("2d")!;
-    const grad = ectx.createLinearGradient(0, 0, 0, 256);
-    grad.addColorStop(0, "#a8b5d4");
-    grad.addColorStop(0.5, "#4a5570");
-    grad.addColorStop(1, "#111218");
-    ectx.fillStyle = grad;
-    ectx.fillRect(0, 0, 256, 256);
-    const rg = ectx.createRadialGradient(154, 64, 10, 154, 64, 128);
-    rg.addColorStop(0, "rgba(255,255,255,0.85)");
-    rg.addColorStop(1, "rgba(255,255,255,0)");
-    ectx.fillStyle = rg;
-    ectx.fillRect(0, 0, 256, 256);
-    const envTex = new THREE.CanvasTexture(envCanvas);
-    envTex.mapping = THREE.EquirectangularReflectionMapping;
-    scene.environment = pmrem.fromEquirectangular(envTex).texture;
-    envTex.dispose();
-    pmrem.dispose();
-
-    const phoneGroup = new THREE.Group();
-    scene.add(phoneGroup);
-
-    let phoneModel: THREE.Object3D | null = null;
-    let modelReady = false;
-    let rafId = 0;
-    let disposed = false;
-
-    const animate = () => {
-      if (disposed) return;
-      rafId = requestAnimationFrame(animate);
-      if (phoneModel) {
-        phoneGroup.position.x +=
-          Math.sin(performance.now() * 0.0008) * 0.00005;
-      }
-      renderer.render(scene, camera);
-    };
-    animate();
-
-    const onResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      ScrollTrigger.refresh();
-    };
-    window.addEventListener("resize", onResize);
-
-    const BLUE = { r: 0, g: 56, b: 255 };
-    const DEEP = { r: 10, g: 10, b: 31 };
-    const bgState = { r: BLUE.r, g: BLUE.g, b: BLUE.b };
-    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
-    const applyBg = () => {
-      document.body.style.backgroundColor = `rgb(${bgState.r | 0}, ${bgState.g | 0
-        }, ${bgState.b | 0})`;
-    };
-    applyBg();
-
-    const triggers: ScrollTrigger[] = [];
-
-    const initScrollTimelines = () => {
-      if (!modelReady) return;
-
-      gsap.to(".sec-hero .hero-text-block", {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        delay: 0.15,
-        ease: "power3.out",
-      });
-      gsap.to(".sec-hero .hint", {
-        opacity: 1,
-        duration: 1,
-        delay: 1,
-        ease: "power2.out",
-      });
-
-      const isMobile = window.innerWidth < 768;
-      const sideOffset = isMobile ? 0 : 1.6;
-
-      triggers.push(
-        ScrollTrigger.create({
-          trigger: document.body,
-          start: "top top",
-          end: "bottom bottom",
-          onUpdate: (self) => {
-            progressBar.style.width = self.progress * 100 + "%";
-          },
-        })
-      );
-
-      const t1 = gsap
-        .timeline({
-          scrollTrigger: {
-            trigger: ".sec-zoom",
-            start: "top bottom",
-            end: "top top",
-            scrub: 1.5,
-          },
-        })
-        .to(
-          phoneGroup.position,
-          { x: 0, y: 0, z: 0, ease: "power2.inOut" },
-          0
-        )
-        .to(
-          phoneGroup.scale,
-          { x: 1.0, y: 1.0, z: 1.0, ease: "power2.inOut" },
-          0
-        )
-        .to(phoneGroup.rotation, { y: 0, ease: "none" }, 0);
-      if (t1.scrollTrigger) triggers.push(t1.scrollTrigger);
-
-      const t2 = gsap
-        .timeline({
-          scrollTrigger: {
-            trigger: ".sec-zoom",
-            start: "top top",
-            end: "bottom top",
-            scrub: 1.5,
-          },
-        })
-        .to(
-          phoneGroup.position,
-          {
-            x: sideOffset * 0.5,
-            y: 0,
-            z: 0.8,
-            ease: "power1.inOut",
-          },
-          0
-        )
-        .to(
-          phoneGroup.scale,
-          { x: 1.05, y: 1.05, z: 1.05, ease: "power1.inOut" },
-          0
-        )
-        .to(
-          phoneGroup.rotation,
-          { y: THREE.MathUtils.degToRad(15), ease: "power1.inOut" },
-          0
-        )
-        .fromTo(
-          ".sec-zoom .text-block",
-          { opacity: 0, x: -40 },
-          { opacity: 1, x: 0, ease: "power2.out", duration: 0.35 },
-          0
-        )
-        .to(
-          ".sec-zoom .text-block",
-          { opacity: 0, x: -20, ease: "power1.in", duration: 0.25 },
-          0.85
-        );
-      if (t2.scrollTrigger) triggers.push(t2.scrollTrigger);
-
-      const t3 = gsap
-        .timeline({
-          scrollTrigger: {
-            trigger: ".sec-spin",
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.5,
-            onUpdate: (self) => {
-              const t = gsap.utils.clamp(0, 1, (self.progress - 0.15) / 0.7);
-              bgState.r = lerp(BLUE.r, DEEP.r, t);
-              bgState.g = lerp(BLUE.g, DEEP.g, t);
-              bgState.b = lerp(BLUE.b, DEEP.b, t);
-              applyBg();
-            },
-          },
-        })
-        .to(
-          phoneGroup.position,
-          { x: 0, y: 0, z: 0.4, ease: "power1.inOut" },
-          0
-        )
-        .to(
-          phoneGroup.scale,
-          { x: 1.15, y: 1.15, z: 1.15, ease: "power1.inOut" },
-          0
-        )
-        .to(
-          phoneGroup.rotation,
-          { y: THREE.MathUtils.degToRad(15 + 360), ease: "none" },
-          0
-        )
-        .fromTo(
-          ".sec-spin .text-block",
-          { opacity: 0, y: 40 },
-          { opacity: 1, y: 0, ease: "power2.out", duration: 0.35 },
-          0.05
-        )
-        .to(
-          ".sec-spin .text-block",
-          { opacity: 0, y: -30, ease: "power1.in", duration: 0.3 },
-          0.78
-        );
-      if (t3.scrollTrigger) triggers.push(t3.scrollTrigger);
-
-      const t4 = gsap
-        .timeline({
-          scrollTrigger: {
-            trigger: ".sec-camera",
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.5,
-          },
-        })
-        .to(
-          phoneGroup.position,
-          { x: -sideOffset, y: 0.0, z: 0.8, ease: "power2.inOut" },
-          0
-        )
-        .to(
-          phoneGroup.scale,
-          { x: 1.05, y: 1.05, z: 1.05, ease: "power2.inOut" },
-          0
-        )
-        .to(
-          phoneGroup.rotation,
-          {
-            y: THREE.MathUtils.degToRad(15 + 360 + 180),
-            x: THREE.MathUtils.degToRad(-4),
-            ease: "power2.inOut",
-          },
-          0
-        )
-        .fromTo(
-          ".sec-camera .text-block",
-          { opacity: 0, x: 40 },
-          { opacity: 1, x: 0, ease: "power2.out", duration: 0.35 },
-          0.05
-        )
-        .to(
-          ".sec-camera .text-block",
-          { opacity: 0, x: 20, ease: "power1.in", duration: 0.25 },
-          0.85
-        );
-      if (t4.scrollTrigger) triggers.push(t4.scrollTrigger);
-
-      const t5 = gsap
-        .timeline({
-          scrollTrigger: {
-            trigger: ".sec-cta",
-            start: "top bottom",
-            end: "bottom bottom",
-            scrub: 1.5,
-            onUpdate: (self) => {
-              const t = gsap.utils.clamp(0, 1, self.progress / 0.6);
-              bgState.r = lerp(DEEP.r, BLUE.r, t);
-              bgState.g = lerp(DEEP.g, BLUE.g, t);
-              bgState.b = lerp(DEEP.b, BLUE.b, t);
-              applyBg();
-            },
-          },
-        })
-        .to(
-          phoneGroup.position,
-          { x: 0, y: -0.2, z: 0, ease: "power2.inOut" },
-          0
-        )
-        .to(
-          phoneGroup.scale,
-          { x: 0.92, y: 0.92, z: 0.92, ease: "power2.inOut" },
-          0
-        )
-        .to(
-          phoneGroup.rotation,
-          {
-            y: THREE.MathUtils.degToRad(15 + 360 + 360),
-            x: 0,
-            ease: "power2.inOut",
-          },
-          0
-        );
-      if (t5.scrollTrigger) triggers.push(t5.scrollTrigger);
-
-      const ctaH2 = gsap.to(".sec-cta h2", {
-        opacity: 1,
-        y: 0,
-        ease: "power3.out",
-        duration: 1,
-        scrollTrigger: {
-          trigger: ".sec-cta",
-          start: "top 55%",
-          toggleActions: "play none none reverse",
-        },
-      });
-      if (ctaH2.scrollTrigger) triggers.push(ctaH2.scrollTrigger);
-
-      const ctaWrap = gsap.to(".sec-cta .cta-wrap", {
-        opacity: 1,
-        y: 0,
-        ease: "power3.out",
-        duration: 1,
-        delay: 0.15,
-        scrollTrigger: {
-          trigger: ".sec-cta",
-          start: "top 55%",
-          toggleActions: "play none none reverse",
-        },
-      });
-      if (ctaWrap.scrollTrigger) triggers.push(ctaWrap.scrollTrigger);
-
-      const canvasFade = gsap.to("#webgl", {
-        opacity: 0,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".sec-story",
-          start: "top 90%",
-          end: "top 40%",
-          scrub: true,
-        },
-      });
-      if (canvasFade.scrollTrigger) triggers.push(canvasFade.scrollTrigger);
-
-      ScrollTrigger.refresh();
-    };
-
-    const gltfLoader = new GLTFLoader();
-    gltfLoader.load(
-      "/models/iphone17pro.glb",
-      (gltf) => {
-        phoneModel = gltf.scene;
-        const box = new THREE.Box3().setFromObject(phoneModel);
-        const size = new THREE.Vector3();
-        const center = new THREE.Vector3();
-        box.getSize(size);
-        box.getCenter(center);
-        phoneModel.position.sub(center);
-        const s = 3.2 / size.y;
-        phoneModel.scale.setScalar(s);
-
-        phoneModel.traverse((obj) => {
-          const mesh = obj as THREE.Mesh;
-          if (mesh.isMesh && mesh.material) {
-            const mats = Array.isArray(mesh.material)
-              ? mesh.material
-              : [mesh.material];
-            mats.forEach((m) => {
-              const mm = m as THREE.MeshStandardMaterial;
-              if (
-                (mm as THREE.MeshStandardMaterial).isMeshStandardMaterial ||
-                (m as THREE.MeshPhysicalMaterial).isMeshPhysicalMaterial
-              ) {
-                mm.envMapIntensity = 1.2;
-                if (mm.metalness !== undefined && mm.metalness > 0.5) {
-                  mm.envMapIntensity = 1.6;
-                }
-              }
-            });
-          }
-        });
-
-        phoneGroup.add(phoneModel);
-        phoneGroup.position.set(0, -1.6, 0);
-        phoneGroup.scale.setScalar(0.7);
-        phoneGroup.rotation.set(0, 0, 0);
-
-        modelReady = true;
-        loaderEl.classList.add("hidden");
-        initScrollTimelines();
-      },
-      undefined,
-      (err) => {
-        console.error("Error loading GLB:", err);
-        const fallback = new THREE.Mesh(
-          new THREE.BoxGeometry(1.4, 3, 0.18),
-          new THREE.MeshStandardMaterial({
-            color: 0x1a1a1a,
-            metalness: 0.9,
-            roughness: 0.25,
-            envMapIntensity: 1.5,
-          })
-        );
-        phoneGroup.add(fallback);
-        phoneModel = fallback;
-        phoneGroup.position.set(0, -1.6, 0);
-        phoneGroup.scale.setScalar(0.7);
-        modelReady = true;
-        loaderEl.classList.add("hidden");
-        initScrollTimelines();
-      }
-    );
-
-    const ctaEl = ctaRef.current;
-    const onCta = () => {
-      gsap.fromTo(
-        ctaEl,
-        { scale: 1 },
-        {
-          scale: 0.95,
-          yoyo: true,
-          repeat: 1,
-          duration: 0.15,
-          ease: "power2.out",
-        }
-      );
-    };
-    ctaEl?.addEventListener("click", onCta);
-
-    const onScrollBtn = () => {
-      const btn = scrollBtnRef.current;
-      if (!btn) return;
-      btn.style.opacity = window.scrollY > 400 ? "1" : "0";
-      btn.style.pointerEvents = window.scrollY > 400 ? "auto" : "none";
-    };
-    window.addEventListener("scroll", onScrollBtn);
-
-    return () => {
-      disposed = true;
-      cancelAnimationFrame(rafId);
-      window.removeEventListener("scroll", onScrollBtn);
-      window.removeEventListener("resize", onResize);
-      ctaEl?.removeEventListener("click", onCta);
-      triggers.forEach((t) => t.kill());
-      renderer.dispose();
-      scene.traverse((o) => {
-        const mesh = o as THREE.Mesh;
-        if (mesh.geometry) mesh.geometry.dispose();
-        if (mesh.material) {
-          const mats = Array.isArray(mesh.material)
-            ? mesh.material
-            : [mesh.material];
-          mats.forEach((m) => (m as THREE.Material).dispose());
-        }
-      });
-      document.body.style.backgroundColor = "";
-    };
-  }, []);
+  // Parallax sutil sobre el badge superior
+  const badgeY = useTransform(scrollYProgress, [0, 1], [0, -60]);
+  const badgeOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
   return (
-    <>
-      <style jsx global>{`
-        :root {
-          --mg-blue: #0038ff;
-          --mg-blue-deep: #001a99;
-          --mg-blue-ink: #001166;
-          --mg-lime: #ccff00;
-          --mg-ink: #080e14;
-          --mg-white: #ffffff;
-        }
-        html,
-        body {
-          background: var(--mg-blue);
-          color: var(--mg-white);
-          font-family: var(--font-display), "Syne", -apple-system,
-            BlinkMacSystemFont, sans-serif;
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-          overflow-x: hidden;
-        }
-        body {
-          transition: background-color 0.1s linear;
-        }
-        body::before {
-          content: "";
-          position: fixed;
-          inset: 0;
-          background-image: linear-gradient(
-              rgba(255, 255, 255, 0.06) 1px,
-              transparent 1px
-            ),
-            linear-gradient(
-              90deg,
-              rgba(255, 255, 255, 0.06) 1px,
-              transparent 1px
-            );
-          background-size: 48px 48px;
-          pointer-events: none;
-          z-index: 0;
-          opacity: 0.9;
-        }
-        #webgl {
-          position: fixed;
-          inset: 0;
-          width: 100vw;
-          height: 100vh;
-          z-index: 1;
-          pointer-events: none;
-        }
-        #mg-loader {
-          position: fixed;
-          inset: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: var(--mg-blue);
-          color: var(--mg-white);
-          z-index: 100;
-          font-weight: 600;
-          letter-spacing: 0.08em;
-          font-size: 14px;
-          text-transform: uppercase;
-          transition: opacity 0.6s ease;
-        }
-        #mg-loader.hidden {
-          opacity: 0;
-          pointer-events: none;
-        }
-        #mg-loader .dot {
-          width: 6px;
-          height: 6px;
-          border-radius: 50%;
-          background: var(--mg-lime);
-          margin: 0 3px;
-          animation: mgPulse 1.4s ease-in-out infinite;
-          display: inline-block;
-        }
-        #mg-loader .dot:nth-child(2) {
-          animation-delay: 0.2s;
-        }
-        #mg-loader .dot:nth-child(3) {
-          animation-delay: 0.4s;
-        }
-        @keyframes mgPulse {
-          0%,
-          80%,
-          100% {
-            opacity: 0.2;
-            transform: scale(0.8);
-          }
-          40% {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-        main.mg-about {
-          position: relative;
-          z-index: 2;
-        }
-        main.mg-about section.scene {
-          position: relative;
-          width: 100%;
-          height: 100vh;
-          display: flex;
-          align-items: center;
-          padding: 0 6vw;
-        }
-        .mg-about .eyebrow {
-          display: inline-block;
-          font-size: 12px;
-          letter-spacing: 0.3em;
-          text-transform: uppercase;
-          font-weight: 800;
-          color: var(--mg-lime);
-          margin-bottom: 22px;
-        }
-        .mg-about h1,
-        .mg-about h2 {
-          font-family: var(--font-display), "Syne", sans-serif;
-          font-weight: 800;
-          letter-spacing: -0.04em;
-          line-height: 0.95;
-          text-wrap: balance;
-          text-transform: uppercase;
-        }
-        .mg-shadow-triple {
-          text-shadow: 2px 2px 0 var(--mg-blue-deep),
-            4px 4px 0 var(--mg-blue-deep), 6px 6px 0 var(--mg-blue-deep);
-        }
-        .mg-about .headline-xl {
-          font-size: clamp(48px, 10vw, 140px);
-          font-weight: 800;
-          letter-spacing: -0.05em;
-          color: var(--mg-lime);
-          line-height: 0.9;
-          word-break: break-word;
-          overflow-wrap: break-word;
-          hyphens: manual;
-        }
-        .mg-about .headline-lg {
-          font-size: clamp(34px, 6vw, 92px);
-          font-weight: 800;
-          letter-spacing: -0.035em;
-          color: var(--mg-white);
-          line-height: 0.95;
-          word-break: break-word;
-          overflow-wrap: break-word;
-          hyphens: manual;
-        }
-        .mg-about .hl-lime {
-          color: var(--mg-lime);
-        }
-        .mg-about .hl-blue {
-          color: var(--mg-blue);
-        }
-        .mg-about .sec-spin .headline-lg {
-          color: var(--mg-lime);
-        }
-        .mg-about p.sub {
-          margin-top: 22px;
-          font-size: clamp(15px, 1.2vw, 19px);
-          font-weight: 500;
-          color: var(--mg-white);
-          max-width: 460px;
-          line-height: 1.55;
-          letter-spacing: -0.005em;
-          text-transform: none;
-        }
-        .mg-about .sec-hero {
-          justify-content: center;
-          align-items: center;
-          text-align: center;
-          flex-direction: column;
-          background: transparent;
-          padding-bottom: 28vh;
-        }
-        .mg-about .sec-hero::after {
-          content: "";
-          position: absolute;
-          right: 8vw;
-          top: 18vh;
-          width: 90px;
-          height: 90px;
-          background: var(--mg-lime);
-          border: 3px solid var(--mg-ink);
-          border-radius: 50%;
-          box-shadow: 6px 6px 0 var(--mg-ink);
-          opacity: 0.95;
-          z-index: -1;
-        }
-        .mg-about .hero-text-block {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        .mg-about .sec-hero .hint {
-          position: absolute;
-          bottom: 40px;
-          left: 50%;
-          transform: translateX(-50%);
-          font-size: 11px;
-          letter-spacing: 0.35em;
-          color: var(--mg-lime);
-          text-transform: uppercase;
-          font-weight: 800;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 10px;
-          opacity: 0;
-        }
-        .mg-about .sec-hero .hint .line {
-          width: 2px;
-          height: 40px;
-          background: linear-gradient(to bottom, var(--mg-lime), transparent);
-          animation: mgScrollHint 2s ease-in-out infinite;
-        }
-        @keyframes mgScrollHint {
-          0%,
-          100% {
-            transform: scaleY(1);
-            transform-origin: top;
-          }
-          50% {
-            transform: scaleY(0.3);
-            transform-origin: top;
-          }
-        }
-        .mg-about .sec-zoom {
-          justify-content: flex-start;
-        }
-        .mg-about .sec-zoom .text-block {
-          max-width: min(520px, 44vw);
-          opacity: 0;
-          transform: translateX(-30px);
-        }
-        .mg-about .sec-spin {
-          justify-content: center;
-          text-align: center;
-          flex-direction: column;
-        }
-        .mg-about .sec-spin .text-block {
-          opacity: 0;
-          transform: translateY(30px);
-        }
-        .mg-about .sec-camera {
-          justify-content: flex-end;
-          text-align: right;
-        }
-        .mg-about .sec-camera .text-block {
-          max-width: min(520px, 44vw);
-          opacity: 0;
-          transform: translateX(30px);
-        }
-        .mg-about .sec-camera p.sub {
-          margin-left: auto;
-        }
-        .mg-about .sec-cta {
-          justify-content: center;
-          text-align: center;
-          flex-direction: column;
-        }
-        .mg-about .sec-cta h2 {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        .mg-about .sec-cta .cta-wrap {
-          opacity: 0;
-          transform: translateY(20px);
-          margin-top: 40px;
-        }
-        .mg-about .cta-btn {
-          display: inline-flex;
-          align-items: center;
-          gap: 14px;
-          padding: 22px 44px;
-          background: var(--mg-lime);
-          color: var(--mg-ink);
-          border-radius: 999px;
-          font-family: var(--font-display), "Syne", sans-serif;
-          font-size: 18px;
-          font-weight: 800;
-          letter-spacing: -0.01em;
-          text-transform: uppercase;
-          text-decoration: none;
-          border: 3px solid var(--mg-ink);
-          cursor: pointer;
-          box-shadow: 6px 6px 0 var(--mg-ink);
-          transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
-            box-shadow 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
-            background 0.3s ease;
-        }
-        .mg-about .cta-btn:hover {
-          transform: translate(-2px, -2px);
-          box-shadow: 8px 8px 0 var(--mg-ink);
-          background: #dfff4a;
-        }
-        .mg-about .cta-btn:active {
-          transform: translate(3px, 3px);
-          box-shadow: 2px 2px 0 var(--mg-ink);
-        }
-        .mg-about .cta-btn .arrow {
-          transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-        .mg-about .cta-btn:hover .arrow {
-          transform: translateX(4px);
-        }
-        #mg-progress {
-          position: fixed;
-          top: 0;
-          left: 0;
-          height: 3px;
-          background: var(--mg-lime);
-          width: 0%;
-          z-index: 50;
-          transition: width 0.1s linear;
-          box-shadow: 0 0 12px rgba(204, 255, 0, 0.7);
-        }
-        .mg-about .scene-badge {
-          display: none;
-          position: absolute;
-          top: 40px;
-          left: 6vw;
-          font-size: 11px;
-          letter-spacing: 0.35em;
-          text-transform: uppercase;
-          color: var(--mg-lime);
-          font-weight: 800;
-          padding: 8px 14px;
-          border: 2px solid var(--mg-lime);
-          border-radius: 999px;
-          background: rgba(0, 17, 102, 0.35);
-          backdrop-filter: blur(4px);
-          -webkit-backdrop-filter: blur(4px);
-        }
-        .mg-about .sec-camera .scene-badge {
-          left: auto;
-          right: 6vw;
-        }
+    <section
+      ref={ref}
+      className="relative min-h-[180vh] w-full"
+      style={{ background: "#FFFFFF", color: "#0A1F3A" }}
+    >
+      {/* Sticky stage */}
+      <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden px-6">
+        <motion.span
+          style={{ y: badgeY, opacity: badgeOpacity }}
+          className="absolute top-32 text-[10px] font-black uppercase tracking-[0.4em]"
+        >
+          ◆ Movil Guru — Capítulo 01
+        </motion.span>
 
-        /* ───── Content sections below the 3D scroll ───── */
-        .mg-content {
-          position: relative;
-          z-index: 3;
-          background: var(--mg-ink);
-          color: var(--mg-white);
-        }
-        .mg-content .sec-story {
-          padding: clamp(96px, 14vh, 180px) 6vw;
-          background: var(--mg-ink);
-          position: relative;
-          overflow: hidden;
-        }
-        .mg-content .sec-story::before {
-          content: "";
-          position: absolute;
-          inset: 0;
-          background-image: linear-gradient(
-              rgba(255, 255, 255, 0.04) 1px,
-              transparent 1px
-            ),
-            linear-gradient(
-              90deg,
-              rgba(255, 255, 255, 0.04) 1px,
-              transparent 1px
-            );
-          background-size: 64px 64px;
-          pointer-events: none;
-        }
-        .mg-content .story-inner {
-          max-width: 1200px;
-          margin: 0 auto;
-          position: relative;
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 40px;
-        }
-        @media (min-width: 900px) {
-          .mg-content .story-inner {
-            grid-template-columns: 1.1fr 1fr;
-            gap: 80px;
-            align-items: center;
-          }
-        }
-        .mg-content .story-head h2 {
-          font-family: var(--font-display), "Syne", sans-serif;
-          font-size: clamp(40px, 6vw, 88px);
-          font-weight: 800;
-          text-transform: uppercase;
-          line-height: 0.95;
-          letter-spacing: -0.035em;
-          color: var(--mg-white);
-        }
-        .mg-content .story-head p {
-          margin-top: 24px;
-          font-size: 17px;
-          line-height: 1.65;
-          color: rgba(255, 255, 255, 0.72);
-          max-width: 520px;
-          text-transform: none;
-        }
-        .mg-content .story-facts {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 14px;
-        }
-        .mg-content .story-facts .fact {
-          border: 2px solid rgba(255, 255, 255, 0.12);
-          background: rgba(255, 255, 255, 0.02);
-          padding: 22px 22px 26px;
-          border-radius: 14px;
-        }
-        .mg-content .story-facts .fact b {
-          display: block;
-          font-family: var(--font-display), "Syne", sans-serif;
-          font-size: clamp(26px, 3vw, 40px);
-          font-weight: 800;
-          color: var(--mg-lime);
-          letter-spacing: -0.02em;
-          line-height: 1;
-          margin-bottom: 10px;
-        }
-        .mg-content .story-facts .fact span {
-          display: block;
-          font-size: 12px;
-          text-transform: uppercase;
-          letter-spacing: 0.16em;
-          color: rgba(255, 255, 255, 0.55);
-          font-weight: 600;
-        }
+        <ScrollRevealHeading
+          progress={scrollYProgress}
+          start={0.05}
+          end={0.7}
+          text="Reparar no es un servicio. Es un acto de cuidado."
+          className="max-w-5xl text-center text-5xl font-black uppercase leading-[0.95] tracking-[-0.04em] sm:text-7xl lg:text-[112px]"
+        />
 
-        /* Founders gallery */
-        .mg-content .sec-founders {
-          background: var(--mg-blue);
-          padding: clamp(80px, 12vh, 140px) 6vw;
-          position: relative;
-          overflow: hidden;
-        }
-        .mg-content .sec-founders::after {
-          content: "";
-          position: absolute;
-          inset: 0;
-          background-image: linear-gradient(
-              rgba(255, 255, 255, 0.08) 1px,
-              transparent 1px
-            ),
-            linear-gradient(
-              90deg,
-              rgba(255, 255, 255, 0.08) 1px,
-              transparent 1px
-            );
-          background-size: 48px 48px;
-          pointer-events: none;
-        }
-        .mg-content .founders-inner {
-          position: relative;
-          max-width: 1200px;
-          margin: 0 auto;
-        }
-        .mg-content .founders-label {
-          font-size: 12px;
-          letter-spacing: 0.35em;
-          text-transform: uppercase;
-          color: var(--mg-lime);
-          font-weight: 800;
-          margin-bottom: 18px;
-        }
-        .mg-content .founders-title {
-          font-family: var(--font-display), "Syne", sans-serif;
-          font-size: clamp(40px, 7vw, 104px);
-          text-transform: uppercase;
-          font-weight: 800;
-          letter-spacing: -0.04em;
-          line-height: 0.92;
-          color: var(--mg-lime);
-          max-width: 900px;
-          margin-bottom: 56px;
-        }
-        .mg-content .founders-gallery {
-          display: flex;
-          align-items: stretch;
-          gap: 10px;
-          height: 480px;
-          width: 100%;
-        }
-        .mg-content .founder-item {
-          position: relative;
-          flex-grow: 1;
-          flex-shrink: 1;
-          flex-basis: 80px;
-          min-width: 80px;
-          border-radius: 16px;
-          overflow: hidden;
-          cursor: pointer;
-          border: 3px solid var(--mg-ink);
-          box-shadow: 5px 5px 0 var(--mg-ink);
-          transition: flex-basis 0.55s cubic-bezier(0.4, 0, 0.2, 1),
-            flex-grow 0.55s cubic-bezier(0.4, 0, 0.2, 1),
-            box-shadow 0.3s ease;
-        }
-        .mg-content .founders-gallery:hover .founder-item {
-          flex-grow: 0.3;
-        }
-        .mg-content .founders-gallery .founder-item:hover {
-          flex-grow: 4;
-          box-shadow: 8px 8px 0 var(--mg-ink);
-        }
-        .mg-content .founder-item img {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          object-position: center top;
-          transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .mg-content .founder-item:hover img {
-          transform: scale(1.04);
-        }
-        .mg-content .founder-item .founder-overlay {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(
-            to top,
-            rgba(0, 17, 102, 0.92) 0%,
-            rgba(0, 17, 102, 0.5) 40%,
-            transparent 70%
-          );
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-end;
-          padding: 24px 22px;
-          opacity: 0;
-          transition: opacity 0.35s ease;
-        }
-        .mg-content .founder-item:hover .founder-overlay {
-          opacity: 1;
-        }
-        .mg-content .founder-item .founder-tag {
-          position: absolute;
-          top: 18px;
-          left: 18px;
-          font-size: 11px;
-          font-weight: 800;
-          letter-spacing: 0.25em;
-          text-transform: uppercase;
-          color: var(--mg-lime);
-          background: var(--mg-ink);
-          padding: 5px 10px;
-          border-radius: 999px;
-          border: 1.5px solid var(--mg-lime);
-          white-space: nowrap;
-          opacity: 0;
-          transform: translateY(-6px);
-          transition: opacity 0.35s ease 0.1s, transform 0.35s ease 0.1s;
-        }
-        .mg-content .founder-item:hover .founder-tag {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        .mg-content .founder-overlay h3 {
-          font-family: var(--font-display), "Syne", sans-serif;
-          font-size: clamp(18px, 2vw, 26px);
-          font-weight: 800;
-          text-transform: uppercase;
-          letter-spacing: -0.02em;
-          color: var(--mg-white);
-          line-height: 1.05;
-          transform: translateY(8px);
-          transition: transform 0.35s ease 0.05s;
-          white-space: nowrap;
-        }
-        .mg-content .founder-item:hover .founder-overlay h3 {
-          transform: translateY(0);
-        }
-        .mg-content .founder-overlay p {
-          margin-top: 6px;
-          font-size: 13px;
-          font-weight: 500;
-          color: rgba(255, 255, 255, 0.8);
-          line-height: 1.45;
-          text-transform: none;
-          transform: translateY(8px);
-          transition: transform 0.35s ease 0.1s;
-          max-width: 260px;
-        }
-        .mg-content .founder-item:hover .founder-overlay p {
-          transform: translateY(0);
-        }
-        @media (max-width: 640px) {
-          .mg-content .founders-gallery {
-            height: 320px;
-          }
-          .mg-content .founder-item {
-            min-width: 48px;
-          }
-        }
-
-        /* Values */
-        .mg-content .sec-values {
-          background: var(--mg-white);
-          color: var(--mg-ink);
-          padding: clamp(96px, 14vh, 180px) 6vw;
-        }
-        .mg-content .values-inner {
-          max-width: 1200px;
-          margin: 0 auto;
-        }
-        .mg-content .values-head {
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-end;
-          gap: 40px;
-          flex-wrap: wrap;
-          margin-bottom: 64px;
-        }
-        .mg-content .values-head .eyebrow {
-          color: var(--mg-blue);
-          font-size: 12px;
-          letter-spacing: 0.35em;
-          text-transform: uppercase;
-          font-weight: 800;
-        }
-        .mg-content .values-head h2 {
-          font-family: var(--font-display), "Syne", sans-serif;
-          font-size: clamp(40px, 6vw, 92px);
-          font-weight: 800;
-          text-transform: uppercase;
-          line-height: 0.95;
-          letter-spacing: -0.04em;
-          color: var(--mg-ink);
-          margin-top: 14px;
-          max-width: 780px;
-        }
-        .mg-content .values-head p {
-          max-width: 380px;
-          font-size: 16px;
-          line-height: 1.6;
-          color: rgba(8, 14, 20, 0.65);
-          text-transform: none;
-          font-weight: 500;
-        }
-        .mg-content .values-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 24px;
-        }
-        @media (min-width: 700px) {
-          .mg-content .values-grid {
-            grid-template-columns: repeat(2, 1fr);
-          }
-        }
-        @media (min-width: 1100px) {
-          .mg-content .values-grid {
-            grid-template-columns: repeat(4, 1fr);
-          }
-        }
-        .mg-content .value-card {
-          background: var(--mg-ink);
-          color: var(--mg-white);
-          border-radius: 18px;
-          padding: 36px 28px 32px;
-          position: relative;
-          overflow: hidden;
-          border: 3px solid var(--mg-ink);
-          transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
-            background 0.35s ease, color 0.35s ease;
-        }
-        .mg-content .value-card .num {
-          font-family: var(--font-display), "Syne", sans-serif;
-          font-size: 14px;
-          font-weight: 800;
-          letter-spacing: 0.3em;
-          color: var(--mg-lime);
-          margin-bottom: 44px;
-        }
-        .mg-content .value-card h3 {
-          font-family: var(--font-display), "Syne", sans-serif;
-          font-size: clamp(22px, 2vw, 28px);
-          font-weight: 800;
-          text-transform: uppercase;
-          letter-spacing: -0.02em;
-          line-height: 1.05;
-          margin-bottom: 14px;
-        }
-        .mg-content .value-card p {
-          font-size: 14.5px;
-          line-height: 1.55;
-          color: rgba(255, 255, 255, 0.72);
-          text-transform: none;
-          font-weight: 500;
-        }
-        .mg-content .value-card:hover {
-          transform: translateY(-4px);
-          background: var(--mg-blue);
-        }
-        .mg-content .value-card:nth-child(4n + 2):hover {
-          background: var(--mg-lime);
-          color: var(--mg-ink);
-        }
-        .mg-content .value-card:nth-child(4n + 2):hover p {
-          color: rgba(8, 14, 20, 0.75);
-        }
-        .mg-content .value-card:nth-child(4n + 2):hover .num {
-          color: var(--mg-ink);
-        }
-
-        /* Process */
-        .mg-content .sec-process {
-          background: var(--mg-blue);
-          padding: clamp(96px, 14vh, 180px) 6vw;
-          position: relative;
-          overflow: hidden;
-        }
-        .mg-content .sec-process::after {
-          content: "";
-          position: absolute;
-          inset: 0;
-          background-image: linear-gradient(
-              rgba(255, 255, 255, 0.06) 1px,
-              transparent 1px
-            ),
-            linear-gradient(
-              90deg,
-              rgba(255, 255, 255, 0.06) 1px,
-              transparent 1px
-            );
-          background-size: 48px 48px;
-          pointer-events: none;
-        }
-        .mg-content .process-inner {
-          position: relative;
-          max-width: 1200px;
-          margin: 0 auto;
-        }
-        .mg-content .process-head .eyebrow {
-          color: var(--mg-lime);
-        }
-        .mg-content .process-head h2 {
-          font-family: var(--font-display), "Syne", sans-serif;
-          font-size: clamp(40px, 6vw, 92px);
-          font-weight: 800;
-          text-transform: uppercase;
-          line-height: 0.95;
-          letter-spacing: -0.04em;
-          color: var(--mg-white);
-          margin-top: 14px;
-          max-width: 900px;
-        }
-        .mg-content .process-head h2 em {
-          font-style: normal;
-          color: var(--mg-lime);
-        }
-        .mg-content .process-grid {
-          margin-top: 72px;
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 8px;
-          border-top: 2px solid rgba(255, 255, 255, 0.18);
-        }
-        .mg-content .process-row {
-          display: grid;
-          grid-template-columns: 64px 1fr;
-          gap: 24px;
-          padding: 28px 0 26px;
-          border-bottom: 2px solid rgba(255, 255, 255, 0.18);
-          align-items: start;
-        }
-        @media (min-width: 900px) {
-          .mg-content .process-row {
-            grid-template-columns: 140px 1.1fr 1.2fr;
-            gap: 48px;
-            align-items: center;
-          }
-        }
-        .mg-content .process-row .n {
-          font-family: var(--font-display), "Syne", sans-serif;
-          font-size: clamp(32px, 3vw, 44px);
-          font-weight: 800;
-          color: var(--mg-lime);
-          letter-spacing: -0.02em;
-          line-height: 1;
-        }
-        .mg-content .process-row h3 {
-          font-family: var(--font-display), "Syne", sans-serif;
-          font-size: clamp(22px, 2.4vw, 34px);
-          font-weight: 800;
-          text-transform: uppercase;
-          letter-spacing: -0.025em;
-          color: var(--mg-white);
-          line-height: 1.05;
-        }
-        .mg-content .process-row p {
-          font-size: 16px;
-          line-height: 1.6;
-          color: rgba(255, 255, 255, 0.78);
-          text-transform: none;
-          font-weight: 500;
-          max-width: 460px;
-        }
-
-        /* Testimonials */
-        .mg-content .sec-testimonios {
-          background: var(--mg-white);
-          color: var(--mg-ink);
-          padding: clamp(96px, 14vh, 180px) 6vw;
-        }
-        .mg-content .testimonios-inner {
-          max-width: 1200px;
-          margin: 0 auto;
-        }
-        .mg-content .testimonios-head .eyebrow {
-          color: var(--mg-blue);
-        }
-        .mg-content .testimonios-head h2 {
-          font-family: var(--font-display), "Syne", sans-serif;
-          font-size: clamp(40px, 6vw, 92px);
-          font-weight: 800;
-          text-transform: uppercase;
-          line-height: 0.95;
-          letter-spacing: -0.04em;
-          color: var(--mg-ink);
-          margin-top: 14px;
-          max-width: 900px;
-        }
-        .mg-content .testimonios-head h2 em {
-          font-style: normal;
-          color: var(--mg-blue);
-        }
-        .mg-content .testimonios-grid {
-          margin-top: 64px;
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 24px;
-        }
-        @media (min-width: 900px) {
-          .mg-content .testimonios-grid {
-            grid-template-columns: repeat(3, 1fr);
-          }
-        }
-        .mg-content .t-card {
-          background: var(--mg-white);
-          border: 3px solid var(--mg-ink);
-          border-radius: 18px;
-          padding: 34px 28px 30px;
-          box-shadow: 6px 6px 0 var(--mg-ink);
-          display: flex;
-          flex-direction: column;
-          gap: 18px;
-          transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
-            box-shadow 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-        .mg-content .t-card:hover {
-          transform: translate(-2px, -2px);
-          box-shadow: 8px 8px 0 var(--mg-ink);
-        }
-        .mg-content .t-card .stars {
-          color: var(--mg-lime);
-          font-size: 18px;
-          letter-spacing: 2px;
-          -webkit-text-stroke: 1px var(--mg-ink);
-        }
-        .mg-content .t-card blockquote {
-          font-family: var(--font-display), "Syne", sans-serif;
-          font-size: clamp(17px, 1.4vw, 20px);
-          font-weight: 600;
-          line-height: 1.45;
-          color: var(--mg-ink);
-          text-transform: none;
-          letter-spacing: -0.01em;
-        }
-        .mg-content .t-card .who {
-          margin-top: auto;
-          padding-top: 10px;
-          border-top: 2px dashed rgba(8, 14, 20, 0.15);
-        }
-        .mg-content .t-card .who .n {
-          font-family: var(--font-display), "Syne", sans-serif;
-          font-size: 14px;
-          font-weight: 800;
-          text-transform: uppercase;
-          letter-spacing: 0.06em;
-          color: var(--mg-ink);
-        }
-        .mg-content .t-card .who .m {
-          font-size: 12px;
-          font-weight: 600;
-          color: rgba(8, 14, 20, 0.55);
-          margin-top: 2px;
-          text-transform: none;
-        }
-
-        /* Final contact */
-        .mg-content .sec-contact {
-          background: var(--mg-ink);
-          padding: clamp(96px, 14vh, 180px) 6vw;
-          text-align: center;
-        }
-        .mg-content .contact-inner {
-          max-width: 900px;
-          margin: 0 auto;
-        }
-        .mg-content .contact-inner h2 {
-          font-family: var(--font-display), "Syne", sans-serif;
-          font-size: clamp(36px, 5.5vw, 80px);
-          font-weight: 800;
-          text-transform: uppercase;
-          line-height: 1;
-          letter-spacing: -0.04em;
-          color: var(--mg-white);
-        }
-        .mg-content .contact-inner h2 em {
-          font-style: normal;
-          color: var(--mg-lime);
-        }
-        .mg-content .contact-inner p {
-          margin-top: 22px;
-          font-size: 17px;
-          color: rgba(255, 255, 255, 0.7);
-          line-height: 1.6;
-          text-transform: none;
-          font-weight: 500;
-        }
-        .mg-content .contact-actions {
-          margin-top: 44px;
-          display: inline-flex;
-          gap: 16px;
-          flex-wrap: wrap;
-          justify-content: center;
-        }
-        .mg-content .contact-actions a {
-          display: inline-flex;
-          align-items: center;
-          gap: 10px;
-          padding: 18px 34px;
-          border-radius: 999px;
-          font-family: var(--font-display), "Syne", sans-serif;
-          font-size: 15px;
-          font-weight: 800;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-          text-decoration: none;
-          border: 2px solid var(--mg-lime);
-          color: var(--mg-lime);
-          transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
-            background 0.3s ease, color 0.3s ease;
-        }
-        .mg-content .contact-actions a:hover {
-          background: var(--mg-lime);
-          color: var(--mg-ink);
-          transform: translateY(-3px);
-        }
-        .mg-content .contact-actions a.primary {
-          background: var(--mg-lime);
-          color: var(--mg-ink);
-          border-color: var(--mg-lime);
-          box-shadow: 6px 6px 0 var(--mg-blue-deep);
-        }
-        .mg-content .contact-actions a.primary:hover {
-          background: #dfff4a;
-          transform: translate(-2px, -2px);
-          box-shadow: 8px 8px 0 var(--mg-blue-deep);
-        }
-
-        /* ───── Horizontal scroll container ───── */
-        .mg-content-outer {
-          overflow: hidden;
-          position: relative;
-          z-index: 3;
-        }
-        .mg-content-track {
-          display: flex;
-          flex-direction: row;
-          will-change: transform;
-        }
-        .mg-h-section {
-          width: 100vw;
-          min-height: 100vh;
-          flex-shrink: 0;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-        }
-        /* On mobile/tablet, fall back to vertical stacking so all content is reachable */
-        @media (max-width: 1023.98px) {
-          .mg-content-outer { overflow: visible; }
-          .mg-content-track {
-            flex-direction: column;
-            transform: none !important;
-          }
-          .mg-h-section {
-            width: 100%;
-            min-height: auto;
-            padding: 4rem 1.5rem;
-          }
-        }
-        .anim-title {
-          opacity: 0;
-          transform: translateY(55px);
-        }
-        .anim-sub {
-          opacity: 0;
-          transform: translateY(30px);
-        }
-        .v-reveal {
-          opacity: 0;
-        }
-        .v-fade-up {
-          opacity: 0;
-        }
-        .v-stagger-group > * {
-          opacity: 0;
-        }
-
-        @media (max-width: 1024px) {
-          .mg-about .sec-zoom .text-block,
-          .mg-about .sec-camera .text-block {
-            max-width: 52vw;
-          }
-        }
-        /* Tienda nav link visible on blue bg — override brand blue */
-        header a[href="/tienda"] {
-          color: #CCFF00 !important;
-        }
-
-        @media (max-width: 768px) {
-          main.mg-about section.scene {
-            padding: 0 24px;
-          }
-          .mg-about .sec-zoom,
-          .mg-about .sec-camera {
-            justify-content: center;
-            text-align: center;
-          }
-          .mg-about .sec-camera p.sub {
-            margin-left: auto;
-            margin-right: auto;
-          }
-          .mg-about .sec-zoom .text-block,
-          .mg-about .sec-camera .text-block {
-            transform: translateY(30px) translateX(0);
-            max-width: 100%;
-          }
-          .mg-about .scene-badge {
-            left: 24px !important;
-            right: auto !important;
-          }
-          .mg-about .sec-camera .scene-badge {
-            left: auto !important;
-            right: 24px !important;
-          }
-          .mg-about .headline-xl {
-            font-size: clamp(42px, 13vw, 96px);
-          }
-          .mg-about .headline-lg {
-            font-size: clamp(32px, 9vw, 64px);
-          }
-        }
-      `}</style>
-
-      <div id="mg-loader" ref={loaderRef}>
-        <span className="dot" />
-        <span className="dot" />
-        <span className="dot" />
+        <motion.div
+          style={{
+            opacity: useTransform(scrollYProgress, [0.6, 0.85], [0, 1]),
+            y: useTransform(scrollYProgress, [0.6, 0.85], [30, 0]),
+          }}
+          className="absolute bottom-24 flex flex-col items-center gap-2"
+        >
+          <span className="text-xs font-semibold uppercase tracking-[0.3em] opacity-60">
+            Sigue bajando
+          </span>
+          <div className="h-10 w-[1px] bg-[#0A1F3A]/30">
+            <motion.div
+              className="h-full w-full origin-top"
+              style={{ background: "#0038FF" }}
+              animate={{ scaleY: [0, 1, 0] }}
+              transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </div>
+        </motion.div>
       </div>
-      <div id="mg-progress" ref={progressRef} />
+    </section>
+  );
+}
 
-      <canvas id="webgl" ref={canvasRef} />
+/* ─────────────────────────────────────────────────────────────────────
+ * 2. HISTORIA — ahora vive en `ParallaxFeatureSection` (componente externo).
+ * ──────────────────────────────────────────────────────────────────── */
 
-      <Header />
+/* ─────────────────────────────────────────────────────────────────────
+ * 3. FILOSOFÍA — sección sticky con frases que se intercambian al scrollear.
+ *    Ocupa 4×100vh de altura: el contenedor está pinneado y el texto
+ *    interno cambia según el progreso.
+ * ──────────────────────────────────────────────────────────────────── */
+const PHILOSOPHY = [
+  {
+    big: "Honestidad",
+    small:
+      "Te decimos lo que pasa, lo que cuesta y lo que no merece la pena reparar.",
+  },
+  {
+    big: "Precisión",
+    small:
+      "Diagnóstico exhaustivo antes de tocar una sola pieza. La rapidez nunca compromete el cuidado.",
+  },
+  {
+    big: "Privacidad",
+    small:
+      "Tus datos no se tocan. Reparamos sin formatear, con protocolos certificados.",
+  },
+  {
+    big: "Permanencia",
+    small:
+      "Garantía de por vida. La reparación que dura más que el propio teléfono.",
+  },
+];
 
-      <main className="mg-about">
-        <section className="scene sec-hero">
-          <span className="scene-badge">01 — Movil Guru</span>
-          <div className="hero-text-block">
-            <span className="eyebrow">Expertos en reparación</span>
-            <h1 className="headline-xl mg-shadow-triple">
-              Tu móvil,
-              <br />
-              <span
-                style={{ color: "var(--mg-white)" }}
-                className="mg-shadow-triple"
-              >
-                como nuevo.
-              </span>
-            </h1>
-          </div>
-          <div className="hint">
-            <span>Scroll</span>
-            <span className="line" />
-          </div>
-        </section>
+function PhilosophySection() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end end"],
+  });
 
-        <section className="scene sec-zoom">
-          <span className="scene-badge">02 — Servicio</span>
-          <div className="text-block">
-            <span className="eyebrow">En el día</span>
-            <h2 className="headline-lg mg-shadow-triple">
-              Listo en
-              <br />
-              <span className="hl-lime mg-shadow-triple">30 minutos.</span>
-            </h2>
-            <p className="sub">
-              La mayoría de averías resueltas en menos de 30 minutos. Pantallas,
-              baterías, cámaras y conectores reparados con piezas originales.
-            </p>
-          </div>
-        </section>
+  return (
+    <section
+      ref={ref}
+      className="relative w-full"
+      style={{
+        height: `${PHILOSOPHY.length * 100}vh`,
+        background: "#FFFFFF",
+        color: "#0A1F3A",
+      }}
+    >
+      <div className="sticky top-0 flex h-screen w-full flex-col items-center justify-center overflow-hidden px-6">
+        <span className="absolute top-24 text-[10px] font-black uppercase tracking-[0.4em] opacity-50">
+          03 · Filosofía
+        </span>
 
-        <section className="scene sec-spin">
-          <span className="scene-badge">03 — Diagnóstico</span>
-          <div className="text-block">
-            <span className="eyebrow">Revisión 360°</span>
-            <h2 className="headline-lg mg-shadow-triple">
-              Cada <span className="hl-lime">detalle</span>
-              <br />
-              importa.
-            </h2>
-            <p
-              className="sub"
-              style={{ marginLeft: "auto", marginRight: "auto" }}
-            >
-              Revisamos tu móvil por completo antes y después de cada
-              reparación. Sin sorpresas, sin atajos.
-            </p>
-          </div>
-        </section>
+        {/* Capas superpuestas: cada una es visible en su ventana del progreso. */}
+        <div className="relative flex h-full w-full max-w-5xl items-center justify-center">
+          {PHILOSOPHY.map((p, i) => (
+            <PhilosophyLayer
+              key={p.big}
+              item={p}
+              index={i}
+              total={PHILOSOPHY.length}
+              progress={scrollYProgress}
+            />
+          ))}
+        </div>
 
-        <section className="scene sec-camera">
-          <span className="scene-badge">04 — Garantía</span>
-          <div className="text-block">
-            <span className="eyebrow">De por vida</span>
-            <h2 className="headline-lg mg-shadow-triple">
-              Garantía
-              <br />
-              <span className="hl-lime mg-shadow-triple">de por vida.</span>
-            </h2>
-            <p className="sub">
-              Cada reparación que hacemos está cubierta para siempre. Si algo
-              vuelve a fallar, lo arreglamos. Así de simple.
-            </p>
-          </div>
-        </section>
-
-        <section className="scene sec-cta">
-          <span className="scene-badge">05 — Empieza ya</span>
-          <h2 className="headline-lg mg-shadow-triple">
-            Tráenos tu
-            <br />
-            <span className="hl-lime mg-shadow-triple">móvil hoy.</span>
-          </h2>
-          <div className="cta-wrap">
-            <button className="cta-btn" ref={ctaRef}>
-              Pedir Reparación
-              <svg
-                className="arrow"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2.5}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </button>
-          </div>
-        </section>
-      </main>
-
-      <div className="mg-content mg-content-outer">
-        <div className="mg-content-track">
-        <section className="sec-story mg-h-section">
-          <div className="story-inner">
-            <div className="story-head">
-              <span className="eyebrow anim-sub" style={{ color: "var(--mg-lime)" }}>
-                Nuestra Historia
-              </span>
-              <h2 className="anim-title">
-                Nacimos para
-                <br />
-                hacer las cosas{" "}
-                <em className="hl-lime" style={{ fontStyle: "normal" }}>
-                  bien.
-                </em>
-              </h2>
-              <p className="anim-sub">
-                Movil Guru nació en 2026 con una sola obsesión: que cualquier
-                persona pudiera reparar su móvil sin miedo a que le engañaran.
-                Somos nuevos, pero no improvisados — presupuesto cerrado, piezas
-                originales y garantía de por vida. Si no lo arreglamos, no cobras.
-              </p>
-            </div>
-            <div className="story-facts">
-              <div className="fact">
-                <b>2026</b>
-                <span>Año de fundación</span>
-              </div>
-              <div className="fact">
-                <b>500+</b>
-                <span>Reparaciones completadas</span>
-              </div>
-              <div className="fact">
-                <b>30 min</b>
-                <span>Tiempo medio de pantalla</span>
-              </div>
-              <div className="fact">
-                <b>4.9 / 5</b>
-                <span>Valoración en Google</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="sec-founders mg-h-section">
-          <div className="founders-inner">
-            <div className="founders-label anim-sub">El equipo detrás</div>
-            <h2 className="founders-title anim-title">
-              Las personas
-              <br />
-              que lo hacen.
-            </h2>
-            <div className="founders-gallery">
-              {founders.map((f) => (
-                <div className="founder-item" key={f.name}>
-                  <img src={f.img} alt={f.name} />
-                  <div className="founder-tag">{f.role}</div>
-                  <div className="founder-overlay">
-                    <h3>{f.name}</h3>
-                    <p>{f.detail}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-        </div>{/* end mg-content-track */}
-      </div>{/* end mg-content-outer */}
-
-      <div className="mg-content">
-        <RulesShowcase />
-
-        <section className="sec-process">
-          <div className="process-inner">
-            <div className="process-head">
-              <span className="eyebrow v-fade-up">Nuestro proceso</span>
-              <h2 className="v-reveal">
-                De la puerta al <em>móvil reparado</em> en cuatro pasos.
-              </h2>
-            </div>
-            <div className="process-grid v-stagger-group" data-from="left">
-              {proceso.map((p) => (
-                <div className="process-row" key={p.n}>
-                  <div className="n">{p.n}</div>
-                  <h3>{p.title}</h3>
-                  <p>{p.body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="sec-testimonios">
-          <div className="testimonios-inner">
-            <div className="testimonios-head">
-              <span className="eyebrow v-fade-up">Lo que dicen</span>
-              <h2 className="v-reveal">
-                Clientes que <em>vuelven</em>, no casualidades.
-              </h2>
-            </div>
-            <div className="testimonios-grid v-stagger-group">
-              {testimonios.map((t) => (
-                <article className="t-card" key={t.name}>
-                  <div className="stars">★★★★★</div>
-                  <blockquote>"{t.quote}"</blockquote>
-                  <div className="who">
-                    <div className="n">{t.name}</div>
-                    <div className="m">{t.meta}</div>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="sec-contact">
-          <div className="contact-inner">
-            <h2 className="v-reveal">
-              ¿Tu móvil <em>falla?</em>
-              <br />
-              Vamos a arreglarlo.
-            </h2>
-            <p className="v-fade-up">
-              Presupuesto gratis y sin compromiso en menos de 15 minutos.
-              Reserva tu hueco o pásate por el taller — te atendemos al momento.
-            </p>
-            <div className="contact-actions v-stagger-group">
-              <a href="/reservar" className="primary">
-                Pedir Reparación
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2.5}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                  <polyline points="12 5 19 12 12 19" />
-                </svg>
-              </a>
-              <a href="/contacto">Ver tienda</a>
-            </div>
-          </div>
-        </section>
+        {/* Indicador de pasos */}
+        <div className="absolute bottom-16 flex gap-2">
+          {PHILOSOPHY.map((_, i) => (
+            <StepDot
+              key={i}
+              index={i}
+              total={PHILOSOPHY.length}
+              progress={scrollYProgress}
+            />
+          ))}
+        </div>
       </div>
+    </section>
+  );
+}
 
-      <div style={{ background: "#ffffff", position: "relative", zIndex: 3 }}>
-        <Footer />
-      </div>
+function PhilosophyLayer({
+  item,
+  index,
+  total,
+  progress,
+}: {
+  item: (typeof PHILOSOPHY)[number];
+  index: number;
+  total: number;
+  progress: MotionValue<number>;
+}) {
+  const span = 1 / total;
+  const start = span * index;
+  const peak = start + span * 0.5;
+  const end = start + span;
 
-      <button
-        ref={scrollBtnRef}
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        aria-label="Volver arriba"
-        style={{
-          position: "fixed",
-          bottom: "32px",
-          right: "32px",
-          zIndex: 60,
-          width: "52px",
-          height: "52px",
-          borderRadius: "50%",
-          background: "var(--mg-lime)",
-          border: "3px solid var(--mg-ink)",
-          boxShadow: "4px 4px 0 var(--mg-ink)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          cursor: "pointer",
-          opacity: 0,
-          pointerEvents: "none",
-          transition: "opacity 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease",
-        }}
-        onMouseEnter={e => {
-          (e.currentTarget as HTMLButtonElement).style.transform = "translate(-2px,-2px)";
-          (e.currentTarget as HTMLButtonElement).style.boxShadow = "6px 6px 0 var(--mg-ink)";
-        }}
-        onMouseLeave={e => {
-          (e.currentTarget as HTMLButtonElement).style.transform = "translate(0,0)";
-          (e.currentTarget as HTMLButtonElement).style.boxShadow = "4px 4px 0 var(--mg-ink)";
-        }}
+  const opacity = useTransform(
+    progress,
+    [start, peak, end],
+    [0, 1, index === total - 1 ? 1 : 0]
+  );
+  const y = useTransform(progress, [start, peak, end], [40, 0, -40]);
+  const scale = useTransform(progress, [start, peak, end], [0.96, 1, 1.02]);
+
+  return (
+    <motion.div
+      style={{ opacity, y, scale }}
+      className="absolute inset-0 flex flex-col items-center justify-center text-center"
+    >
+      <span
+        className="text-xs font-black uppercase tracking-[0.4em]"
+        style={{ color: "#0038FF" }}
       >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#080e14" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-          <polyline points="18 15 12 9 6 15" />
-        </svg>
-      </button>
-    </>
+        0{index + 1}
+      </span>
+      <h3
+        className="mt-6 text-6xl font-black uppercase leading-none tracking-[-0.04em] sm:text-8xl lg:text-[160px]"
+      >
+        {item.big}
+      </h3>
+      <p className="mt-8 max-w-xl text-base leading-relaxed opacity-70 sm:text-lg">
+        {item.small}
+      </p>
+    </motion.div>
+  );
+}
+
+function StepDot({
+  index,
+  total,
+  progress,
+}: {
+  index: number;
+  total: number;
+  progress: MotionValue<number>;
+}) {
+  const span = 1 / total;
+  const active = useTransform(
+    progress,
+    [span * index, span * index + span * 0.5, span * (index + 1)],
+    [0.25, 1, 0.25]
+  );
+  return (
+    <motion.span
+      style={{ opacity: active }}
+      className="h-1.5 w-6 rounded-full"
+      transition={{ duration: 0.3 }}
+    >
+      <span
+        className="block h-full w-full rounded-full"
+        style={{ background: "#0A1F3A" }}
+      />
+    </motion.span>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+ * 4. CIERRE — mensaje final cinematográfico.
+ * ──────────────────────────────────────────────────────────────────── */
+function ClosingSection() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end end"],
+  });
+  const opacity = useTransform(scrollYProgress, [0, 0.6], [0, 1]);
+  const scale = useTransform(scrollYProgress, [0, 0.7], [0.9, 1]);
+  const lineWidth = useTransform(scrollYProgress, [0.3, 0.9], ["0%", "100%"]);
+
+  return (
+    <section
+      ref={ref}
+      className="relative flex min-h-[120vh] w-full items-center justify-center overflow-hidden px-6"
+      style={{ background: "#FFFFFF", color: "#0A1F3A" }}
+    >
+      <motion.div
+        style={{ opacity, scale }}
+        className="relative flex max-w-5xl flex-col items-center text-center"
+      >
+        <span
+          className="text-[10px] font-black uppercase tracking-[0.4em]"
+          style={{ color: "#0038FF" }}
+        >
+          ◆ Cierre
+        </span>
+        <h2 className="mt-8 text-5xl font-black uppercase leading-[0.95] tracking-[-0.04em] sm:text-7xl lg:text-[120px]">
+          Tu móvil <br />
+          merece volver <br />
+          <span className="relative inline-block">
+            a sentirse
+            <motion.span
+              aria-hidden
+              className="absolute bottom-2 left-0 h-3"
+              style={{ width: lineWidth, background: "#CCFF00" }}
+            />
+          </span>{" "}
+          <span style={{ color: "#0038FF" }}>nuevo.</span>
+        </h2>
+
+        <div className="mt-12 flex flex-wrap justify-center gap-4">
+          <a
+            href="/reparacion"
+            className="group inline-flex items-center gap-2 rounded-full px-8 py-4 text-sm font-black uppercase tracking-wider shadow-[0_15px_40px_-10px_rgba(204,255,0,0.6)] transition-transform duration-200 hover:scale-[1.03] active:scale-95"
+            style={{ background: "#CCFF00", color: "#0A1F3A" }}
+          >
+            Reservar reparación
+            <span className="transition-transform duration-200 group-hover:translate-x-0.5">
+              →
+            </span>
+          </a>
+          <a
+            href="/contacto"
+            className="inline-flex items-center gap-2 rounded-full border border-[#0A1F3A]/20 px-8 py-4 text-sm font-black uppercase tracking-wider transition-colors duration-200 hover:bg-[#0A1F3A] hover:text-white"
+          >
+            Hablar con un guru
+          </a>
+        </div>
+      </motion.div>
+    </section>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+ * Página
+ * ──────────────────────────────────────────────────────────────────── */
+export default function AboutPage() {
+  return (
+    <main className="relative w-full">
+      <ScrollIndicator />
+      <Header />
+      <Skiper19 />
+      <ParallaxFeatureSection />
+      <ZoomParallax items={ZOOM_IMAGES} />
+      <PhilosophySection />
+      <FeaturesSection />
+      <ClosingSection />
+      <Footer />
+    </main>
   );
 }

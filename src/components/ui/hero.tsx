@@ -98,20 +98,33 @@ export const HeroComponent = () => {
 
       {/* Hero Section */}
       <main className="flex-1 relative z-10 pt-16 pb-32 md:pt-20 md:pb-48 px-4 flex flex-col items-center justify-center w-full max-w-[1440px] mx-auto max-lg:pt-24 max-lg:pb-40 max-md:pb-56">
+
+        {/* GURU BOT — fuera del área de texto */}
+        <motion.div
+          animate={{ y: [0, -14, 0], rotate: [-4, 4, -4] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+          className="hidden md:block absolute left-4 top-[8%] z-40 pointer-events-none"
+        >
+          <img
+            src="/images/GURU_BOT/emociones/amigable.png"
+            alt="Guru Bot"
+            className="w-52 lg:w-64 xl:w-72 drop-shadow-2xl"
+          />
+        </motion.div>
         <div className="relative w-full max-w-5xl mx-auto flex flex-col items-center justify-center text-center z-10 mt-4 mb-16">
 
           {/* Headline Stack */}
           <div className="w-full flex flex-col items-center relative z-10 space-y-2 md:space-y-4">
             <div className="w-full flex justify-center relative z-30">
               <h1
-                className="text-[clamp(2.7rem,8vw,160px)] font-black leading-[0.85] tracking-tighter text-[#CCFF00] m-0 p-0 uppercase"
+                className="text-[clamp(2rem,6vw,120px)] font-black leading-[0.85] tracking-tighter text-[#CCFF00] m-0 p-0 uppercase whitespace-nowrap"
                 style={{
                   fontFamily: 'var(--font-display), sans-serif',
                   textShadow:
                     '1px 1px 0 #001A99, 2px 2px 0 #001A99, 3px 3px 0 #001A99, 4px 4px 0 #001A99, 5px 5px 0 #001A99, 6px 6px 0 #001A99, 7px 7px 0 #001A99, 8px 8px 0 #001A99, 9px 9px 0 #001A99, 10px 10px 0 #001A99, 11px 11px 0 #001A99, 12px 12px 0 #001A99, 13px 13px 0 #001A99, 14px 14px 0 #001A99',
                 }}
               >
-                EXPERTOS
+                ¿PANTALLA ROTA?
               </h1>
             </div>
 
@@ -124,7 +137,7 @@ export const HeroComponent = () => {
                     '1px 1px 0 #001A99, 2px 2px 0 #001A99, 3px 3px 0 #001A99, 4px 4px 0 #001A99, 5px 5px 0 #001A99, 6px 6px 0 #001A99, 7px 7px 0 #001A99, 8px 8px 0 #001A99, 9px 9px 0 #001A99, 10px 10px 0 #001A99, 11px 11px 0 #001A99, 12px 12px 0 #001A99, 13px 13px 0 #001A99, 14px 14px 0 #001A99',
                 }}
               >
-                REPARA
+                LO DEJAMOS
               </h1>
             </div>
 
@@ -137,13 +150,15 @@ export const HeroComponent = () => {
                     '1px 1px 0 #001A99, 2px 2px 0 #001A99, 3px 3px 0 #001A99, 4px 4px 0 #001A99, 5px 5px 0 #001A99, 6px 6px 0 #001A99, 7px 7px 0 #001A99, 8px 8px 0 #001A99, 9px 9px 0 #001A99, 10px 10px 0 #001A99, 11px 11px 0 #001A99, 12px 12px 0 #001A99, 13px 13px 0 #001A99, 14px 14px 0 #001A99',
                 }}
               >
-                <span className="text-white">MOV</span><span className="text-[#CCFF00]">ILE</span><span className="text-white">S</span>
+                <span className="text-white">COMO </span><span className="text-[#CCFF00]">NUEVO.</span>
               </h1>
             </div>
+
           </div>
 
           {/* Floating Cards & Decorative Elements — hidden on mobile */}
           <div className="hidden md:block absolute inset-0 w-full h-full pointer-events-none">
+
 
             {/* Repair Status Card 1 — iPhone */}
             <motion.div

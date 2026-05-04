@@ -70,23 +70,19 @@ export function Header({ dark = false }: { dark?: boolean }) {
     <header
       className={cn(
         'sticky top-0 z-50 mx-auto w-full max-w-6xl border-b border-transparent lg:rounded-full lg:border lg:border-transparent lg:transition-all lg:duration-300 lg:ease-out',
-        dark
-          ? 'bg-[#060d12]/90 backdrop-blur-md border-white/[0.06]'
-          : '',
+        dark && scrolled ? '' : '',
         {
           'bg-background/95 supports-[backdrop-filter]:bg-background/50 border-border backdrop-blur-lg lg:top-4 lg:max-w-5xl lg:shadow lg:rounded-full':
-            scrolled && !dark && !open,
-          'bg-[#060d12]/95 border-white/[0.10] lg:top-4 lg:max-w-5xl lg:shadow-lg lg:border-white/[0.10] lg:rounded-full':
-            scrolled && dark && !open,
+            scrolled && !open,
           'bg-background/90': open && !dark,
           'bg-[#060d12]/95': open && dark,
         }
       )}
     >
-      <nav className={cn('flex h-14 w-full items-center justify-between px-4 lg:transition-all lg:duration-300 lg:ease-out', scrolled && 'lg:px-2', dark && 'text-white')} style={{ fontFamily: "var(--font-display), sans-serif" }}>
+      <nav className={cn('flex h-14 w-full items-center justify-between px-4 lg:transition-all lg:duration-300 lg:ease-out', (dark && !scrolled) ? 'text-white' : 'text-black', scrolled && 'lg:px-2')} style={{ fontFamily: "var(--font-display), sans-serif" }}>
         <div className="flex items-center gap-5">
-          <Link href="/" className={cn('rounded-md px-2 py-1 flex items-center gap-1.5', dark ? 'hover:bg-white/10' : 'hover:bg-accent')}>
-            <div className={cn('font-black text-xs px-2.5 py-1 rounded-xl rounded-bl-sm', dark ? 'bg-white text-black' : 'bg-foreground text-background')}>
+          <Link href="/" className={cn('rounded-md px-2 py-1 flex items-center gap-1.5', (dark && !scrolled) ? 'hover:bg-white/10' : 'hover:bg-accent')}>
+            <div className={cn('font-black text-xs px-2.5 py-1 rounded-xl rounded-bl-sm', (dark && !scrolled) ? 'bg-[#080e14] text-white border border-white/20' : 'bg-foreground text-background')}>
               MOVIL
             </div>
             <div className="bg-[#CCFF00] text-black font-black text-xs px-2.5 py-1 rounded-full border border-foreground/10">
@@ -97,7 +93,7 @@ export function Header({ dark = false }: { dark?: boolean }) {
             <NavigationMenuList>
               <NavigationMenuItem>
                 <NavigationMenuTrigger
-                  className={cn('bg-transparent', dark && 'text-white hover:bg-white/10 hover:text-white data-[state=open]:bg-white/10')}
+                  className={cn('bg-transparent', (dark && !scrolled) && 'text-white hover:bg-white/10 hover:text-white data-[state=open]:bg-white/10')}
                   onClick={() => router.push('/marcas')}
                 >
                   Marcas
@@ -159,7 +155,7 @@ export function Header({ dark = false }: { dark?: boolean }) {
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <NavigationMenuTrigger className={cn('bg-transparent', dark && 'text-white hover:bg-white/10 hover:text-white data-[state=open]:bg-white/10')}>
+                <NavigationMenuTrigger className={cn('bg-transparent', (dark && !scrolled) && 'text-white hover:bg-white/10 hover:text-white data-[state=open]:bg-white/10')}>
                   Nosotros
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-background p-1 pr-1.5 pb-1.5">
@@ -188,13 +184,13 @@ export function Header({ dark = false }: { dark?: boolean }) {
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuLink className="px-4" asChild>
-                <Link href="/tiendas" className={cn('rounded-md p-2 flex items-center gap-1.5', dark ? 'text-white hover:bg-white/10' : 'hover:bg-accent')}>
+                <Link href="/tiendas" className={cn('rounded-md p-2 flex items-center gap-1.5', (dark && !scrolled) ? 'text-white hover:bg-white/10' : 'hover:bg-accent')}>
                   <Store className="size-3.5" />
                   Tiendas
                 </Link>
               </NavigationMenuLink>
               <NavigationMenuLink className="px-4" asChild>
-                <Link href="/tienda" className={cn('rounded-md p-2 font-semibold flex items-center gap-1.5', dark ? 'text-[#CCFF00] hover:bg-white/10' : 'text-[#0038FF] hover:bg-accent')}>
+                <Link href="/tienda" className={cn('rounded-md p-2 font-semibold flex items-center gap-1.5', (dark && !scrolled) ? 'text-[#CCFF00] hover:bg-white/10' : 'text-[#0038FF] hover:bg-accent')}>
                   <span className="size-1.5 rounded-full bg-[#CCFF00] shadow-[0_0_6px_#CCFF00]" />
                   Tienda
                 </Link>
@@ -203,8 +199,8 @@ export function Header({ dark = false }: { dark?: boolean }) {
           </NavigationMenu>
         </div>
         <div className="hidden items-center gap-2 lg:flex">
-          <ProfileMenu dark={dark} />
-          <Link href="/tienda/carrito" className={cn('relative flex items-center justify-center size-9 rounded-full border transition-all', dark ? 'border-white/15 text-white hover:border-[#CCFF00]/60 hover:bg-[#CCFF00]/10' : 'border-foreground/10 hover:border-foreground/30')} aria-label="Carrito">
+          <ProfileMenu dark={dark && !scrolled} />
+          <Link href="/tienda/carrito" className={cn('relative flex items-center justify-center size-9 rounded-full border transition-all', (dark && !scrolled) ? 'border-white/15 text-white hover:border-[#CCFF00]/60 hover:bg-[#CCFF00]/10' : 'border-foreground/10 hover:border-foreground/30')} aria-label="Carrito">
             <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
           </Link>
           <Button asChild className="rounded-full bg-[#CCFF00] text-black border-[#CCFF00] hover:bg-[#b8e600] hover:text-black font-semibold"><Link href="/track">Rastrear Reparación</Link></Button>
@@ -213,7 +209,7 @@ export function Header({ dark = false }: { dark?: boolean }) {
           size="icon"
           variant="outline"
           onClick={() => setOpen(!open)}
-          className={cn('lg:hidden', dark && 'border-white/30 text-white hover:bg-white/10 hover:text-white')}
+          className={cn('lg:hidden', (dark && !scrolled) && 'border-white/30 text-white hover:bg-white/10 hover:text-white')}
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label="Toggle menu"

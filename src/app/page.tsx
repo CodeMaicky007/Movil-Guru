@@ -131,16 +131,6 @@ function useHorizontalScroll() {
 
     return () => {
       ctx.revert();
-      document
-        .querySelectorAll<HTMLElement>(".pin-spacer, .gsap-pin-spacer")
-        .forEach((spacer) => {
-          const parent = spacer.parentNode;
-          if (!parent) return;
-          while (spacer.firstChild) {
-            parent.insertBefore(spacer.firstChild, spacer);
-          }
-          parent.removeChild(spacer);
-        });
     };
   }, []);
 }
@@ -311,7 +301,7 @@ export default function Home() {
   const loaderRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLButtonElement>(null);
-  const scrollBtnRef = useRef<HTMLButtonElement>(null);
+
 
   useHorizontalScroll();
   useVerticalAnimations();
@@ -779,18 +769,9 @@ export default function Home() {
     };
     ctaEl?.addEventListener("click", onCta);
 
-    const onScrollBtn = () => {
-      const btn = scrollBtnRef.current;
-      if (!btn) return;
-      btn.style.opacity = window.scrollY > 400 ? "1" : "0";
-      btn.style.pointerEvents = window.scrollY > 400 ? "auto" : "none";
-    };
-    window.addEventListener("scroll", onScrollBtn);
-
     return () => {
       disposed = true;
       cancelAnimationFrame(rafId);
-      window.removeEventListener("scroll", onScrollBtn);
       window.removeEventListener("resize", onResize);
       ctaEl?.removeEventListener("click", onCta);
       triggers.forEach((t) => t.kill());
@@ -1870,7 +1851,7 @@ export default function Home() {
 
       <canvas id="webgl" ref={canvasRef} />
 
-      <Header />
+      <Header dark />
 
       <div style={{ position: "relative", zIndex: 2 }}>
         <HeroComponent />
@@ -1884,7 +1865,7 @@ export default function Home() {
         <section className="scene sec-hero">
           <span className="scene-badge">01 — Movil Guru</span>
           <div className="hero-text-block">
-            <span className="eyebrow">Expertos en reparación</span>
+            <span className="eyebrow">Expertos reparando móviles</span>
             <h1 className="headline-xl mg-shadow-triple">
               Tu móvil,
               <br />
@@ -2135,42 +2116,6 @@ export default function Home() {
         <Footer />
       </div>
 
-      <button
-        ref={scrollBtnRef}
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        aria-label="Volver arriba"
-        style={{
-          position: "fixed",
-          bottom: "32px",
-          right: "32px",
-          zIndex: 60,
-          width: "52px",
-          height: "52px",
-          borderRadius: "50%",
-          background: "var(--mg-lime)",
-          border: "3px solid var(--mg-ink)",
-          boxShadow: "4px 4px 0 var(--mg-ink)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          cursor: "pointer",
-          opacity: 0,
-          pointerEvents: "none",
-          transition: "opacity 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease",
-        }}
-        onMouseEnter={e => {
-          (e.currentTarget as HTMLButtonElement).style.transform = "translate(-2px,-2px)";
-          (e.currentTarget as HTMLButtonElement).style.boxShadow = "6px 6px 0 var(--mg-ink)";
-        }}
-        onMouseLeave={e => {
-          (e.currentTarget as HTMLButtonElement).style.transform = "translate(0,0)";
-          (e.currentTarget as HTMLButtonElement).style.boxShadow = "4px 4px 0 var(--mg-ink)";
-        }}
-      >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#080e14" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-          <polyline points="18 15 12 9 6 15" />
-        </svg>
-      </button>
     </>
   );
 }
