@@ -88,40 +88,79 @@ function FeatureRow({ item }: { item: FeatureItem }) {
       {/* Texto */}
       <motion.div style={{ y: textY }} className="max-w-md flex-1">
         {item.eyebrow && (
-          <span
-            className="text-[10px] font-black uppercase tracking-[0.4em]"
-            style={{ color: "#CCFF00" }}
-          >
-            {item.eyebrow}
-          </span>
+          <div className="flex items-center gap-2">
+            <span
+              className="inline-block h-px w-6 shrink-0"
+              style={{ background: "#0038FF" }}
+            />
+            <span
+              className="text-[10px] font-black uppercase tracking-[0.4em]"
+              style={{ color: "#0038FF" }}
+            >
+              {item.eyebrow}
+            </span>
+          </div>
         )}
         <h3
-          className="mt-4 text-4xl font-black uppercase leading-[0.95] tracking-[-0.03em] sm:text-5xl lg:text-6xl"
+          className="mt-5 text-4xl font-black uppercase leading-[0.95] tracking-[-0.03em] sm:text-5xl lg:text-6xl"
           style={{ fontFamily: "var(--font-display), sans-serif" }}
         >
-          {item.title}
+          {/* Split title: last word gets the lime accent */}
+          {item.title.split(" ").map((word, i, arr) =>
+            i === arr.length - 1 ? (
+              <span key={i} style={{ color: "#CCFF00" }}>
+                {word}
+              </span>
+            ) : (
+              <span key={i} className="text-white">
+                {word}{" "}
+              </span>
+            )
+          )}
         </h3>
-        <p className="mt-6 text-base leading-relaxed text-white/65 sm:text-lg">
+        <p className="mt-6 text-base leading-relaxed sm:text-lg" style={{ color: "rgba(255,255,255,0.75)" }}>
           {item.description}
         </p>
+        {/* Decorative rule */}
+        <div
+          className="mt-8 h-px w-16"
+          style={{ background: "linear-gradient(to right, #0038FF, transparent)" }}
+        />
       </motion.div>
 
       {/* Imagen con clip-path animado */}
       <motion.div
         style={{ opacity: imageOpacity, clipPath: imageClip }}
-        className="relative shrink-0 overflow-hidden rounded-2xl"
+        className="relative shrink-0"
       >
-        <img
-          src={item.imageUrl}
-          alt={item.title}
-          className="size-72 object-cover sm:size-80 lg:size-[420px]"
-        />
-        {/* Tinte azul sutil para integrar con el sistema visual */}
+        {/* Lime border accent offset frame */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 mix-blend-multiply"
-          style={{ background: "rgba(0,56,255,0.15)" }}
+          className="absolute -inset-[3px] rounded-2xl"
+          style={{
+            background: "linear-gradient(135deg, #CCFF00 0%, #0038FF 60%, transparent 100%)",
+            opacity: 0.5,
+          }}
         />
+        <div className="relative overflow-hidden rounded-2xl">
+          <img
+            src={item.imageUrl}
+            alt={item.title}
+            className="size-72 object-cover sm:size-80 lg:size-[420px]"
+          />
+          {/* Blue brand tint */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 mix-blend-multiply"
+            style={{ background: "rgba(0,56,255,0.20)" }}
+          />
+          {/* Bottom gradient overlay */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute bottom-0 left-0 right-0 h-1/3"
+            style={{ background: "linear-gradient(to top, rgba(0,30,180,0.65), transparent)" }}
+          />
+        </div>
       </motion.div>
     </div>
   );
@@ -143,12 +182,35 @@ export function ParallaxFeatureSection({
     <section className={`relative w-full bg-white px-4 ${className}`}>
       <div
         className="relative w-full rounded-b-[2.5rem] px-6 py-20 sm:px-12 sm:py-28"
-        style={{ background: "#0A1F3A", color: "#FFFFFF" }}
+        style={{ background: "#0038FF", color: "#FFFFFF" }}
       >
-        <div className="mx-auto max-w-6xl">
-          <span className="block text-[10px] font-black uppercase tracking-[0.4em] opacity-50">
-            {eyebrow}
-          </span>
+        {/* Accent glow blob — top left */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute left-[-10%] top-0 h-[500px] w-[500px] rounded-full"
+          style={{ background: "radial-gradient(closest-side, rgba(0,20,180,0.35), transparent 70%)" }}
+        />
+        {/* Accent glow blob — bottom right */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute bottom-0 right-[-5%] h-[400px] w-[400px] rounded-full"
+          style={{ background: "radial-gradient(closest-side, rgba(204,255,0,0.08), transparent 70%)" }}
+        />
+
+        <div className="relative mx-auto max-w-6xl">
+          {/* Section eyebrow */}
+          <div className="flex items-center gap-3">
+            <span
+              className="inline-block h-px w-8"
+              style={{ background: "#CCFF00" }}
+            />
+            <span
+              className="text-[10px] font-black uppercase tracking-[0.4em]"
+              style={{ color: "#CCFF00" }}
+            >
+              {eyebrow}
+            </span>
+          </div>
 
           <div className="mt-12 flex flex-col">
             {items.map((item) => (

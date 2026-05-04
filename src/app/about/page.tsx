@@ -24,6 +24,8 @@ import { Skiper19 } from "@/components/ui/svg-follow-scroll";
 import { ParallaxFeatureSection } from "@/components/ui/parallax-scroll-feature-section";
 import { ZoomParallax } from "@/components/ui/zoom-parallax";
 import { Features as FeaturesSection } from "@/components/ui/features-9";
+import { AboutServicesGrid } from "@/components/ui/about-services-grid";
+import { Testimonials } from "@/components/ui/testimonials-columns-1";
 
 /**
  * Items del zoom parallax — el slot central (index 0) es el vídeo que avanza
@@ -217,155 +219,6 @@ function IntroSection() {
  *    Ocupa 4×100vh de altura: el contenedor está pinneado y el texto
  *    interno cambia según el progreso.
  * ──────────────────────────────────────────────────────────────────── */
-const PHILOSOPHY = [
-  {
-    big: "Honestidad",
-    small:
-      "Te decimos lo que pasa, lo que cuesta y lo que no merece la pena reparar.",
-  },
-  {
-    big: "Precisión",
-    small:
-      "Diagnóstico exhaustivo antes de tocar una sola pieza. La rapidez nunca compromete el cuidado.",
-  },
-  {
-    big: "Privacidad",
-    small:
-      "Tus datos no se tocan. Reparamos sin formatear, con protocolos certificados.",
-  },
-  {
-    big: "Permanencia",
-    small:
-      "Garantía de por vida. La reparación que dura más que el propio teléfono.",
-  },
-];
-
-function PhilosophySection() {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end end"],
-  });
-
-  return (
-    <section
-      ref={ref}
-      className="relative w-full"
-      style={{
-        height: `${PHILOSOPHY.length * 100}vh`,
-        background: "#FFFFFF",
-        color: "#0A1F3A",
-      }}
-    >
-      <div className="sticky top-0 flex h-screen w-full flex-col items-center justify-center overflow-hidden px-6">
-        <span className="absolute top-24 text-[10px] font-black uppercase tracking-[0.4em] opacity-50">
-          03 · Filosofía
-        </span>
-
-        {/* Capas superpuestas: cada una es visible en su ventana del progreso. */}
-        <div className="relative flex h-full w-full max-w-5xl items-center justify-center">
-          {PHILOSOPHY.map((p, i) => (
-            <PhilosophyLayer
-              key={p.big}
-              item={p}
-              index={i}
-              total={PHILOSOPHY.length}
-              progress={scrollYProgress}
-            />
-          ))}
-        </div>
-
-        {/* Indicador de pasos */}
-        <div className="absolute bottom-16 flex gap-2">
-          {PHILOSOPHY.map((_, i) => (
-            <StepDot
-              key={i}
-              index={i}
-              total={PHILOSOPHY.length}
-              progress={scrollYProgress}
-            />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function PhilosophyLayer({
-  item,
-  index,
-  total,
-  progress,
-}: {
-  item: (typeof PHILOSOPHY)[number];
-  index: number;
-  total: number;
-  progress: MotionValue<number>;
-}) {
-  const span = 1 / total;
-  const start = span * index;
-  const peak = start + span * 0.5;
-  const end = start + span;
-
-  const opacity = useTransform(
-    progress,
-    [start, peak, end],
-    [0, 1, index === total - 1 ? 1 : 0]
-  );
-  const y = useTransform(progress, [start, peak, end], [40, 0, -40]);
-  const scale = useTransform(progress, [start, peak, end], [0.96, 1, 1.02]);
-
-  return (
-    <motion.div
-      style={{ opacity, y, scale }}
-      className="absolute inset-0 flex flex-col items-center justify-center text-center"
-    >
-      <span
-        className="text-xs font-black uppercase tracking-[0.4em]"
-        style={{ color: "#0038FF" }}
-      >
-        0{index + 1}
-      </span>
-      <h3
-        className="mt-6 text-6xl font-black uppercase leading-none tracking-[-0.04em] sm:text-8xl lg:text-[160px]"
-      >
-        {item.big}
-      </h3>
-      <p className="mt-8 max-w-xl text-base leading-relaxed opacity-70 sm:text-lg">
-        {item.small}
-      </p>
-    </motion.div>
-  );
-}
-
-function StepDot({
-  index,
-  total,
-  progress,
-}: {
-  index: number;
-  total: number;
-  progress: MotionValue<number>;
-}) {
-  const span = 1 / total;
-  const active = useTransform(
-    progress,
-    [span * index, span * index + span * 0.5, span * (index + 1)],
-    [0.25, 1, 0.25]
-  );
-  return (
-    <motion.span
-      style={{ opacity: active }}
-      className="h-1.5 w-6 rounded-full"
-      transition={{ duration: 0.3 }}
-    >
-      <span
-        className="block h-full w-full rounded-full"
-        style={{ background: "#0A1F3A" }}
-      />
-    </motion.span>
-  );
-}
 
 /* ─────────────────────────────────────────────────────────────────────
  * 4. CIERRE — mensaje final cinematográfico.
@@ -444,7 +297,8 @@ export default function AboutPage() {
       <Skiper19 />
       <ParallaxFeatureSection />
       <ZoomParallax items={ZOOM_IMAGES} />
-      <PhilosophySection />
+      <Testimonials />
+      <AboutServicesGrid />
       <FeaturesSection />
       <ClosingSection />
       <Footer />

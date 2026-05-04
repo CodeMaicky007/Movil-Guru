@@ -103,7 +103,7 @@ export const HeroComponent = () => {
         <motion.div
           animate={{ y: [0, -14, 0], rotate: [-4, 4, -4] }}
           transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-          className="hidden md:block absolute left-4 top-[8%] z-40 pointer-events-none"
+          className="hidden md:block absolute -left-96 top-[0%] z-40 pointer-events-none"
         >
           <img
             src="/images/GURU_BOT/emociones/amigable.png"
@@ -117,14 +117,14 @@ export const HeroComponent = () => {
           <div className="w-full flex flex-col items-center relative z-10 space-y-2 md:space-y-4">
             <div className="w-full flex justify-center relative z-20">
               <h1
-                className="text-[clamp(3.2rem,10vw,220px)] font-black leading-[0.85] tracking-tighter text-white m-0 p-0 uppercase"
+                className="text-[clamp(3.2rem,10vw,220px)] font-black leading-[0.85] tracking-tighter text-white m-0 p-0 uppercase whitespace-nowrap"
                 style={{
                   fontFamily: 'var(--font-display), sans-serif',
                   textShadow:
                     '1px 1px 0 #001A99, 2px 2px 0 #001A99, 3px 3px 0 #001A99, 4px 4px 0 #001A99, 5px 5px 0 #001A99, 6px 6px 0 #001A99, 7px 7px 0 #001A99, 8px 8px 0 #001A99, 9px 9px 0 #001A99, 10px 10px 0 #001A99, 11px 11px 0 #001A99, 12px 12px 0 #001A99, 13px 13px 0 #001A99, 14px 14px 0 #001A99',
                 }}
               >
-                TU MÓVIL,
+                TU MÓVIL<span style={{ marginLeft: '0.08em' }}>,</span>
               </h1>
             </div>
 
@@ -196,10 +196,10 @@ export const HeroComponent = () => {
             </motion.div>
 
             {/* Decorative Arrows */}
-            <div className="absolute bottom-[8%] -left-40 md:-left-56 w-24 h-24 md:w-32 md:h-32 z-20">
+            <div className="absolute bottom-[8%] -left-64 md:-left-80 w-24 h-24 md:w-32 md:h-32 z-20">
               <ArrowGreenLeft />
             </div>
-            <div className="absolute top-[3%] -right-60 md:-right-80 w-24 h-24 md:w-32 md:h-32 z-20">
+            <div className="absolute -top-[4%] -right-72 md:-right-96 w-24 h-24 md:w-32 md:h-32 z-20">
               <ArrowGreenRight />
             </div>
 

@@ -37,13 +37,13 @@ const Skiper19 = () => {
         />
       </div>
 
-      <div className="w-full translate-y-[80vh] rounded-t-[2.5rem] bg-[#0A1F3A] px-4 pb-12 text-white">
+      <div className="w-full translate-y-[80vh] overflow-hidden rounded-t-[2.5rem] bg-[#0038FF] px-4 pb-12 text-white">
         <h1
           className="mt-12 flex items-center justify-center gap-3 text-center font-black uppercase leading-[0.9] tracking-[-0.04em] sm:gap-5"
           style={{ fontFamily: "var(--font-display), sans-serif" }}
         >
-          <span className="text-[9vw] text-white">MOVIL</span>
-          <span className="rounded-[0.15em] bg-[#CCFF00] px-3 text-[9vw] text-[#0A1F3A] sm:px-5">
+          <span className="rounded-[0.15em] bg-black px-3 text-[6vw] text-white sm:px-5">MOVIL</span>
+          <span className="rounded-[0.15em] bg-[#CCFF00] px-3 text-[6vw] text-[#0A1F3A] sm:px-5">
             GURU
           </span>
         </h1>
