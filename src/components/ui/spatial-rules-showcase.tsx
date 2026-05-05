@@ -148,7 +148,7 @@ const BackgroundFx = ({ isFirst }: { isFirst: boolean }) => (
       className="absolute inset-0"
       style={{
         backgroundImage:
-          'linear-gradient(rgba(8,14,20,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(8,14,20,0.05) 1px, transparent 1px)',
+          'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)',
         backgroundSize: '64px 64px',
       }}
     />
@@ -305,7 +305,7 @@ const RuleDetails = ({ data, isFirst }: { data: RuleData; isFirst: boolean }) =>
         className="mb-5"
         style={{
           fontFamily,
-          color: '#080e14',
+          color: '#ffffff',
           fontSize: 'clamp(36px, 5vw, 68px)',
           lineHeight: 0.95,
           letterSpacing: '-0.04em',
@@ -320,7 +320,7 @@ const RuleDetails = ({ data, isFirst }: { data: RuleData; isFirst: boolean }) =>
         variants={ANIMATIONS.item}
         className={`mb-8 max-w-md ${margin}`}
         style={{
-          color: 'rgba(8, 14, 20, 0.65)',
+          color: 'rgba(255, 255, 255, 0.65)',
           fontSize: '17px',
           lineHeight: 1.55,
           fontWeight: 500,
@@ -334,9 +334,9 @@ const RuleDetails = ({ data, isFirst }: { data: RuleData; isFirst: boolean }) =>
         variants={ANIMATIONS.item}
         className="w-full max-w-md p-6 rounded-2xl border space-y-5"
         style={{
-          background: '#ffffff',
-          borderColor: 'rgba(8, 14, 20, 0.1)',
-          boxShadow: '0 14px 40px rgba(8,14,20,0.06), inset 0 1px 0 rgba(255,255,255,0.6)',
+          background: 'rgba(255,255,255,0.05)',
+          borderColor: 'rgba(255,255,255,0.1)',
+          boxShadow: '0 14px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06)',
         }}
       >
         {data.features.map((feature, idx) => {
@@ -349,7 +349,7 @@ const RuleDetails = ({ data, isFirst }: { data: RuleData; isFirst: boolean }) =>
                 <div
                   className="flex items-center gap-2"
                   style={{
-                    color: 'rgba(8,14,20,0.85)',
+                    color: 'rgba(255,255,255,0.85)',
                     fontSize: '13px',
                     fontWeight: 600,
                   }}
@@ -360,7 +360,7 @@ const RuleDetails = ({ data, isFirst }: { data: RuleData; isFirst: boolean }) =>
                 <span
                   className="font-mono"
                   style={{
-                    color: '#080e14',
+                    color: '#ffffff',
                     fontSize: '12px',
                     fontWeight: 800,
                   }}
@@ -370,7 +370,7 @@ const RuleDetails = ({ data, isFirst }: { data: RuleData; isFirst: boolean }) =>
               </div>
               <div
                 className="relative h-[5px] w-full rounded-full overflow-hidden"
-                style={{ background: 'rgba(8,14,20,0.08)' }}
+                style={{ background: 'rgba(255,255,255,0.08)' }}
               >
                 <motion.div
                   initial={{ width: 0 }}
@@ -423,7 +423,7 @@ const RuleDetails = ({ data, isFirst }: { data: RuleData; isFirst: boolean }) =>
       <motion.div
         variants={ANIMATIONS.item}
         className={`mt-6 flex items-center gap-3 ${flexDir}`}
-        style={{ color: 'rgba(8,14,20,0.55)' }}
+        style={{ color: 'rgba(255,255,255,0.55)' }}
       >
         <CheckCircle2 size={16} style={{ color: data.primary }} />
         <span style={{ fontSize: '13px', fontWeight: 600 }}>
@@ -455,9 +455,9 @@ const RuleSwitcher = ({
         className="flex items-center gap-1 p-1.5 rounded-full border"
         style={{
           background: '#080e14',
-          borderColor: 'rgba(8, 14, 20, 0.1)',
+          borderColor: 'rgba(255,255,255,0.12)',
           boxShadow:
-            '0 20px 50px rgba(8,14,20,0.18), inset 0 1px 0 rgba(255,255,255,0.06)',
+            '0 20px 50px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)',
         }}
       >
         {options.map((opt) => {
@@ -525,8 +525,8 @@ export default function MovilGuruRulesShowcase() {
       className="relative w-full overflow-hidden"
       style={{
         minHeight: '100vh',
-        background: '#ffffff',
-        color: '#080e14',
+        background: '#080e14',
+        color: '#ffffff',
         fontFamily,
       }}
     >
@@ -563,7 +563,7 @@ export default function MovilGuruRulesShowcase() {
               textTransform: 'uppercase',
               lineHeight: 1,
               letterSpacing: '-0.04em',
-              color: '#080e14',
+              color: '#ffffff',
               textAlign: 'center',
             }}
           >

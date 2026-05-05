@@ -219,38 +219,6 @@ function useVerticalAnimations() {
   }, []);
 }
 
-const founders = [
-  {
-    name: "Miguel Ángel Vega",
-    role: "Co-fundador & CEO",
-    detail: "Obsesionado con que cada cliente salga con el móvil perfecto.",
-    img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop",
-  },
-  {
-    name: "Alex Torres",
-    role: "Co-fundador & Técnico Jefe",
-    detail: "10 años abriendo dispositivos. Ninguno se ha resistido.",
-    img: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=800&auto=format&fit=crop",
-  },
-  {
-    name: "Sofía Márquez",
-    role: "Directora de Operaciones",
-    detail: "La que hace que todo funcione sin que nadie se entere.",
-    img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=800&auto=format&fit=crop",
-  },
-  {
-    name: "Carlos Ruiz",
-    role: "Técnico Senior",
-    detail: "Especialista en placas base y daños por agua.",
-    img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800&auto=format&fit=crop",
-  },
-  {
-    name: "Elena Vargas",
-    role: "Atención al Cliente",
-    detail: "Porque tratar bien a las personas es parte de la reparación.",
-    img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=800&auto=format&fit=crop",
-  },
-];
 
 const proceso = [
   {
@@ -1963,74 +1931,6 @@ export default function Home() {
         </section>
       </main>
 
-      <div className="mg-content mg-content-outer">
-        <div className="mg-content-track">
-          <section className="sec-story mg-h-section">
-            <div className="story-inner">
-              <div className="story-head">
-                <span className="eyebrow anim-sub" style={{ color: "var(--mg-lime)" }}>
-                  Nuestra Historia
-                </span>
-                <h2 className="anim-title">
-                  Nacimos para
-                  <br />
-                  hacer las cosas{" "}
-                  <em className="hl-lime" style={{ fontStyle: "normal" }}>
-                    bien.
-                  </em>
-                </h2>
-                <p className="anim-sub">
-                  Movil Guru nació en 2026 con una sola obsesión: que cualquier
-                  persona pudiera reparar su móvil sin miedo a que le engañaran.
-                  Somos nuevos, pero no improvisados — presupuesto cerrado, piezas
-                  originales y garantía de por vida. Si no lo arreglamos, no cobras.
-                </p>
-              </div>
-              <div className="story-facts">
-                <div className="fact">
-                  <b>2026</b>
-                  <span>Año de fundación</span>
-                </div>
-                <div className="fact">
-                  <b>500+</b>
-                  <span>Reparaciones completadas</span>
-                </div>
-                <div className="fact">
-                  <b>30 min</b>
-                  <span>Tiempo medio de pantalla</span>
-                </div>
-                <div className="fact">
-                  <b>4.9 / 5</b>
-                  <span>Valoración en Google</span>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section className="sec-founders mg-h-section">
-            <div className="founders-inner">
-              <div className="founders-label anim-sub">El equipo detrás</div>
-              <h2 className="founders-title anim-title">
-                Las personas
-                <br />
-                que lo hacen.
-              </h2>
-              <div className="founders-gallery">
-                {founders.map((f) => (
-                  <div className="founder-item" key={f.name}>
-                    <img src={f.img} alt={f.name} />
-                    <div className="founder-tag">{f.role}</div>
-                    <div className="founder-overlay">
-                      <h3>{f.name}</h3>
-                      <p>{f.detail}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        </div>
-      </div>
 
       <div className="mg-content">
         <RulesShowcase />

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import dynamic from "next/dynamic";
 import React, { useState } from "react";
@@ -422,31 +422,6 @@ export default function TiendaPage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#060d12] via-transparent to-transparent" />
 
-                {/* Floating price tag */}
-                <div className="absolute top-6 right-6 bg-[#CCFF00] text-black rounded-2xl px-4 py-3 rotate-3 shadow-[0_10px_40px_rgba(204,255,0,0.4)]">
-                  <div className="text-[9px] font-black uppercase tracking-[0.25em]">
-                    Desde
-                  </div>
-                  <div className="font-black text-2xl leading-none">34€</div>
-                </div>
-
-                {/* Bottom card */}
-                <div className="absolute bottom-6 left-6 right-6 bg-white/[0.08] backdrop-blur-xl border border-white/10 rounded-2xl p-5 flex items-center justify-between">
-                  <div>
-                    <div className="text-[10px] font-black uppercase tracking-[0.3em] text-[#CCFF00] mb-1">
-                      Producto destacado
-                    </div>
-                    <div className="text-white font-bold text-lg leading-tight">
-                      Funda Armor Kevlar
-                    </div>
-                  </div>
-                  <button
-                    className="size-12 rounded-full bg-[#CCFF00] text-black flex items-center justify-center hover:scale-110 transition-transform"
-                    aria-label="Ver producto"
-                  >
-                    <ArrowRight className="size-5" strokeWidth={3} />
-                  </button>
-                </div>
               </div>
             </motion.div>
           </div>
@@ -577,70 +552,6 @@ export default function TiendaPage() {
                 <ProductCard product={p} dark />
               </motion.div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ LAYERED TEXT + NEWSLETTER ═══ */}
-      <section className="w-full min-h-[76vh] bg-[#CCFF00] overflow-hidden">
-        <div className="max-w-7xl mx-auto h-full min-h-[76vh] grid lg:grid-cols-2 gap-0 items-center">
-
-          {/* Left — LayeredText */}
-          <div className="flex items-center justify-start -ml-64 py-12 lg:py-0">
-            <LayeredText
-              lines={[
-                { top: "\u00A0", bottom: "PROTEGE" },
-                { top: "PROTEGE", bottom: "ESTILO" },
-                { top: "ESTILO", bottom: "POTENCIA" },
-                { top: "POTENCIA", bottom: "MOVIL" },
-                { top: "MOVIL", bottom: "GURU" },
-                { top: "GURU", bottom: "FOREVER" },
-                { top: "FOREVER", bottom: "\u00A0" },
-              ]}
-              className="!py-0 !text-black"
-              fontSize="clamp(1.6rem, 5.2vw, 72px)"
-              fontSizeMd="clamp(1.2rem, 4vw, 52px)"
-              lineHeight={86}
-              lineHeightMd={62}
-            />
-          </div>
-
-          {/* Divider */}
-          <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-black/10" />
-
-          {/* Right — Newsletter */}
-          <div className="flex flex-col items-start justify-center py-12 lg:py-0 lg:pl-48 pr-6 md:pr-64 border-t lg:border-t-0 border-black/10">
-            <p className="text-xs font-black uppercase tracking-[0.4em] text-black/50 mb-5">
-              Ofertas exclusivas
-            </p>
-            <h2 className="font-black text-5xl md:text-6xl lg:text-7xl uppercase leading-[0.88] tracking-tight text-black mb-6">
-              Sé el <span className="text-[#0038FF]">primero</span>
-              <br />
-              en <span className="text-black">saberlo.</span>
-            </h2>
-            <p className="text-black/60 text-base md:text-lg leading-relaxed mb-10 max-w-sm">
-              Drops, descuentos y accesorios nuevos — directo a tu email antes que nadie. Sin spam.
-            </p>
-            <form
-              onSubmit={(e) => e.preventDefault()}
-              className="w-full flex flex-col gap-4 max-w-sm"
-            >
-              <input
-                type="email"
-                required
-                placeholder="tu@email.com"
-                className="w-full bg-black/10 border border-black/15 rounded-full px-6 py-4 text-black placeholder:text-black/40 text-base focus:outline-none focus:border-black/40 transition-colors"
-              />
-              <button
-                type="submit"
-                className="w-full bg-black text-[#CCFF00] font-black text-sm uppercase tracking-[0.25em] px-8 py-4 rounded-full hover:bg-black/80 active:scale-[0.98] transition-all"
-              >
-                Suscribirme gratis
-              </button>
-            </form>
-            <p className="text-black/40 text-xs font-semibold mt-5">
-              Sin spam · Cancela cuando quieras
-            </p>
           </div>
         </div>
       </section>
