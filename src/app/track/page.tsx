@@ -1,6 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 import { LampContainer } from "@/components/ui/lamp";
 
@@ -13,54 +14,42 @@ const Footer = dynamic(
   { ssr: false }
 );
 
-// ─── Mock data ────────────────────────────────────────────────────────────────
-type RepairStatus = "recibido" | "diagnostico" | "reparando" | "control" | "listo";
+// ─── Tipos (los datos vienen del endpoint real /api/track/[code]) ──────────
+type RepairStatus = "recibido" | "diagnostico" | "reparando" | "control" | "listo" | "cancelada";
 
 interface RepairResult {
-  id: string;
+  code: string;
   device: string;
   issue: string;
   status: RepairStatus;
-  date: string;
-  tech: string;
-  estimatedPickup: string;
-  steps: { key: RepairStatus; label: string; time?: string; done: boolean }[];
+  created_at: string;
+  scheduled_for: string | null;
+  store: string | null;
+  technician: string | null;
+  steps: { key: RepairStatus; label: string; time: string | null; done: boolean }[];
 }
 
-const mockResults: Record<string, RepairResult> = {
-  "MG-2026-4821": {
-    id: "MG-2026-4821",
-    device: "iPhone 15 Pro Max",
-    issue: "Sustitución de pantalla OLED",
-    status: "reparando",
-    date: "8 abril 2026",
-    tech: "Carlos M.",
-    estimatedPickup: "Hoy antes de las 18:00",
-    steps: [
-      { key: "recibido",    label: "Recibido en taller",       time: "08 abr · 10:32", done: true  },
-      { key: "diagnostico", label: "Diagnóstico completado",   time: "08 abr · 11:15", done: true  },
-      { key: "reparando",   label: "En reparación",            time: "08 abr · 12:00", done: true  },
-      { key: "control",     label: "Control de calidad",                                done: false },
-      { key: "listo",       label: "Listo para recoger",                                done: false },
-    ],
-  },
-  "MG-2026-3109": {
-    id: "MG-2026-3109",
-    device: "Samsung Galaxy Z Fold5",
-    issue: "Reparación de pantalla plegable + batería",
-    status: "listo",
-    date: "5 abril 2026",
-    tech: "Laura S.",
-    estimatedPickup: "Disponible para recoger",
-    steps: [
-      { key: "recibido",    label: "Recibido en taller",     time: "05 abr · 09:00", done: true },
-      { key: "diagnostico", label: "Diagnóstico completado", time: "05 abr · 10:45", done: true },
-      { key: "reparando",   label: "En reparación",          time: "05 abr · 14:30", done: true },
-      { key: "control",     label: "Control de calidad",     time: "06 abr · 09:00", done: true },
-      { key: "listo",       label: "Listo para recoger",     time: "06 abr · 10:15", done: true },
-    ],
-  },
-};
+function fmtShort(iso: string | null): string {
+  if (!iso) return "";
+  try {
+    return new Intl.DateTimeFormat("es-ES", {
+      day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit",
+    }).format(new Date(iso));
+  } catch { return iso; }
+}
+
+function pickupHint(r: { status: RepairStatus; scheduled_for: string | null }): string {
+  if (r.status === "listo") return "Disponible para recoger";
+  if (r.status === "cancelada") return "—";
+  if (r.scheduled_for) {
+    try {
+      return new Intl.DateTimeFormat("es-ES", {
+        day: "2-digit", month: "long", hour: "2-digit", minute: "2-digit",
+      }).format(new Date(r.scheduled_for));
+    } catch { return r.scheduled_for; }
+  }
+  return "Te avisaremos cuando esté lista";
+}
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 function StatusBadge({ status }: { status: RepairStatus }) {
@@ -70,6 +59,7 @@ function StatusBadge({ status }: { status: RepairStatus }) {
     reparando:   { label: "En reparación",       bg: "bg-white/15",      text: "text-white"       },
     control:     { label: "Control de calidad",  bg: "bg-purple-100",    text: "text-purple-700"  },
     listo:       { label: "Listo para recoger",  bg: "bg-[#CCFF00]/90",  text: "text-black"       },
+    cancelada:   { label: "Cancelada",           bg: "bg-red-100",       text: "text-red-700"     },
   };
   const s = map[status];
   return (
@@ -114,7 +104,7 @@ function Timeline({ steps }: { steps: RepairResult["steps"] }) {
             <p className={`text-sm font-semibold leading-tight ${step.done ? "text-[#080e14]" : "text-[#080e14]/35"}`}>
               {step.label}
             </p>
-            {step.time && <p className="text-xs text-[#080e14]/40 mt-0.5">{step.time}</p>}
+            {step.done && step.time && <p className="text-xs text-[#080e14]/40 mt-0.5">{fmtShort(step.time)}</p>}
           </motion.div>
         );
       })}
@@ -124,27 +114,57 @@ function Timeline({ steps }: { steps: RepairResult["steps"] }) {
 
 // ─── Page ──────────────────────────────────────────────────────────────────────
 export default function TrackPage() {
+  return (
+    <Suspense fallback={null}>
+      <TrackPageContent />
+    </Suspense>
+  );
+}
+
+function TrackPageContent() {
+  const searchParams = useSearchParams();
   const [code, setCode]         = useState("");
   const [result, setResult]     = useState<RepairResult | null>(null);
   const [notFound, setNotFound] = useState(false);
   const [loading, setLoading]   = useState(false);
+  const [error, setError]       = useState<string | null>(null);
+
+  const search = useCallback(async (rawCode: string) => {
+    const trimmed = rawCode.trim().toUpperCase();
+    setResult(null);
+    setNotFound(false);
+    setError(null);
+    if (!trimmed) return;
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/track/${encodeURIComponent(trimmed)}`, { cache: 'no-store' });
+      if (res.status === 404) {
+        setNotFound(true);
+      } else if (!res.ok) {
+        setError("No pudimos comprobar el estado. Inténtalo de nuevo en un momento.");
+      } else {
+        const data = await res.json();
+        setResult(data.reservation ? { ...data.reservation, steps: data.steps } : null);
+      }
+    } catch {
+      setError("Sin conexión. Inténtalo de nuevo.");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  // Auto-buscar si llega ?code=MG-XXXX en la URL (deep link desde emails).
+  useEffect(() => {
+    const urlCode = searchParams.get("code");
+    if (urlCode) {
+      setCode(urlCode);
+      search(urlCode);
+    }
+  }, [searchParams, search]);
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
-    const trimmed = code.trim().toUpperCase();
-    setResult(null);
-    setNotFound(false);
-    if (!trimmed) return;
-    setLoading(true);
-    setTimeout(() => {
-      if (mockResults[trimmed]) {
-        setResult(mockResults[trimmed]);
-        setNotFound(false);
-      } else {
-        setNotFound(true);
-      }
-      setLoading(false);
-    }, 800);
+    search(code);
   }
 
   return (
@@ -230,18 +250,25 @@ export default function TrackPage() {
           </button>
         </motion.form>
 
-        {/* Demo hint */}
+        {/* Hint */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7 }}
           className="text-center text-xs text-white/35 mt-3"
         >
-          Demo:{" "}
-          <button type="button" onClick={() => setCode("MG-2026-4821")} className="underline hover:text-white transition-colors">MG-2026-4821</button>
-          {" "}o{" "}
-          <button type="button" onClick={() => setCode("MG-2026-3109")} className="underline hover:text-white transition-colors">MG-2026-3109</button>
+          Encuentra tu código en el correo de confirmación o en tu comprobante de tienda.
         </motion.p>
+
+        {error && (
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center text-xs text-red-300 mt-3"
+          >
+            {error}
+          </motion.p>
+        )}
       </LampContainer>
 
       {/* ── Result ── */}
@@ -249,7 +276,7 @@ export default function TrackPage() {
         <AnimatePresence mode="wait">
           {result && (
             <motion.div
-              key={result.id}
+              key={result.code}
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
@@ -261,7 +288,7 @@ export default function TrackPage() {
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
                   <div>
                     <p className="text-xs font-black uppercase tracking-wider text-[#080e14]/35 mb-0.5">Código de reparación</p>
-                    <p className="text-2xl font-black text-[#080e14] tracking-tight" style={{ fontFamily: "var(--font-display, inherit)" }}>{result.id}</p>
+                    <p className="text-2xl font-black text-[#080e14] tracking-tight" style={{ fontFamily: "var(--font-display, inherit)" }}>{result.code}</p>
                   </div>
                   <StatusBadge status={result.status} />
                 </div>
@@ -269,8 +296,9 @@ export default function TrackPage() {
                   {[
                     { label: "Dispositivo", value: result.device },
                     { label: "Reparación",  value: result.issue },
-                    { label: "Técnico",     value: result.tech },
-                    { label: "Recogida",    value: result.estimatedPickup },
+                    ...(result.technician ? [{ label: "Técnico", value: result.technician }] : []),
+                    ...(result.store ? [{ label: "Tienda", value: result.store }] : []),
+                    { label: "Recogida",    value: pickupHint(result) },
                   ].map((d) => (
                     <div key={d.label}>
                       <p className="text-[10px] font-bold uppercase tracking-wider text-[#080e14]/30 mb-0.5">{d.label}</p>
