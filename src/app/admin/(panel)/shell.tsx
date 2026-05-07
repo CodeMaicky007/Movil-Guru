@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
-  LayoutDashboard, CalendarClock, Wrench, Users, LogOut, Clock, UserCog,
+  LayoutDashboard, CalendarClock, Wrench, Users, LogOut, Clock, UserCog, Activity,
 } from 'lucide-react';
 import { createSupabaseBrowserClient } from '@/lib/supabase/client';
 import type { SessionUser } from '@/lib/auth';
@@ -15,6 +15,7 @@ const ITEMS: Item[] = [
   { href: '/admin/servicios', label: 'Servicios', icon: <Wrench size={15} />,          roles: ['admin','manager'] },
   { href: '/admin/clientes',  label: 'Clientes',  icon: <Users size={15} />,           roles: ['admin','manager'] },
   { href: '/admin/empleados', label: 'Empleados', icon: <UserCog size={15} />,         roles: ['admin','manager'] },
+  { href: '/admin/automatizaciones', label: 'Automatización', icon: <Activity size={15} />, roles: ['admin'] },
   { href: '/admin/fichaje',   label: 'Fichaje',   icon: <Clock size={15} /> },
 ];
 
