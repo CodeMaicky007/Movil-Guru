@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { requireApiUser } from '@/lib/auth';
+import { triggerAutomationInline } from '@/server/automation';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,6 +16,11 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
   const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase.from('reservations').update(patch).eq('id', id).select().single();
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
+
+  // Si cambió el status, el trigger SQL ya emitió un evento. Lo procesamos
+  // inline para que el email salga en ~1-2s (no esperar al cron diario).
+  if ('status' in patch) await triggerAutomationInline();
+
   return NextResponse.json({ reservation: data });
 }
 

@@ -1,5 +1,6 @@
 import { type ChatCompletionTool } from 'groq-sdk/resources/chat/completions';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
+import { triggerAutomationInline } from '@/server/automation';
 
 export const TOOL_DEFINITIONS: ChatCompletionTool[] = [
   {
@@ -179,6 +180,10 @@ export async function executeTool(
         .select('id, code, scheduled_for, status')
         .single();
       if (error) return `Error creando la reserva: ${error.message}`;
+
+      // Dispara la confirmación al cliente sin esperar al cron diario.
+      await triggerAutomationInline();
+
       return JSON.stringify({ ok: true, reserva: data });
     }
 

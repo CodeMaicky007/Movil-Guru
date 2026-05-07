@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { requireApiUser } from '@/lib/auth';
+import { triggerAutomationInline } from '@/server/automation';
 
 export const dynamic = 'force-dynamic';
 
@@ -48,6 +49,10 @@ export async function POST(req: Request) {
     }
     const { data, error } = await supabase.from('reservations').insert(insert).select().single();
     if (error) return NextResponse.json({ error: error.message }, { status: 400 });
+
+    // Procesa la notificación inline (~1-2s). Si falla queda pendiente para el cron.
+    await triggerAutomationInline();
+
     return NextResponse.json({ reservation: data });
   } catch {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

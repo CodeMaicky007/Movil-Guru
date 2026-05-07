@@ -3,6 +3,7 @@
 
 export { AutomationDispatcher } from './application/dispatcher';
 export { NotificationWorker } from './application/worker';
+export { triggerAutomationInline } from './inline';
 export { isAuthorizedCronRequest } from './auth';
 export { createLogger } from './logger';
 
