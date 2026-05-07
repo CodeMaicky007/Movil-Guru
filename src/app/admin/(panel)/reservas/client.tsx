@@ -3,8 +3,9 @@ import { useMemo, useState } from 'react';
 import { Search, Plus, Trash2 } from 'lucide-react';
 import StatusPill from '../_components/status-pill';
 import type { SessionUser } from '@/lib/auth';
+import { REPAIR_STATUSES, REPAIR_STATUS_LABEL, type RepairStatus } from '@/lib/repair-status';
 
-type Status = 'pendiente'|'en_curso'|'completada'|'cancelada';
+type Status = RepairStatus;
 type Reservation = {
   id: string; code: string; customer_name: string; phone: string|null; email: string|null;
   device: string; service_id: string|null; store_id: string|null; technician_id: string|null;
@@ -14,10 +15,6 @@ type Reservation = {
 type Service = { id: string; nombre: string; precio_base: number };
 type Tienda = { id: string; nombre: string };
 type Tecnico = { id: string; full_name: string|null; email: string; store_id: string|null };
-
-const STATUS_LABEL: Record<Status, string> = {
-  pendiente: 'Pendiente', en_curso: 'En curso', completada: 'Completada', cancelada: 'Cancelada',
-};
 
 function brandLogo(device: string) {
   if (/iphone/i.test(device))  return '/images/Apple.png';
@@ -88,7 +85,7 @@ export default function ReservasClient({
           />
         </div>
         <div className="flex gap-0.5 rounded-md border border-white/8 bg-[#111113] p-0.5">
-          {(['todas','pendiente','en_curso','completada','cancelada'] as const).map(s => (
+          {(['todas', ...REPAIR_STATUSES] as const).map(s => (
             <button
               key={s}
               onClick={() => setFilter(s)}
@@ -98,7 +95,7 @@ export default function ReservasClient({
                 color: filter === s ? '#f5f5f5' : '#8a8a90',
               }}
             >
-              {s === 'todas' ? 'Todas' : STATUS_LABEL[s]}
+              {s === 'todas' ? 'Todas' : REPAIR_STATUS_LABEL[s]}
             </button>
           ))}
         </div>
@@ -170,10 +167,9 @@ export default function ReservasClient({
                       onChange={e => patch(r.id, { status: e.target.value as Status })}
                       className="rounded border border-white/10 bg-[#0e0e10] px-2 py-1 text-xs text-neutral-200 outline-none focus:border-[#4B7BD4]"
                     >
-                      <option value="pendiente">Pendiente</option>
-                      <option value="en_curso">En curso</option>
-                      <option value="completada">Completada</option>
-                      <option value="cancelada">Cancelada</option>
+                      {REPAIR_STATUSES.map(s => (
+                        <option key={s} value={s}>{REPAIR_STATUS_LABEL[s]}</option>
+                      ))}
                     </select>
                   </td>
                   {canEdit && (

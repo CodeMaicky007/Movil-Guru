@@ -19,7 +19,7 @@ export default async function ClientesPage() {
     const key = r.email || r.phone || r.customer_name;
     const g = map.get(key) || { name: r.customer_name, phone: r.phone, email: r.email, count: 0, total: 0 };
     g.count += 1;
-    g.total += r.status === 'completada' ? Number(r.price ?? 0) : 0;
+    g.total += r.status === 'listo' ? Number(r.price ?? 0) : 0;
     map.set(key, g);
   });
   const list = Array.from(map.values()).sort((a, b) => b.count - a.count);

@@ -151,7 +151,7 @@ export async function executeTool(
         .select('scheduled_for')
         .gte('scheduled_for', inicio)
         .lte('scheduled_for', fin)
-        .in('status', ['pendiente', 'en_curso']);
+        .in('status', ['recibido', 'diagnostico', 'reparando', 'control']);
       if (error) return `Error consultando disponibilidad: ${error.message}`;
       const ocupadas = (data ?? []).map((r) => r.scheduled_for);
       const horas = ['09:00', '10:00', '11:00', '12:00', '13:00', '16:00', '17:00', '18:00'];
@@ -173,7 +173,7 @@ export async function executeTool(
           service_id: input.service_id ?? null,
           scheduled_for: input.scheduled_for ?? null,
           notes: input.notes ?? null,
-          status: 'pendiente',
+          status: 'recibido',
           price: 0,
         })
         .select('id, code, scheduled_for, status')

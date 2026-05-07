@@ -2,6 +2,7 @@ import { requireUser } from '@/lib/auth';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { TrendingUp, Euro, Clock, CheckCircle2 } from 'lucide-react';
 import StatusPill from './_components/status-pill';
+import { OPEN_REPAIR_STATUSES } from '@/lib/repair-status';
 
 export const dynamic = 'force-dynamic';
 
@@ -22,12 +23,12 @@ export default async function ResumenPage() {
 
   // Queries paralelas y acotadas. Los counts no devuelven filas (head:true).
   const [
-    totalCount, pendientesCount, enCursoCount,
+    totalCount, abiertasCount, listoCount,
     monthRowsRes, recentRes, tiendasRes, tecnicosRes, shiftsRes,
   ] = await Promise.all([
     supabase.from('reservations').select('*', { count: 'exact', head: true }),
-    supabase.from('reservations').select('*', { count: 'exact', head: true }).eq('status','pendiente'),
-    supabase.from('reservations').select('*', { count: 'exact', head: true }).eq('status','en_curso'),
+    supabase.from('reservations').select('*', { count: 'exact', head: true }).in('status', OPEN_REPAIR_STATUSES),
+    supabase.from('reservations').select('*', { count: 'exact', head: true }).eq('status','listo'),
 
     // Sólo lo necesario para ranking + ingresos del mes.
     supabase.from('reservations')
@@ -48,9 +49,9 @@ export default async function ResumenPage() {
       .gte('clock_in', weekStart),
   ]);
 
-  const total      = totalCount.count ?? 0;
-  const pendientes = pendientesCount.count ?? 0;
-  const enCurso    = enCursoCount.count ?? 0;
+  const total    = totalCount.count ?? 0;
+  const abiertas = abiertasCount.count ?? 0;
+  const listas   = listoCount.count ?? 0;
   const monthList  = monthRowsRes.data ?? [];
   const recent     = recentRes.data ?? [];
   const tiendas    = tiendasRes.data ?? [];
@@ -61,7 +62,7 @@ export default async function ResumenPage() {
   const techMap  = new Map<string, { reps: number; revenue: number }>();
   const storeMap = new Map<string, number>();
   for (const r of monthList) {
-    if (r.status !== 'completada') continue;
+    if (r.status !== 'listo') continue;
     const price = Number(r.price ?? 0);
     ingresos += price;
     if (r.technician_id) {
@@ -95,9 +96,9 @@ export default async function ResumenPage() {
     <div className="space-y-8">
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
         <StatCard icon={<TrendingUp size={14} />}   label="Reservas totales" value={String(total)} sub="Histórico" />
-        <StatCard icon={<Euro size={14} />}         label="Ingresos del mes" value={`${ingresos.toFixed(0)} €`} sub="Completadas" />
-        <StatCard icon={<Clock size={14} />}        label="Pendientes"       value={String(pendientes)} />
-        <StatCard icon={<CheckCircle2 size={14} />} label="En curso"         value={String(enCurso)} />
+        <StatCard icon={<Euro size={14} />}         label="Ingresos del mes" value={`${ingresos.toFixed(0)} €`} sub="Reparaciones listas" />
+        <StatCard icon={<Clock size={14} />}        label="En proceso"       value={String(abiertas)} sub="Activas en taller" />
+        <StatCard icon={<CheckCircle2 size={14} />} label="Listas"           value={String(listas)} sub="Para recoger" />
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">

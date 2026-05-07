@@ -40,7 +40,7 @@ export async function POST(req: Request) {
       technician_id: body.technician_id ?? null,
       scheduled_for: body.scheduled_for ?? null,
       price: body.price ?? 0,
-      status: body.status ?? 'pendiente',
+      status: body.status ?? 'recibido',
       notes: body.notes ?? null,
     };
     if (!insert.customer_name || !insert.device) {
