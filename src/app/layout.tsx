@@ -11,7 +11,13 @@ const syne = Syne({
 
 export const metadata: Metadata = {
   title: "Movil Guru",
-  description: "A comprehensive website with all components",
+  description: "Reparación de móviles con garantía de por vida. iPhone, Samsung, Xiaomi y más.",
+  icons: {
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+    ],
+    apple: '/icon.svg',
+  },
 };
 
 export default function RootLayout({

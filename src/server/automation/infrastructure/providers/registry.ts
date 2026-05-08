@@ -1,6 +1,6 @@
 import type { NotificationChannel } from '../../domain/notification';
 import type { NotificationProvider } from './notification-provider';
-import { ResendEmailProvider } from './resend-email-provider';
+import { BrevoEmailProvider } from './brevo-email-provider';
 import { ConsoleEmailProvider } from './console-email-provider';
 
 // Resolución de provider por canal. Centralizado aquí para que el worker no
@@ -11,12 +11,13 @@ let cached: Partial<Record<NotificationChannel, NotificationProvider>> | null = 
 function build(): Partial<Record<NotificationChannel, NotificationProvider>> {
   const providers: Partial<Record<NotificationChannel, NotificationProvider>> = {};
 
-  // Email — Resend si hay API key, fallback a console en dev.
-  const resendKey = process.env.RESEND_API_KEY;
-  const resendFrom = process.env.RESEND_FROM ?? 'Movil Guru <reparaciones@movilguru.com>';
-  const resendReplyTo = process.env.RESEND_REPLY_TO;
-  if (resendKey) {
-    providers.email = new ResendEmailProvider(resendKey, resendFrom, resendReplyTo);
+  // Email — Brevo si hay API key, fallback a console en dev.
+  const brevoKey = process.env.BREVO_API_KEY;
+  const brevoFromEmail = process.env.BREVO_FROM_EMAIL ?? 'ac.miguelangel.vega@gmail.com';
+  const brevoFromName = process.env.BREVO_FROM_NAME ?? 'Movil Guru';
+  const brevoReplyTo = process.env.BREVO_REPLY_TO;
+  if (brevoKey) {
+    providers.email = new BrevoEmailProvider(brevoKey, brevoFromEmail, brevoFromName, brevoReplyTo);
   } else {
     providers.email = new ConsoleEmailProvider();
   }
