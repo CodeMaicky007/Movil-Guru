@@ -191,8 +191,8 @@ function TrackPageContent() {
             initial={{ opacity: 0.5, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8, ease: "easeInOut" }}
-            className="text-[clamp(3rem,10vw,120px)] font-black leading-[0.82] tracking-tighter uppercase text-[#CCFF00] m-0"
-            style={{ fontFamily: 'var(--font-display), sans-serif', textShadow: "2px 2px 0 #001A99,4px 4px 0 #001A99,6px 6px 0 #001A99" }}
+            className="font-black leading-tight tracking-tighter uppercase text-[#CCFF00] m-0"
+            style={{ fontSize: "40px", fontFamily: 'var(--font-display), sans-serif', textShadow: "2px 2px 0 #001A99,4px 4px 0 #001A99,6px 6px 0 #001A99" }}
           >
             RASTREAR
           </motion.h1>
@@ -200,8 +200,8 @@ function TrackPageContent() {
             initial={{ opacity: 0.5, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8, ease: "easeInOut" }}
-            className="text-[clamp(3rem,10vw,120px)] font-black leading-[0.82] tracking-tighter uppercase text-white m-0"
-            style={{ fontFamily: 'var(--font-display), sans-serif' }}
+            className="font-black leading-tight tracking-tighter uppercase text-white m-0"
+            style={{ fontSize: "40px", fontFamily: 'var(--font-display), sans-serif' }}
           >
             REPARACIÓN
           </motion.h1>

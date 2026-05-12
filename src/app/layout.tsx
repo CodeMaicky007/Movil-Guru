@@ -27,9 +27,36 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" suppressHydrationWarning>
+      <head>
+        <style dangerouslySetInnerHTML={{ __html: `
+          html { background: #0038FF; }
+          body { background: #0038FF; color: #0038FF; }
+          body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: #0038FF;
+            z-index: 2147483647;
+            pointer-events: none;
+          }
+          #mg-loader ~ * { visibility: hidden; }
+        `}} />
+      </head>
       <body className={`${syne.variable} ${syne.className}`} suppressHydrationWarning>
         {children}
         <ChatWidget />
+        <script dangerouslySetInnerHTML={{ __html: `
+          (function() {
+            function hide() {
+              var s = document.createElement('style');
+              s.innerHTML = 'body::before{display:none !important} #mg-loader ~ * { visibility: visible !important; }';
+              document.head.appendChild(s);
+            }
+            if (document.readyState === 'complete') hide();
+            else window.addEventListener('load', hide);
+          })();
+        `}} />
       </body>
     </html>
   );

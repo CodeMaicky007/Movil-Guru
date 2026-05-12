@@ -81,7 +81,10 @@ export default function OpinionesPage() {
            min-height. Without this, Matter.js measures 0 px, places the floor at y=10,
            and all bodies pile up instantly in the top-left corner.
       ─────────────────────────────────────────────────────────────────────── */}
-      <section className="relative w-full h-[720px] bg-[#0038FF] overflow-hidden">
+      <section
+        className="relative w-full h-[720px] bg-[#0038FF] overflow-hidden"
+        onWheel={(e) => { window.scrollBy({ top: e.deltaY, behavior: "auto" }); }}
+      >
         {/* Grid texture */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none z-0" />
         {/* Radial glow */}

@@ -11,13 +11,14 @@ let cached: Partial<Record<NotificationChannel, NotificationProvider>> | null = 
 function build(): Partial<Record<NotificationChannel, NotificationProvider>> {
   const providers: Partial<Record<NotificationChannel, NotificationProvider>> = {};
 
-  // Email — Brevo si hay API key, fallback a console en dev.
-  const brevoKey = process.env.BREVO_API_KEY;
+  // Email — Brevo SMTP si hay credenciales, fallback a console en dev.
+  const brevoLogin    = process.env.BREVO_SMTP_LOGIN;
+  const brevoPassword = process.env.BREVO_SMTP_PASSWORD;
   const brevoFromEmail = process.env.BREVO_FROM_EMAIL ?? 'ac.miguelangel.vega@gmail.com';
-  const brevoFromName = process.env.BREVO_FROM_NAME ?? 'Movil Guru';
-  const brevoReplyTo = process.env.BREVO_REPLY_TO;
-  if (brevoKey) {
-    providers.email = new BrevoEmailProvider(brevoKey, brevoFromEmail, brevoFromName, brevoReplyTo);
+  const brevoFromName  = process.env.BREVO_FROM_NAME ?? 'Movil Guru';
+  const brevoReplyTo   = process.env.BREVO_REPLY_TO;
+  if (brevoLogin && brevoPassword) {
+    providers.email = new BrevoEmailProvider(brevoLogin, brevoPassword, brevoFromEmail, brevoFromName, brevoReplyTo);
   } else {
     providers.email = new ConsoleEmailProvider();
   }

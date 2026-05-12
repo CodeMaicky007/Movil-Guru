@@ -1,3 +1,4 @@
+import { createTransport } from 'nodemailer';
 import type { Notification, RenderedEmail, SendResult } from '../../domain/notification';
 import type { NotificationProvider } from './notification-provider';
 
@@ -5,59 +6,45 @@ export class BrevoEmailProvider implements NotificationProvider {
   readonly name = 'brevo';
   readonly channel = 'email' as const;
 
+  private readonly transporter;
+
   constructor(
-    private readonly apiKey: string,
+    smtpLogin: string,
+    smtpPassword: string,
     private readonly fromEmail: string,
     private readonly fromName: string,
     private readonly replyTo?: string,
-  ) {}
+  ) {
+    this.transporter = createTransport({
+      host: 'smtp-relay.brevo.com',
+      port: 587,
+      secure: false,
+      auth: { user: smtpLogin, pass: smtpPassword },
+    });
+  }
 
   async send(notification: Notification, rendered: RenderedEmail | string): Promise<SendResult> {
     if (typeof rendered === 'string') {
       return { ok: false, provider: this.name, error: 'Email provider requires RenderedEmail', retryable: false };
     }
 
-    let res: Response;
     try {
-      res = await fetch('https://api.brevo.com/v3/smtp/email', {
-        method: 'POST',
-        headers: {
-          'api-key': this.apiKey,
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: JSON.stringify({
-          sender: { email: this.fromEmail, name: this.fromName },
-          to: [{ email: notification.recipient }],
-          subject: rendered.subject,
-          htmlContent: rendered.html,
-          textContent: rendered.text,
-          ...(this.replyTo ? { replyTo: { email: this.replyTo } } : {}),
-          headers: { 'X-Entity-Ref-ID': notification.id },
-        }),
+      const info = await this.transporter.sendMail({
+        from: `"${this.fromName}" <${this.fromEmail}>`,
+        to: notification.recipient,
+        subject: rendered.subject,
+        html: rendered.html,
+        text: rendered.text,
+        ...(this.replyTo ? { replyTo: this.replyTo } : {}),
+        headers: { 'X-Entity-Ref-ID': notification.id },
       });
+
+      console.log('[brevo-smtp] sent:', info.messageId, '→', notification.recipient);
+      return { ok: true, provider: this.name, provider_id: info.messageId };
     } catch (e) {
-      return {
-        ok: false,
-        provider: this.name,
-        error: e instanceof Error ? e.message : 'network error',
-        retryable: true,
-      };
+      const msg = e instanceof Error ? e.message : String(e);
+      console.error('[brevo-smtp] error:', msg);
+      return { ok: false, provider: this.name, error: msg, retryable: true };
     }
-
-    let body: { messageId?: string; message?: string; code?: string } = {};
-    try { body = await res.json() as typeof body; } catch { /* ignore */ }
-
-    if (res.ok && body.messageId) {
-      return { ok: true, provider: this.name, provider_id: body.messageId };
-    }
-
-    const retryable = res.status === 429 || res.status >= 500;
-    return {
-      ok: false,
-      provider: this.name,
-      error: body.message ?? body.code ?? `HTTP ${res.status}`,
-      retryable,
-    };
   }
 }

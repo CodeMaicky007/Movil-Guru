@@ -270,7 +270,6 @@ export default function Home() {
   const progressRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLButtonElement>(null);
 
-
   useHorizontalScroll();
   useVerticalAnimations();
 

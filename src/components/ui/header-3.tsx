@@ -49,9 +49,10 @@ type LinkItem = {
   logoSrc?: string;
 };
 
-export function Header({ dark = false }: { dark?: boolean }) {
+export function Header({ dark = false, transparent = false }: { dark?: boolean; transparent?: boolean }) {
   const [open, setOpen] = React.useState(false);
   const [showMoreBrands, setShowMoreBrands] = React.useState(false);
+  const [mobileBrandsOpen, setMobileBrandsOpen] = React.useState(false);
   const scrolled = useScroll(10);
   const router = useRouter();
 
@@ -199,7 +200,7 @@ export function Header({ dark = false }: { dark?: boolean }) {
           </NavigationMenu>
         </div>
         <div className="hidden items-center gap-2 lg:flex">
-          <ProfileMenu dark={dark && !scrolled} />
+          <ProfileMenu dark={(dark || transparent) && !scrolled} />
           <Link href="/tienda/carrito" className={cn('relative flex items-center justify-center size-9 rounded-full border transition-all', (dark && !scrolled) ? 'border-white/15 text-white hover:border-[#CCFF00]/60 hover:bg-[#CCFF00]/10' : 'border-foreground/10 hover:border-foreground/30')} aria-label="Carrito">
             <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
           </Link>
@@ -231,10 +232,25 @@ export function Header({ dark = false }: { dark?: boolean }) {
               <Store className="size-4" />
               Tiendas
             </Link>
-            <span className="text-sm">Marcas</span>
-            {productLinks.map((link) => (
-              <ListItem key={link.title} {...link} />
-            ))}
+
+            {/* Marcas collapsible */}
+            <button
+              onClick={() => setMobileBrandsOpen(!mobileBrandsOpen)}
+              className="flex items-center justify-between text-sm font-medium px-2 py-2 rounded-lg hover:bg-accent transition-colors w-full"
+            >
+              <span>Marcas</span>
+              <svg className={`size-4 transition-transform ${mobileBrandsOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
+            </button>
+            {mobileBrandsOpen && (
+              <div className="flex flex-col gap-1 pl-2">
+                {productLinks.map((link) => (
+                  <ListItem key={link.title} {...link} />
+                ))}
+              </div>
+            )}
+
             <span className="text-sm">Nosotros</span>
             {companyLinks.map((link) => (
               <ListItem key={link.title} {...link} />

@@ -743,7 +743,10 @@ export function BookingWizard({
   const [selectedTime, setSelectedTime]         = useState<string | null>(null);
   const [customerName, setCustomerName]         = useState("");
   const [customerPhone, setCustomerPhone]       = useState("");
+  const [customerEmail, setCustomerEmail]       = useState("");
   const [confirmed, setConfirmed]               = useState(false);
+  const [bookingCode, setBookingCode]           = useState<string | null>(null);
+  const [submitting, setSubmitting]             = useState(false);
   const [searchQuery, setSearchQuery]           = useState("");
   const [modelSearch, setModelSearch]           = useState("");
 
@@ -911,7 +914,10 @@ export function BookingWizard({
                   <svg width="32" height="24" viewBox="0 0 32 24" fill="none"><path d="M2 12l10 10L30 2" stroke="#000" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </motion.div>
                 <h2 className="text-3xl md:text-4xl font-black text-[#0a0a0a] tracking-tight mb-3" style={{ fontFamily: "var(--font-display, inherit)" }}>¡Reserva confirmada!</h2>
-                <p className="text-[#0a0a0a]/50 text-base leading-relaxed mb-8 max-w-md mx-auto">Recibirás un mensaje de confirmación por WhatsApp con todos los detalles de tu cita.</p>
+                {bookingCode && (
+                  <p className="text-[#0038FF] font-black text-lg mb-2">Tu código: {bookingCode}</p>
+                )}
+                <p className="text-[#0a0a0a]/50 text-base leading-relaxed mb-8 max-w-md mx-auto">{customerEmail ? 'Te enviaremos actualizaciones por email.' : 'Te avisaremos por WhatsApp con todos los detalles.'}</p>
                 <div className="bg-[#0a0a0a]/[0.03] rounded-2xl p-6 text-left space-y-4 max-w-md mx-auto mb-8">
                   {[
                     { label: "Dispositivo",   value: `${selectedBrand?.shortName} ${selectedModel?.name}` },
@@ -931,7 +937,7 @@ export function BookingWizard({
                     </div>
                   ))}
                 </div>
-                <button onClick={() => { if (!isBrandFirst) setSelectedBrand(null); setSelectedModel(null); setSelectedCategory(null); setSelectedFaultType(null); setSelectedRepair(null); setSelectedDate(null); setSelectedTime(null); setCustomerName(""); setCustomerPhone(""); setConfirmed(false); }} className="text-[#0038FF] font-bold text-sm underline underline-offset-4 hover:no-underline">
+                <button onClick={() => { if (!isBrandFirst) setSelectedBrand(null); setSelectedModel(null); setSelectedCategory(null); setSelectedFaultType(null); setSelectedRepair(null); setSelectedDate(null); setSelectedTime(null); setCustomerName(""); setCustomerPhone(""); setCustomerEmail(""); setBookingCode(null); setConfirmed(false); }} className="text-[#0038FF] font-bold text-sm underline underline-offset-4 hover:no-underline">
                   Hacer otra reserva
                 </button>
               </motion.div>
@@ -1257,9 +1263,49 @@ export function BookingWizard({
                   <div className="space-y-3 mb-6">
                     <input type="text" placeholder="Tu nombre" value={customerName} onChange={(e) => setCustomerName(e.target.value)} className="w-full px-4 py-3.5 rounded-xl border border-[#0a0a0a]/10 text-sm font-medium focus:outline-none focus:border-[#0038FF] transition-colors" />
                     <input type="tel" placeholder="Número de teléfono (WhatsApp)" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} className="w-full px-4 py-3.5 rounded-xl border border-[#0a0a0a]/10 text-sm font-medium focus:outline-none focus:border-[#0038FF] transition-colors" />
+                    <input type="email" placeholder="Tu email (para seguir tu reparación)" value={customerEmail} onChange={(e) => setCustomerEmail(e.target.value)} className="w-full px-4 py-3.5 rounded-xl border border-[#0a0a0a]/10 text-sm font-medium focus:outline-none focus:border-[#0038FF] transition-colors" />
                   </div>
-                  <button onClick={() => { if (customerName && customerPhone) { setConfirmed(true); scrollUp(); } }} disabled={!customerName || !customerPhone} className="w-full bg-[#0038FF] text-white font-black text-base py-4 rounded-xl hover:bg-[#0028cc] active:scale-[0.98] transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed">
-                    Confirmar reserva →
+                  <button
+                    disabled={!customerName || !customerPhone || submitting}
+                    onClick={async () => {
+                      if (!customerName || !customerPhone || submitting) return;
+                      setSubmitting(true);
+                      try {
+                        const device = `${selectedBrand?.shortName ?? ''} ${selectedModel?.name ?? ''}`.trim();
+                        const repairLabel = isBrandFirst ? (selectedFaultType?.label ?? '') : (selectedRepair?.name ?? '');
+                        const priceRaw = isBrandFirst ? (selectedFaultType?.price ?? '0') : String(selectedRepair?.price ?? 0);
+                        const price = parseFloat(priceRaw.split(/[-–]/)[0].replace(/[^\d.]/g, '')) || 0;
+                        const scheduledFor = selectedDate && selectedTime
+                          ? new Date(`${selectedDate}T${selectedTime}`).toISOString()
+                          : null;
+                        const res = await fetch('/api/booking', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({
+                            customer_name: customerName,
+                            phone: customerPhone,
+                            email: customerEmail || null,
+                            device,
+                            notes: repairLabel,
+                            price,
+                            scheduled_for: scheduledFor,
+                          }),
+                        });
+                        const json = await res.json() as { reservation?: { code: string } };
+                        setBookingCode(json.reservation?.code ?? null);
+                        setConfirmed(true);
+                        scrollUp();
+                      } catch {
+                        // si falla la red confirmamos igual — no bloqueamos al cliente
+                        setConfirmed(true);
+                        scrollUp();
+                      } finally {
+                        setSubmitting(false);
+                      }
+                    }}
+                    className="w-full bg-[#0038FF] text-white font-black text-base py-4 rounded-xl hover:bg-[#0028cc] active:scale-[0.98] transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed"
+                  >
+                    {submitting ? 'Enviando…' : 'Confirmar reserva →'}
                   </button>
                   <p className="text-[10px] text-[#0a0a0a]/30 text-center mt-3">Te avisamos por WhatsApp · Precio cerrado garantizado</p>
                 </div>

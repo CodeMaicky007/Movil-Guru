@@ -309,7 +309,7 @@ export default function AboutPage() {
   return (
     <main className="relative w-full">
       <ScrollIndicator />
-      <Header />
+      <Header transparent />
       <Skiper19 />
       <AboutSection2 />
       <ImageGallery />

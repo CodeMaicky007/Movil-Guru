@@ -36,6 +36,7 @@ type GravityProps = {
   gravity?: { x: number; y: number };
   addTopWall?: boolean;
   autoStart?: boolean;
+  allowScroll?: boolean;
   className?: string;
 };
 
@@ -113,6 +114,7 @@ export const Gravity = forwardRef<GravityRef, GravityProps>(
       gravity = { x: 0, y: 1 },
       addTopWall = false,
       autoStart = true,
+      allowScroll = false,
       className,
     },
     ref
