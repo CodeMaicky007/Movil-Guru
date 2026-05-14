@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import React from "react";
 import { motion, AnimatePresence } from "motion/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   Mail,
   Lock,
@@ -14,7 +15,9 @@ import {
   Shield,
   Zap,
   Gift,
+  AlertCircle,
 } from "lucide-react";
+import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 
 const Header = dynamic(
   () => import("@/components/ui/header-3").then((m) => m.Header),
@@ -32,7 +35,13 @@ const steps = [
 ];
 
 export default function RegistroPage() {
+  const router = useRouter();
+  const supabase = createSupabaseBrowserClient();
+
   const [step, setStep] = React.useState(0);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [error, setError] = React.useState("");
+  const [acceptedTerms, setAcceptedTerms] = React.useState(false);
   const [form, setForm] = React.useState({
     name: "",
     email: "",
@@ -42,6 +51,70 @@ export default function RegistroPage() {
 
   const next = () => setStep((s) => Math.min(steps.length - 1, s + 1));
   const prev = () => setStep((s) => Math.max(0, s - 1));
+
+  const handleStep0 = () => {
+    if (!form.name.trim() || !form.email.trim()) {
+      setError("Por favor completa nombre y correo.");
+      return;
+    }
+    setError("");
+    next();
+  };
+
+  const handleStep1 = async () => {
+    if (!form.password || form.password.length < 8) {
+      setError("La contraseña debe tener al menos 8 caracteres.");
+      return;
+    }
+    if (!acceptedTerms) {
+      setError("Debes aceptar los términos y la política de privacidad.");
+      return;
+    }
+    setError("");
+    setIsLoading(true);
+
+    // Registrar en Supabase Auth
+    const { data, error: signUpError } = await supabase.auth.signUp({
+      email: form.email,
+      password: form.password,
+      options: {
+        data: {
+          full_name: form.name,
+          phone: form.phone,
+        },
+      },
+    });
+
+    if (signUpError) {
+      if (signUpError.message.includes("already registered")) {
+        setError("Este correo ya está registrado. ¿Quieres iniciar sesión?");
+      } else {
+        setError(signUpError.message);
+      }
+      setIsLoading(false);
+      return;
+    }
+
+    // Crear perfil en tabla profiles si el usuario fue creado
+    if (data.user) {
+      await supabase.from("profiles").upsert({
+        id: data.user.id,
+        full_name: form.name,
+        phone: form.phone,
+        email: form.email,
+      });
+    }
+
+    // Enviar correo de bienvenida vía Brevo
+    fetch("/api/auth/welcome-email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: form.name, email: form.email }),
+    }).catch(() => {/* no bloqueante */});
+
+    setIsLoading(false);
+    next();
+  };
 
   return (
     <main className="w-full bg-[#060d12] min-h-screen relative overflow-hidden">
@@ -156,6 +229,7 @@ export default function RegistroPage() {
                       setForm({ ...form, name: e.target.value })
                     }
                     placeholder="Carlos Mendoza"
+                    autoComplete="name"
                   />
                   <Field
                     icon={Mail}
@@ -166,16 +240,18 @@ export default function RegistroPage() {
                       setForm({ ...form, email: e.target.value })
                     }
                     placeholder="tu@correo.com"
+                    autoComplete="email"
                   />
                   <Field
                     icon={Phone}
-                    label="Teléfono"
+                    label="Teléfono (opcional)"
                     type="tel"
                     value={form.phone}
                     onChange={(e) =>
                       setForm({ ...form, phone: e.target.value })
                     }
                     placeholder="+34 600 000 000"
+                    autoComplete="tel"
                   />
                 </motion.div>
               )}
@@ -202,12 +278,15 @@ export default function RegistroPage() {
                       setForm({ ...form, password: e.target.value })
                     }
                     placeholder="Mínimo 8 caracteres"
+                    autoComplete="new-password"
                   />
                   <PwStrength value={form.password} />
                   <label className="flex items-start gap-3 text-sm text-white/60 cursor-pointer">
                     <input
                       type="checkbox"
-                      className="mt-1 appearance-none size-4 rounded border border-white/20 bg-white/5 checked:bg-[#CCFF00] checked:border-[#CCFF00] transition-colors"
+                      checked={acceptedTerms}
+                      onChange={e => setAcceptedTerms(e.target.checked)}
+                      className="mt-1 appearance-none size-4 rounded border border-white/20 bg-white/5 checked:bg-[#CCFF00] checked:border-[#CCFF00] transition-colors flex-shrink-0"
                     />
                     <span>
                       Acepto los{" "}
@@ -256,7 +335,7 @@ export default function RegistroPage() {
                   <p className="text-white/55 max-w-sm mx-auto mb-8">
                     Tu cuenta está lista. Desbloqueaste estos beneficios:
                   </p>
-                  <div className="grid sm:grid-cols-3 gap-3 text-left">
+                  <div className="grid sm:grid-cols-3 gap-3 text-left mb-6">
                     {[
                       {
                         icon: Shield,
@@ -288,12 +367,34 @@ export default function RegistroPage() {
                       </div>
                     ))}
                   </div>
+
+                  {/* Nota verificación email */}
+                  <div className="mb-6 p-3 rounded-xl border border-[#CCFF00]/20 bg-[#CCFF00]/5 text-left">
+                    <p className="text-xs text-[#CCFF00] font-bold mb-0.5">Confirma tu correo</p>
+                    <p className="text-xs text-white/50">Te enviamos un email a <span className="text-white/70">{form.email}</span>. Haz clic en el enlace para activar tu cuenta.</p>
+                  </div>
+
                   <Link
-                    href="/perfil"
-                    className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#CCFF00] px-6 py-3 font-bold text-black hover:bg-[#b8e600] transition-colors"
+                    href="/login"
+                    className="inline-flex items-center gap-2 rounded-full bg-[#CCFF00] px-6 py-3 font-bold text-black hover:bg-[#b8e600] transition-colors"
                   >
-                    Ir a mi perfil <ArrowRight className="size-4" />
+                    Ir a iniciar sesión <ArrowRight className="size-4" />
                   </Link>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Error */}
+            <AnimatePresence>
+              {error && (
+                <motion.div
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -4 }}
+                  className="mt-4 flex items-start gap-2 p-3 rounded-xl border border-red-900/30 bg-red-950/20 text-xs text-red-400"
+                >
+                  <AlertCircle className="size-4 flex-shrink-0 mt-0.5" />
+                  <span>{error}</span>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -308,11 +409,12 @@ export default function RegistroPage() {
                   <ArrowLeft className="size-4" /> Atrás
                 </button>
                 <button
-                  onClick={next}
-                  className="group flex items-center gap-2 rounded-full bg-[#CCFF00] px-6 py-3 text-sm font-bold text-black shadow-[0_10px_30px_-8px_rgba(204,255,0,0.6)] hover:bg-[#b8e600] transition-colors"
+                  onClick={step === 0 ? handleStep0 : handleStep1}
+                  disabled={isLoading}
+                  className="group flex items-center gap-2 rounded-full bg-[#CCFF00] px-6 py-3 text-sm font-bold text-black shadow-[0_10px_30px_-8px_rgba(204,255,0,0.6)] hover:bg-[#b8e600] transition-colors disabled:opacity-60"
                 >
-                  {step === 1 ? "Crear cuenta" : "Continuar"}
-                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                  {isLoading ? "Creando cuenta..." : step === 1 ? "Crear cuenta" : "Continuar"}
+                  {!isLoading && <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />}
                 </button>
               </div>
             )}

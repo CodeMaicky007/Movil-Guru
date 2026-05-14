@@ -309,7 +309,7 @@ export default function AboutPage() {
   return (
     <main className="relative w-full">
       <ScrollIndicator />
-      <Header transparent />
+      <Header />
       <Skiper19 />
       <AboutSection2 />
       <ImageGallery />
@@ -320,7 +320,9 @@ export default function AboutPage() {
       <BrandLogoCloud />
       <SocialConnect />
       <ClosingSection />
-      <Footer />
+      <div className="bg-white">
+        <Footer />
+      </div>
     </main>
   );
 }

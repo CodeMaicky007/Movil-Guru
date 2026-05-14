@@ -21,6 +21,7 @@ export type FeatureItem = {
   title: string;
   description: string;
   imageUrl: string;
+  imageUrls?: string[];
   reverse?: boolean;
 };
 
@@ -31,8 +32,7 @@ const DEFAULT_FEATURES: FeatureItem[] = [
     title: "Un taller. Una promesa.",
     description:
       "Abrimos en el centro de Valladolid con tres herramientas y una convicción: un móvil roto no debería significar empezar de cero. Cada reparación se hace a la vista del cliente, sin sustos ni asteriscos.",
-    imageUrl:
-      "https://images.pexels.com/photos/4195342/pexels-photo-4195342.jpeg?auto=compress&w=1000",
+    imageUrl: "/Vall1.png",
     reverse: false,
   },
   {
@@ -41,8 +41,7 @@ const DEFAULT_FEATURES: FeatureItem[] = [
     title: "Cruzamos provincia.",
     description:
       "El boca a boca nos lleva a León. Misma garantía de por vida, mismo trato honesto, las mismas piezas originales certificadas. Una segunda casa para nuestros gurus reparadores.",
-    imageUrl:
-      "https://images.pexels.com/photos/3568520/pexels-photo-3568520.jpeg?auto=compress&w=1000",
+    imageUrl: "/Leon.png",
     reverse: true,
   },
   {
@@ -51,8 +50,8 @@ const DEFAULT_FEATURES: FeatureItem[] = [
     title: "Cuatro tiendas, una filosofía.",
     description:
       "1 en León, 2 en Valladolid, 1 en Burgos. Una red completa al servicio de Castilla y León — sin perder lo que nos hace pequeños: el cuidado, la cercanía y la palabra dada.",
-    imageUrl:
-      "https://images.pexels.com/photos/4195325/pexels-photo-4195325.jpeg?auto=compress&w=1000",
+    imageUrl: "/Vall1.png",
+    imageUrls: ["/Vall1.png", "/Vall2.png", "/Leon.png", "/Burgos.png"],
     reverse: false,
   },
 ];
@@ -133,34 +132,58 @@ function FeatureRow({ item }: { item: FeatureItem }) {
         style={{ opacity: imageOpacity, clipPath: imageClip }}
         className="relative shrink-0"
       >
-        {/* Lime border accent offset frame */}
-        <div
-          aria-hidden
-          className="absolute -inset-[3px] rounded-2xl"
-          style={{
-            background: "linear-gradient(135deg, #CCFF00 0%, #0038FF 60%, transparent 100%)",
-            opacity: 0.5,
-          }}
-        />
-        <div className="relative overflow-hidden rounded-2xl">
-          <img
-            src={item.imageUrl}
-            alt={item.title}
-            className="size-72 object-cover sm:size-80 lg:size-[420px]"
-          />
-          {/* Blue brand tint */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 mix-blend-multiply"
-            style={{ background: "rgba(0,56,255,0.20)" }}
-          />
-          {/* Bottom gradient overlay */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute bottom-0 left-0 right-0 h-1/3"
-            style={{ background: "linear-gradient(to top, rgba(0,30,180,0.65), transparent)" }}
-          />
-        </div>
+        {item.imageUrls && item.imageUrls.length > 1 ? (
+          /* Collage 2×2 */
+          <div className="relative w-72 sm:w-80 lg:w-[420px]">
+            <div className="grid grid-cols-2 gap-2">
+              {item.imageUrls.map((url, i) => (
+                <div
+                  key={i}
+                  className="relative overflow-hidden rounded-xl"
+                  style={{ aspectRatio: "1/1" }}
+                >
+                  <img src={url} alt={`Tienda ${i + 1}`} className="w-full h-full object-cover" />
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 mix-blend-multiply"
+                    style={{ background: "rgba(0,56,255,0.15)" }}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <>
+            {/* Lime border accent offset frame */}
+            <div
+              aria-hidden
+              className="absolute -inset-[3px] rounded-2xl"
+              style={{
+                background: "linear-gradient(135deg, #CCFF00 0%, #0038FF 60%, transparent 100%)",
+                opacity: 0.5,
+              }}
+            />
+            <div className="relative overflow-hidden rounded-2xl">
+              <img
+                src={item.imageUrl}
+                alt={item.title}
+                className="size-72 object-cover sm:size-80 lg:size-[420px]"
+              />
+              {/* Blue brand tint */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 mix-blend-multiply"
+                style={{ background: "rgba(0,56,255,0.20)" }}
+              />
+              {/* Bottom gradient overlay */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute bottom-0 left-0 right-0 h-1/3"
+                style={{ background: "linear-gradient(to top, rgba(0,30,180,0.65), transparent)" }}
+              />
+            </div>
+          </>
+        )}
       </motion.div>
     </div>
   );

@@ -178,7 +178,7 @@ function TrackPageContent() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mb-6 text-center"
+          className="mb-14 text-center"
         >
           <span className="bg-white/10 border border-white/20 text-white/80 text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-wider">
             Movil Guru · Seguimiento
@@ -192,7 +192,7 @@ function TrackPageContent() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8, ease: "easeInOut" }}
             className="font-black leading-tight tracking-tighter uppercase text-[#CCFF00] m-0"
-            style={{ fontSize: "40px", fontFamily: 'var(--font-display), sans-serif', textShadow: "2px 2px 0 #001A99,4px 4px 0 #001A99,6px 6px 0 #001A99" }}
+            style={{ fontSize: "72px", fontFamily: 'var(--font-display), sans-serif', textShadow: "2px 2px 0 #001A99,4px 4px 0 #001A99,6px 6px 0 #001A99" }}
           >
             RASTREAR
           </motion.h1>
@@ -201,7 +201,7 @@ function TrackPageContent() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8, ease: "easeInOut" }}
             className="font-black leading-tight tracking-tighter uppercase text-white m-0"
-            style={{ fontSize: "40px", fontFamily: 'var(--font-display), sans-serif' }}
+            style={{ fontSize: "72px", fontFamily: 'var(--font-display), sans-serif' }}
           >
             REPARACIÓN
           </motion.h1>

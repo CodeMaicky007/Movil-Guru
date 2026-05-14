@@ -118,7 +118,7 @@ export function ZoomParallax({ items }: ZoomParallaxProps) {
 
   return (
     <div ref={container} className="relative h-[300vh] bg-white">
-      <div className="sticky top-0 h-screen overflow-hidden">
+      <div className="sticky top-0 h-screen overflow-hidden" style={{ transform: "translateZ(0)", backfaceVisibility: "hidden" }}>
         {items.map((item, index) => {
           const scale = scales[index % scales.length];
           const isVideo = item.type === "video";
@@ -126,7 +126,7 @@ export function ZoomParallax({ items }: ZoomParallaxProps) {
           return (
             <motion.div
               key={index}
-              style={{ scale }}
+              style={{ scale, willChange: "transform" }}
               className={`absolute top-0 flex h-full w-full items-center justify-center ${
                 index === 1
                   ? "[&>div]:!-top-[30vh] [&>div]:!left-[5vw] [&>div]:!h-[30vh] [&>div]:!w-[35vw]"
@@ -166,6 +166,8 @@ export function ZoomParallax({ items }: ZoomParallaxProps) {
                     src={item.src}
                     alt={item.alt || `Parallax image ${index + 1}`}
                     className="h-full w-full object-cover"
+                    loading="eager"
+                    decoding="async"
                   />
                 )}
 

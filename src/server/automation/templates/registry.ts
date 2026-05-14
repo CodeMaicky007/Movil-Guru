@@ -6,6 +6,7 @@ import { renderRepairInQc } from './email/repair-in-qc';
 import { renderRepairReady } from './email/repair-ready';
 import { renderRepairCancelled } from './email/repair-cancelled';
 import { renderSatisfactionSurvey } from './email/satisfaction-survey';
+import { renderWelcome } from './email/welcome';
 
 // Registro central de templates. Cada entrada es una función pura que recibe
 // el payload de la notificación y devuelve el email renderizado.
@@ -21,6 +22,7 @@ export const emailTemplates: Record<string, EmailRenderer> = {
   'repair-ready':          renderRepairReady,
   'repair-cancelled':      renderRepairCancelled,
   'satisfaction-survey':   renderSatisfactionSurvey,
+  'welcome':               renderWelcome,
 };
 
 export function renderEmailTemplate(

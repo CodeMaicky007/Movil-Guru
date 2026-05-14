@@ -29,8 +29,8 @@ export default function RootLayout({
     <html lang="es" suppressHydrationWarning>
       <head>
         <style dangerouslySetInnerHTML={{ __html: `
-          html { background: #0038FF; }
-          body { background: #0038FF; color: #0038FF; }
+          html { background: #ffffff; }
+          body { background: #ffffff; color: #0A1F3A; }
           body::before {
             content: "";
             position: fixed;

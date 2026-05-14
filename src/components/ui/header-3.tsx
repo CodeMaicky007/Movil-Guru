@@ -71,10 +71,11 @@ export function Header({ dark = false, transparent = false }: { dark?: boolean; 
     <header
       className={cn(
         'sticky top-0 z-50 mx-auto w-full max-w-6xl border-b border-transparent lg:rounded-full lg:border lg:border-transparent lg:transition-all lg:duration-300 lg:ease-out',
-        dark && scrolled ? '' : '',
+        !dark && !scrolled && !open ? 'bg-white' : '',
         {
           'bg-background/95 supports-[backdrop-filter]:bg-background/50 border-border backdrop-blur-lg lg:top-4 lg:max-w-5xl lg:shadow lg:rounded-full':
             scrolled && !open,
+          'bg-transparent': dark && !scrolled && !open,
           'bg-background/90': open && !dark,
           'bg-[#060d12]/95': open && dark,
         }

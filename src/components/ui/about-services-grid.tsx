@@ -212,21 +212,22 @@ export function AboutServicesGrid() {
               />
               <div className="relative overflow-hidden rounded-2xl">
                 <img
-                  src="https://images.pexels.com/photos/4195342/pexels-photo-4195342.jpeg?auto=compress&w=800"
-                  alt="Técnico reparando móvil"
-                  className="w-full aspect-[3/4] object-cover"
+                  src="/images/GURU_BOT/Gururobot.png"
+                  alt="Guru Robot"
+                  className="w-full aspect-[3/4] object-contain bg-[#0A1F3A]"
                 />
                 <div
                   className="absolute inset-0"
                   style={{ background: "linear-gradient(to top, rgba(0,56,255,0.55) 0%, transparent 60%)" }}
                 />
-                <div className="absolute bottom-4 left-4 right-4">
+                <div className="absolute bottom-4 left-4 right-4 z-10">
                   <a
-                    href="/reparacion"
-                    className="flex items-center justify-center gap-2 w-full rounded-full py-3 text-sm font-black uppercase tracking-wider transition-transform duration-200 hover:scale-[1.03] active:scale-95"
+                    href="/marcas"
+                    className="flex items-center justify-center gap-1.5 w-full rounded-full px-3 py-2.5 text-xs font-black uppercase tracking-wide transition-transform duration-200 hover:scale-[1.03] active:scale-95"
                     style={{ background: "#CCFF00", color: "#0A1F3A" }}
                   >
-                    Reservar reparación <ArrowRight className="w-4 h-4" />
+                    <span>Reservar reparación</span>
+                    <ArrowRight className="w-3 h-3 shrink-0" />
                   </a>
                 </div>
               </div>

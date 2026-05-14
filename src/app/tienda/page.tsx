@@ -35,21 +35,21 @@ const categories = [
     id: "fundas",
     name: "Fundas",
     count: 124,
-    img: "https://images.pexels.com/photos/4526407/pexels-photo-4526407.jpeg?auto=compress&w=800",
+    img: "/images/funda.jpg",
     accent: "#CCFF00",
   },
   {
     id: "cristales",
     name: "Cristales",
     count: 38,
-    img: "https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg?auto=compress&w=800",
+    img: "/images/vidrio-templado-vidrio-telefono-inteligente-vidrio-iphone_967273-14518.jpg",
     accent: "#0038FF",
   },
   {
     id: "cargadores",
     name: "Cargadores",
     count: 56,
-    img: "https://images.pexels.com/photos/4526446/pexels-photo-4526446.jpeg?auto=compress&w=800",
+    img: "/images/cargador-inalambrico-ksix-3en1-15w-carga-rapida-simultanea-para-smartphones-qi-apple-watch-y-airpods-cargadorcable-negro.jpg",
     accent: "#CCFF00",
   },
   {
@@ -60,18 +60,11 @@ const categories = [
     accent: "#0038FF",
   },
   {
-    id: "llaveros",
-    name: "Llaveros",
-    count: 27,
-    img: "https://images.pexels.com/photos/1152077/pexels-photo-1152077.jpeg?auto=compress&w=800",
-    accent: "#CCFF00",
-  },
-  {
     id: "soportes",
     name: "Soportes",
     count: 19,
-    img: "https://images.pexels.com/photos/3944405/pexels-photo-3944405.jpeg?auto=compress&w=800",
-    accent: "#0038FF",
+    img: "/images/soporte-movil-universal-ajustable-cellularline (1).jpg",
+    accent: "#CCFF00",
   },
 ];
 
